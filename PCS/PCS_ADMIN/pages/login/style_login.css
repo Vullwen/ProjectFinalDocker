@@ -1,0 +1,80 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #4D4D4D; /* Gris Sophistiqué pour le fond */
+}
+
+/* Centre le formulaire dans la page */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-form {
+    padding: 20px;
+    background-color: white; /* Fond blanc pour le contraste */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-form h2 {
+    color: #003366; /* Bleu Profond pour les titres */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    color: #4D4D4D; /* Gris Sophistiqué pour les labels */
+}
+
+.form-control {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.form-control:focus {
+    border-color: #DAA520; /* Doré pour le focus */
+    background-color: #fff;
+    color: #000;
+}
+
+.btn {
+    background-color: #003366; /* Bleu Profond pour le bouton */
+    border-color: #003366;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #002244; /* Une teinte de bleu plus foncée au survol */
+    border-color: #002244;
+}
+
+.text-center a {
+    color: #DAA520; /* Doré pour les liens */
+}
+
+.footer {
+    background-color: #003366; /* Bleu Profond pour le footer */
+    color: white;
+    text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px 0;
+}
+
+.alert-danger {
+    color: #721c24; /* Texte rouge foncé pour plus de lisibilité */
+    background-color: #f8d7da; /* Fond rouge clair */
+    border-color: #f5c6cb; /* Bordure rouge claire */
+    margin-bottom: 20px; /* Espacement avant le bouton de connexion */
+}

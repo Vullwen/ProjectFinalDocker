@@ -1,0 +1,23 @@
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: bold;
+}
+
+h5 {
+  font-family: Georgia, italic;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  color: #DAA520 !important;
+}
+
+.carousel-item img {
+  height: 65vh;
+  object-fit: cover;
+}
