@@ -26,36 +26,37 @@
     </form>
 
     <script>
-        document.getElementById('registrationForm').addEventListener('submit', function (event) {
-            event.preventDefault();
+    document.getElementById('registrationForm').addEventListener('submit', function (event) {
+        event.preventDefault();
 
-            var formData = {
-                nom: document.getElementById('nom').value,
-                prenom: document.getElementById('prenom').value,
-                email: document.getElementById('email').value,
-                telephone: document.getElementById('telephone').value,
-                mdp: document.getElementById('mdp').value,
-                mdp_confirm: document.getElementById('mdp_confirm').value
-            };
+        var formData = {
+            nom: document.getElementById('nom').value,
+            prenom: document.getElementById('prenom').value,
+            email: document.getElementById('email').value,
+            telephone: document.getElementById('telephone').value,
+            mdp: document.getElementById('mdp').value,
+            mdp_confirm: document.getElementById('mdp_confirm').value
+        };
 
-            console.log(formData);
+        console.log(formData);
 
-            fetch('http://localhost/PCS/API/routes/user/post.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: formData
+        fetch('http://localhost/PCS/API/routes/user/post.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData) // Correction ici
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
             })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
-                })
-                .catch(error => {
-                    console.error('Erreur lors de l\'envoi des données:', error);
-                });
-        });
-    </script>
+            .catch(error => {
+                console.error('Erreur lors de l\'envoi des données:', error);
+            });
+    });
+</script>
+
 </body>
 
 </html>
