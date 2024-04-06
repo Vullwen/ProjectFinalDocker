@@ -16,7 +16,13 @@ document.getElementById('loginForm').addEventListener('submit', function (event)
     })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            if (data.success && data.message) {
+
+                window.location.href = '../#.php';
+
+            } else {
+                alert(data.message);
+            }
         })
         .catch(error => {
             console.error('Erreur lors de l\'envoi des données:', error);

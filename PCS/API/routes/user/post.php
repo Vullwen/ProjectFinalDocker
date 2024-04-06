@@ -25,7 +25,6 @@ try {
     echo jsonResponse(200, ["PCS" => "PCSuccess"], [
         "success" => true,
         "message" => "Utilisateur créé avec succès. Vous pouvez maintenant vous connecter.",
-        "redirect" => "login.php"
     ]);
 
 } catch (Exception $exception) {
