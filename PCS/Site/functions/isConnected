@@ -1,0 +1,8 @@
+<?php
+
+include "../../API/database/connectDB.php";
+
+function isConnected()
+{
+
+}

@@ -11,7 +11,7 @@ document.getElementById('registrationForm').addEventListener('submit', function 
     };
 
     console.log(formData);
-    fetch('http://localhost/2A-ProjetAnnuel/PCS/API/routes/user/post.php', {
+    fetch('http://localhost/2A-ProjetAnnuel/PCS/API/user', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

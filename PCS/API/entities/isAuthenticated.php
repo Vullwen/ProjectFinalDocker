@@ -25,7 +25,7 @@ function isAuthenticated(string $role = "USER"): bool
 
     $databaseConnection = connectDB();
 
-    $getUserQuery = $databaseConnection = $databaseConnection->prepare("SELECT role FROM users WHERE token = :token");
+    $getUserQuery = $databaseConnection = $databaseConnection->prepare("SELECT token FROM users WHERE token = :token");
 
     $success = $getUserQuery->execute([
         "token" => $bearerToken
@@ -38,10 +38,6 @@ function isAuthenticated(string $role = "USER"): bool
     $user = $getUserQuery->fetch(PDO::FETCH_ASSOC);
 
     if (!$user) {
-        return false;
-    }
-
-    if ($user["role"] !== $role) {
         return false;
     }
 
