@@ -1,3 +1,9 @@
+<?php
+include (dirname(__DIR__) . "/functions/isAdmin.php");
+include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
+
+
+?>
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #003366;">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><img src="http://localhost/2A-ProjetAnnuel/PCS/Site/img/LOGO.png" alt="LOGO"
@@ -15,15 +21,30 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Services</a>
                 </li>
+
+
                 <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link"
-                        href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/register.php">Inscription</a>
-                </li>
-                <li class="nav-item">
+                <?php
+                if (isAdmin()) {
+                    echo '<li class="nav-item">
+                                    <a class="nav-link"
+                                        href="http://localhost/2A-ProjetAnnuel/PCS/PCS_ADMIN/index.php">Admin</a>
+                                </li>';
+                }
+                if (isset($_SESSION['token'])) {
+                    echo '<li class="nav-item">
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/functions/logout.php">Déconnexion</a>
+                </li>';
+                } else {
+                    echo '<li class="nav-item">
                     <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/login.php">Connexion</a>
+                </li>';
+                }
+
+
+                ?>
             </ul>
         </div>
     </div>

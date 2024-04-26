@@ -4,7 +4,7 @@ include_once '../template/header.php';
 
 <body>
     <h2>Connexion</h2>
-    <form id="loginForm">
+    <form id="loginForm" action="../functions/login.php" method="GET">
         <label for="email">Email :</label>
         <input type="email" id="email" name="email" required>
         <label for="mdp">Mot de passe :</label>
@@ -12,7 +12,10 @@ include_once '../template/header.php';
         <input type="submit" value="Se connecter">
     </form>
 
-    <script src="../javascript/login.js"></script>
+    <!-- <script src="../javascript/login.js">
+    </script> -->
+
+
 </body>
 
 </html>

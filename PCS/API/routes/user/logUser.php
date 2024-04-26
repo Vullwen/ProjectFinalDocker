@@ -6,22 +6,23 @@ require_once __DIR__ . "/../../database/connectDB.php";
 require_once __DIR__ . "/../../database/conf.inc.php";
 require_once __DIR__ . "/../../libraries/token.php";
 require_once __DIR__ . "/../../entities/loginUser.php";
-
+session_start();
 try {
-    $body = getBody();
 
-    $email = $body['email'];
-    $mdp = $body['mdp'];
-
+    $email = $_GET['email'];
+    $mdp = $_GET['mdp'];
     $result = loginUser($email, $mdp);
 
     if (!$result['success']) {
         throw new Exception(implode("\n", $result['errors']));
     }
 
+
     echo jsonResponse(200, ["PCS" => "PCSuccess"], [
         "success" => true,
-        "message" => "Vous êtes connecté."
+        "message" => "Vous êtes connecté.",
+        "result" => $result['isAdmin'],
+        "token" => $result['token']
     ]);
 
 

@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des Utilisateurs</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</head>
-<body>
+<?php include_once '../../../Site/template/header.php'; ?>
+
 <div class="container mt-5">
     <h2>Liste des Utilisateurs</h2>
-    <input type="text" id="searchInput" class="form-control" onkeyup="searchUsers()" placeholder="Rechercher des utilisateurs...">
+    <input type="text" id="searchInput" class="form-control" onkeyup="searchUsers()"
+        placeholder="Rechercher des utilisateurs...">
     <br>
     <table class="table">
         <thead>
@@ -42,25 +35,26 @@
 </div>
 
 <script>
-function searchUsers() {
-    var input, filter, table, tr, td, i, txtValue;
-    input = document.getElementById("searchInput");
-    filter = input.value.toUpperCase();
-    table = document.getElementById("usersTable");
-    tr = table.getElementsByTagName("tr");
+    function searchUsers() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("usersTable");
+        tr = table.getElementsByTagName("tr");
 
-    for (i = 0; i < tr.length; i++) {
-        td = tr[i].getElementsByTagName("td")[0]; // Recherchez dans la première colonne
-        if (td) {
-            txtValue = td.textContent || td.innerText;
-            if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                tr[i].style.display = "";
-            } else {
-                tr[i].style.display = "none";
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0]; // Recherchez dans la première colonne
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
             }
-        }       
+        }
     }
-}
 </script>
 </body>
+
 </html>
