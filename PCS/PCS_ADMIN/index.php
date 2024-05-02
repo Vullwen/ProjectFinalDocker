@@ -24,12 +24,19 @@ include_once '../Site/template/header.php';
                 </div>
             </div>
         </div>
-        <!-- Ajoutez plus de sections ici si nécessaire -->
-    </div>
-</div>
+        <!-- ajout des biens -->
+        <div class="col-md-4">
+            <div class="card" onclick="window.location.href='pages/biens/ajout_biens.php';" style="cursor: pointer;">
+                <img src="img/add_property_icon.png" class="card-img-top" alt="Ajouter un bien">
+                <div class="card-body">
+                    <h5 class="card-title> Ajouter un bien</h5>
+                    <p class=" card-text">Ajouter un bien immobilier.</p>
+                </div>
+            </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-</body>
+            <script src=" https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js">
+            </script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+            </body>
 
-</html>
+            </html>

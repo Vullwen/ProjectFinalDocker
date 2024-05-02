@@ -17,3 +17,22 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/user")) {
         die();
     }
 }
+
+if (isPath("/2A-ProjetAnnuel/PCS/API/biens")) {
+    if (isPostMethod()) {
+        require_once __DIR__ . "/routes/biens/post.php";
+        die();
+    }
+
+    if (isGetMethod()) {
+        require_once __DIR__ . "/routes/biens/get.php";
+        die();
+    }
+}
+
+if (isPath("/2A-ProjetAnnuel/PCS/API/user/bailleurs")) {
+    if (isGetMethod()) {
+        require_once __DIR__ . "/routes/user/getBailleurs.php";
+        die();
+    }
+}

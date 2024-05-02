@@ -1,5 +1,6 @@
 <?php
 include_once '../../../Site/template/header.php';
+require_once '../../../API/database/connectDB.php';
 ?>
 <div class="container mt-5">
     <h2>Liste des Biens Immobiliers</h2>
@@ -9,7 +10,7 @@ include_once '../../../Site/template/header.php';
     </div>
     <div class="row" id="biensContainer">
         <?php
-        require_once '../../database/connectDB.php';
+
         $db = connectDB();
         $query = $db->query("SELECT * FROM bienimmobilier");
 
@@ -23,13 +24,14 @@ include_once '../../../Site/template/header.php';
             echo "<p class='card-text'>Description: {$bien['Description']}</p>";
             echo "<p class='card-text'>Superficie: {$bien['Superficie']}</p>";
             echo "<p class='card-text'>Nombre de Chambres: {$bien['NbChambres']}</p>";
-            echo "<p class='card-text'>Tarif: {$bien['Tarif']}</p>";
+            echo "<p class='card-text'>Tarif: {$bien['Tarif']} € / nuit</p>";
             echo "</div>";
             echo "</div>";
             echo "</div>";
         }
         ?>
     </div>
+    <a href="../../index.php" class="btn btn-primary">Retour au menu Admin</a>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
