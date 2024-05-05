@@ -80,12 +80,26 @@ if (isAdmin()) {
         event.preventDefault();
 
         var bailleurSelect = document.getElementById('bailleur');
-        console.log(bailleurSelect.options);
         var selectedBailleurIndex = bailleurSelect.selectedIndex;
-        console.log(selectedBailleurIndex);
         var bailleurId = bailleurSelect.options[selectedBailleurIndex].value;
-        console.log(bailleurId);
 
+        var files = document.getElementById('photos').files;
+        var photoNames = [];
+
+
+        for (var i = 0; i < files.length; i++) {
+            var uniqueFileName = generateUniqueFileName(files[i].name);
+            photoNames.push(uniqueFileName);
+        }
+
+        // Fonction pour générer un nom de fichier unique
+        function generateUniqueFileName(fileName) {
+
+            var timestamp = new Date().getTime();
+
+            var uniqueFileName = timestamp + '_' + fileName;
+            return uniqueFileName;
+        }
 
         var formData = {
             type: document.getElementById('type').value,
@@ -95,7 +109,7 @@ if (isAdmin()) {
             nbchambres: document.getElementById('nbchambres').value,
             tarif: document.getElementById('tarif').value,
             idutilisateur: bailleurId,
-            photos: document.getElementById('photos').files
+            photos: photoNames
         }
         console.log(formData);
 
@@ -114,7 +128,7 @@ if (isAdmin()) {
 
                 } else {
                     alert('Bien ajouté avec succès');
-                    //window.location.href = 'bien.php';
+                    window.location.href = 'bien.php';
                 }
             });
     });

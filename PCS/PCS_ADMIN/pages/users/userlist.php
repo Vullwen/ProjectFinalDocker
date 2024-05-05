@@ -25,6 +25,7 @@ require_once '../../../API/database/connectDB.php'; ?>
                 echo "<td>{$user['Nom']}</td>";
                 echo "<td>{$user['Prenom']}</td>";
                 echo "<td>{$user['Email']}</td>";
+                echo "<td><a href='delete_user.php?email={$user['Email']}' class='btn btn-danger'>Supprimer</a></td>";
                 echo "</tr>";
             }
             ?>
