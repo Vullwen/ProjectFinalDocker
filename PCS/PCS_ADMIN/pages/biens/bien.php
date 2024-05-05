@@ -1,5 +1,6 @@
 <?php
 include_once '../../../Site/template/header.php';
+require_once '../../../API/database/connectDB.php';
 ?>
 <div class="container mt-5">
     <h2>Liste des Biens Immobiliers</h2>
@@ -9,27 +10,31 @@ include_once '../../../Site/template/header.php';
     </div>
     <div class="row" id="biensContainer">
         <?php
-        require_once '../../database/connectDB.php';
         $db = connectDB();
         $query = $db->query("SELECT * FROM bienimmobilier");
 
         while ($bien = $query->fetch(PDO::FETCH_ASSOC)) {
             echo "<div class='col-md-4 mb-4'>";
+            echo "<a href='details_bien.php?id={$bien['IDBien']}' class='card-link'>";
             echo "<div class='card' style='cursor: pointer;'>";
-            echo "<img src='img/bien_placeholder.png' class='card-img-top' alt='...'>";
+            echo "<img src='../../img/home_icon.png' class='card-img-top small-image' alt='...'>";
             echo "<div class='card-body'>";
             echo "<h5 class='card-title'>{$bien['Type']}</h5>";
             echo "<p class='card-text'>Adresse: {$bien['Adresse']}</p>";
             echo "<p class='card-text'>Description: {$bien['Description']}</p>";
             echo "<p class='card-text'>Superficie: {$bien['Superficie']}</p>";
             echo "<p class='card-text'>Nombre de Chambres: {$bien['NbChambres']}</p>";
-            echo "<p class='card-text'>Tarif: {$bien['Tarif']}</p>";
+            echo "<p class='card-text'>Tarif: {$bien['Tarif']} € / nuit</p>";
             echo "</div>";
             echo "</div>";
+            echo "</a>";
             echo "</div>";
         }
         ?>
+
+
     </div>
+    <a href="../../index.php" class="btn btn-primary">Retour au menu Admin</a>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

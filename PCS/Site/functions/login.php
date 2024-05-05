@@ -13,5 +13,5 @@ if ($response->success) {
     $_SESSION['token'] = $response->token;
     header("Location: /2A-ProjetAnnuel/PCS/Site/index.php");
 } else {
-    header("Location: /2A-ProjetAnnuel/PCS/Site/login.php");
+    header("Location: /2A-ProjetAnnuel/PCS/Site/src/login.php");
 }

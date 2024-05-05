@@ -40,6 +40,9 @@ include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
                 } else {
                     echo '<li class="nav-item">
                     <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/login.php">Connexion</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/register.php">Inscription</a>
                 </li>';
                 }
 
