@@ -43,9 +43,7 @@ h5 {
   height: 40px;
 
 }
-
 a {
   text-decoration: none;
   color: inherit;
-  /* Pour conserver la couleur par défaut du texte */
 }
