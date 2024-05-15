@@ -1,5 +1,6 @@
 <?php
 include (dirname(__DIR__) . "/functions/isAdmin.php");
+include (dirname(__DIR__) . "/functions/estBailleur.php");
 include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
 
 
@@ -33,10 +34,21 @@ include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
                                         href="http://localhost/2A-ProjetAnnuel/PCS/PCS_ADMIN/index.php">Admin</a>
                                 </li>';
                 }
+
                 if (isset($_SESSION['token'])) {
+                    if (estBailleur()) {
+                        echo '<li class="nav-item">
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/biens/biensList.php">Ajouter un bien</a>
+                </li>';
+                    } else {
+                        echo '<li class="nav-item">
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/registerBailleur.php">Devenir Bailleur</a>
+                </li>';
+                    }
                     echo '<li class="nav-item">
                     <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/functions/logout.php">Déconnexion</a>
                 </li>';
+
                 } else {
                     echo '<li class="nav-item">
                     <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/login.php">Connexion</a>

@@ -11,6 +11,7 @@ if ($response->success) {
     $_SESSION['login'] = 1;
     $_SESSION['isAdmin'] = $response->result;
     $_SESSION['token'] = $response->token;
+    $_SESSION['estBailleur'] = $response->isBailleur;
     header("Location: /2A-ProjetAnnuel/PCS/Site/index.php");
 } else {
     header("Location: /2A-ProjetAnnuel/PCS/Site/src/login.php");

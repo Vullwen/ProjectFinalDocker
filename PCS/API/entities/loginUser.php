@@ -8,7 +8,7 @@ function loginUser(string $email, string $mdp): array|bool
     $errors = [];
     $databaseConnection = connectDB();
 
-    $getUserQuery = $databaseConnection->prepare("SELECT mdp, DroitAdmin FROM utilisateur WHERE email = :email");
+    $getUserQuery = $databaseConnection->prepare("SELECT mdp, DroitAdmin, EstBailleur FROM utilisateur WHERE email = :email");
     $getUserQuery->execute([
         "email" => $email
     ]);
@@ -40,6 +40,6 @@ function loginUser(string $email, string $mdp): array|bool
     ]);
 
 
-    return ['success' => true, 'message' => 'Connexion établie', 'isAdmin' => $user['DroitAdmin'], 'token' => $token];
+    return ['success' => true, 'message' => 'Connexion établie', 'isAdmin' => $user['DroitAdmin'], 'token' => $token, 'isBailleur' => $user['EstBailleur']];
 
 }

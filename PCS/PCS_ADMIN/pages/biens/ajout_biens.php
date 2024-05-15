@@ -4,7 +4,7 @@ include "../../../Site/template/header.php";
 if (isAdmin()) {
     echo '<div class="container">
         <h1>Ajout d\'un bien Immobilier</h1>
-        <form id="ajoutbien">
+        <form id="ajoutbien" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="type">Type de bien</label>
                 <input type="text" class="form-control" id="type" name="type" required>
@@ -39,7 +39,7 @@ if (isAdmin()) {
             <div class="form-group">
                 <label for="photos">Photos</label>
                 <input type="file" class="form-control" id="photos" name="photos[]" multiple required>
-                <div id="imagePreview"></div> <!-- Emplacement pour afficher l\'aperçu de l\'image -->
+                <div id="imagePreview"></div> 
             </div>
             <input type="submit" value="Ajouter le bien">
         </form>
@@ -101,6 +101,7 @@ if (isAdmin()) {
             return uniqueFileName;
         }
 
+
         var formData = {
             type: document.getElementById('type').value,
             adresse: document.getElementById('adresse').value,
@@ -109,8 +110,12 @@ if (isAdmin()) {
             nbchambres: document.getElementById('nbchambres').value,
             tarif: document.getElementById('tarif').value,
             idutilisateur: bailleurId,
-            photos: photoNames
+            photos: photoNames,
         }
+
+
+
+
         console.log(formData);
 
         fetch('http://localhost/2A-ProjetAnnuel/PCS/API/biens', {
@@ -128,7 +133,7 @@ if (isAdmin()) {
 
                 } else {
                     alert('Bien ajouté avec succès');
-                    window.location.href = 'bien.php';
+                    //window.location.href = 'bien.php';
                 }
             });
     });
