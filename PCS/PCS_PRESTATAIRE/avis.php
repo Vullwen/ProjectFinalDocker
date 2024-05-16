@@ -10,12 +10,11 @@ if (!isset($_SESSION['IDPrestataire'])) {
 $IDPrestataire = $_SESSION['IDPrestataire'];
 
 $conn = connectDB();
-$query = "SELECT e.Note, e.Commentaire FROM evaluation e JOIN prestation p ON e.IDPrestation = p.IDPrestation WHERE p.IDPrestataire = ?";
+$query = "SELECT e.Note, e.Commentaire FROM evaluation e JOIN prestation p ON e.IDPrestation = p.IDPrestation WHERE p.IDPrestataire = :idPrestataire";
 $stmt = $conn->prepare($query);
-$stmt->bind_param("i", $IDPrestataire);
-$stmt->execute();
-$result = $stmt->get_result();
-$evaluations = $result->fetch_all(MYSQLI_ASSOC);
+$stmt->execute(['idPrestataire' => $IDPrestataire]);
+$evaluations = $stmt->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
