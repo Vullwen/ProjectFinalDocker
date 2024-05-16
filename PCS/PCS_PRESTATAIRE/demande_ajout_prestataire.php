@@ -11,20 +11,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $domaine = $_POST['domaine'];
     $mdp = password_hash($_POST['mdp'], PASSWORD_BCRYPT);
     
-    
     $conn = connectDB();
-    $query = "INSERT INTO demandes_prestataires (nom, prenom, siret, adresse, email, telephone, domaine, mdp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("ssssssss", $nom, $prenom, $siret, $adresse, $email, $telephone, $domaine, $mdp);
+    $query = "INSERT INTO demandes_prestataires (nom, prenom, siret, adresse, email, telephone, domaine, mdp) 
+              VALUES (:nom, :prenom, :siret, :adresse, :email, :telephone, :domaine, :mdp)";
     
-    if ($stmt->execute()) {
+    $stmt = $conn->prepare($query);
+    $stmt->execute([
+        ':nom' => $nom, 
+        ':prenom' => $prenom, 
+        ':siret' => $siret, 
+        ':adresse' => $adresse, 
+        ':email' => $email, 
+        ':telephone' => $telephone, 
+        ':domaine' => $domaine, 
+        ':mdp' => $mdp
+    ]);
+    
+    if ($stmt->rowCount() > 0) {
         echo "Demande envoyée avec succès.";
     } else {
         echo "Erreur lors de l'envoi de la demande.";
     }
     
-    $stmt->close();
-    $conn->close();
+    $stmt = null; // Closing statement
+    $conn = null; // Closing connection
 }
 ?>
 <!DOCTYPE html>
