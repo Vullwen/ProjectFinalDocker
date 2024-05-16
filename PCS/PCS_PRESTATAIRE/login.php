@@ -10,9 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn = connectDB();
     $query = "SELECT * FROM prestataire WHERE Nom = :nom AND Prenom = :prenom";
     $stmt = $conn->prepare($query);
-    $stmt->bindParam(':nom', $Nom);
-    $stmt->bindParam(':prenom', $Prenom);
-    $stmt->execute();
+    $stmt->execute([
+        ':nom' => $Nom, 
+        ':prenom' => $Prenom
+    ]);
     $prestataire = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($prestataire && password_verify($Mdp, $prestataire['Mdp'])) {
@@ -24,8 +25,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Nom, Prénom ou Mot de Passe incorrect.";
     }
 
-    $stmt = null;
-    $conn = null;
+    $stmt = null;  /
+    $conn = null;  
 }
 ?>
 
