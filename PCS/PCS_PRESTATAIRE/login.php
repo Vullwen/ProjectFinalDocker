@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Nom, Prénom ou Mot de Passe incorrect.";
     }
 
-    $stmt = null;  /
+    $stmt = null;  
     $conn = null;  
 }
 ?>
