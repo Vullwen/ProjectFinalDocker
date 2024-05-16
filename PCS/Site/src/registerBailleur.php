@@ -2,9 +2,11 @@
 
 include_once '../template/header.php';
 ?>
-<h1> Devenir Bailleur chez ParisCareTaker ! </h1>
 
-<form id="devenirBailleurForm">
+
+<h1 id="titleFormBailleur"> Devenir Bailleur chez ParisCareTaker ! </h1>
+
+<form id="devenirBailleurForm" onsubmit="return validateForm()">
     <div class="form-group">
         <label for="conciergerie">Quel type de conciergerie souhaitez-vous ?<span class="obligatoire">
                 (obligatoire)</span></label><br>
@@ -121,5 +123,34 @@ include_once '../template/header.php';
         <a href="#">Déclaration de confidentialité</a>
     </div>
 
-    <button type="submit">RECEVOIR MON ETUDE DE RENTABILITE</button>
+    <div class="g-recaptcha" data-sitekey="6Lelat4pAAAAAICQ5VXhM_NsL35T1LE96e9swlml" data-callback="validateCaptcha"
+        data-expired-callback="resetCaptcha"></div>
+
+    <button disabled id="submitButton" type="submit" onclick="return validateCaptcha()">RECEVOIR MON ETUDE DE
+        RENTABILITE</button>
+
+
 </form>
+
+<script>
+    function validateForm() {
+        var email = document.getElementById('email').value;
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var adresse = document.getElementById('adresse').value;
+
+        if (!emailRegex.test(email)) {
+            alert('Veuillez entrer une adresse e-mail valide.');
+            return false;
+        }
+
+
+        if (!adresse) {
+            alert('Veuillez entrer une adresse.');
+            return false;
+        }
+
+
+        return true;
+    }
+
+</script>
