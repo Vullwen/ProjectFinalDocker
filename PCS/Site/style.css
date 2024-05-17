@@ -47,5 +47,173 @@ h5 {
 a {
   text-decoration: none;
   color: inherit;
-  /* Pour conserver la couleur par défaut du texte */
+}
+
+/* Styles de base */
+.form-group {
+  margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+
+#devenirBailleurForm {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#devenirBailleurForm label {
+  font-weight: bold;
+}
+
+#devenirBailleurForm a {
+  color: #007bff;
+}
+
+
+.obligatoire {
+  color: red;
+}
+
+
+.form-group label {
+  font-weight: bold;
+}
+
+.table th,
+.table td {
+  vertical-align: middle;
+  /* Aligne le texte au milieu des cellules */
+}
+
+.table th {
+  text-align: center;
+  /* Centre le texte dans les en-têtes */
+}
+
+.table td {
+  text-align: left;
+  /* Aligne le texte à gauche dans les cellules */
+}
+
+.table {
+  margin-top: 20px;
+  border-collapse: collapse;
+  width: 100%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table thead th {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #fff;
+}
+
+.table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Ajout de largeurs minimales pour certaines colonnes */
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  min-width: 50px;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2),
+.table th:nth-child(3),
+.table td:nth-child(3),
+.table th:nth-child(4),
+.table td:nth-child(4) {
+  min-width: 50px;
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+  min-width: 50px;
+}
+
+.table th:nth-child(6),
+.table td:nth-child(6) {
+  min-width: 50px;
+}
+
+.table th:nth-child(7),
+.table td:nth-child(7) {
+  min-width: 50px;
+}
+
+.table th:nth-child(8),
+.table td:nth-child(8),
+.table th:nth-child(9),
+.table td:nth-child(9),
+.table th:nth-child(10),
+.table td:nth-child(10) {
+  min-width: 80px;
+}
+
+.table th:nth-child(11),
+.table td:nth-child(11) {
+  min-width: 50px;
+}
+
+.table th:nth-child(12),
+.table td:nth-child(12),
+.table th:nth-child(13),
+.table td:nth-child(13) {
+  min-width: 50px;
+}
+
+.table th:nth-child(14),
+.table td:nth-child(14) {
+  min-width: 60px;
+}
+
+.table th:nth-child(15),
+.table td:nth-child(15) {
+  min-width: 50px;
 }

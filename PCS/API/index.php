@@ -36,3 +36,10 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/user/bailleurs")) {
         die();
     }
 }
+
+if (isPath("/2A-ProjetAnnuel/PCS/API/routes/demandebiens")) {
+    if (isPostMethod()) {
+        require_once __DIR__ . "/routes/biens/demande.php";
+        die();
+    }
+}

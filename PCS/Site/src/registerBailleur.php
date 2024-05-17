@@ -6,14 +6,14 @@ include_once '../template/header.php';
 
 <h1 id="titleFormBailleur"> Devenir Bailleur chez ParisCareTaker ! </h1>
 
-<form id="devenirBailleurForm" onsubmit="return validateForm()">
+<form id="devenirBailleurForm" onsubmit="validateForm()">
     <div class="form-group">
         <label for="conciergerie">Quel type de conciergerie souhaitez-vous ?<span class="obligatoire">
                 (obligatoire)</span></label><br>
         <input type="radio" id="aaz" name="conciergerie" value="De A à Z">
         <label for="aaz">De A à Z</label><br>
         <input type="radio" id="void" name="conciergerie" value="Void management">
-        <label for="void">Void management</label><br>
+        <label for="void">Void management (création, diffusion et optimisatioon de vos revenus)</label><br>
         <input type="radio" id="autre" name="conciergerie" value="Autre">
         <label for="autre">Autre</label><br>
         <input type="text" id="autreConciergerie" name="autreConciergerie" placeholder="Autre (précisez)">
@@ -22,7 +22,7 @@ include_once '../template/header.php';
     <div class="form-group">
         <label for="adresse">Adresse de votre propriété en location courte durée <span class="obligatoire">
                 (obligatoire)</span>:</label><br>
-        <input type="text" id="adresse" name="adresse">
+        <input type="text" id="adresse" name="adresse" required>
     </div>
 
     <div class="form-group">
@@ -62,13 +62,13 @@ include_once '../template/header.php';
     <div class="form-group">
         <label for="nombreChambres">Nombre de chambres <span class="obligatoire">
                 (obligatoire)</span></label><br>
-        <input type="number" id="nombreChambres" name="nombreChambres">
+        <input type="number" id="nombreChambres" name="nombreChambres" required>
     </div>
 
     <div class="form-group">
         <label for="capacite">Quelle est la capacité d'accueil de votre logement ?<span class="obligatoire">
                 (obligatoire)</span></label><br>
-        <select id="capacite" name="capacite">
+        <select id="capacite" name="capacite" required>
             <option value="1">1 personne</option>
             <option value="2">2 personnes</option>
             <option value="3">3 personnes</option>
@@ -87,19 +87,19 @@ include_once '../template/header.php';
     <div class="form-group">
         <label for="nom">Nom et Prénom <span class="obligatoire">
                 (obligatoire)</span></label><br>
-        <input type="text" id="nom" name="nom">
+        <input type="text" id="nom" name="nom" required>
     </div>
 
     <div class="form-group">
         <label for="email">Email <span class="obligatoire">
                 (obligatoire)</span></label><br>
-        <input type="email" id="email" name="email">
+        <input type="email" id="email" name="email" required>
     </div>
 
     <div class="form-group">
         <label for="telephone">Téléphone<span class="obligatoire">
                 (obligatoire)</span></label><br>
-        <input type="tel" id="telephone" name="telephone">
+        <input type="tel" id="telephone" name="telephone" required>
     </div>
 
     <div class="form-group">
@@ -123,29 +123,115 @@ include_once '../template/header.php';
         <a href="#">Déclaration de confidentialité</a>
     </div>
 
-    <div class="g-recaptcha" data-sitekey="6Lelat4pAAAAAICQ5VXhM_NsL35T1LE96e9swlml" data-callback="validateCaptcha"
-        data-expired-callback="resetCaptcha"></div>
+    <div class="g-recaptcha" data-sitekey="6Lelat4pAAAAAICQ5VXhM_NsL35T1LE96e9swlml" data-callback="validateCaptcha">
+    </div>
 
-    <button disabled id="submitButton" type="submit" onclick="return validateCaptcha()">RECEVOIR MON ETUDE DE
+    <button id="submitButton" type="submit" onclick="return validateCaptcha()">RECEVOIR MON ETUDE DE
         RENTABILITE</button>
+
 
 
 </form>
 
 <script>
     function validateForm() {
-        var email = document.getElementById('email').value;
-        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        var adresse = document.getElementById('adresse').value;
+        event.preventDefault();
 
-        if (!emailRegex.test(email)) {
-            alert('Veuillez entrer une adresse e-mail valide.');
+        var token = "<?php echo $_SESSION['token']; ?>";
+        console.log(token);
+
+        var formData = {
+            token: token,
+            conciergerie: document.querySelector('input[name="conciergerie"]:checked').value,
+            autreConciergerie: document.getElementById('autreConciergerie').value,
+            adresse: document.getElementById('adresse').value,
+            pays: document.getElementById('pays').value,
+            typeBien: document.getElementById('typeBien').value,
+            typeLocation: document.getElementById('typeLocation').value,
+            nombreChambres: document.getElementById('nombreChambres').value,
+            capacite: document.getElementById('capacite').value,
+            nom: document.getElementById('nom').value,
+            email: document.getElementById('email').value,
+            telephone: document.getElementById('telephone').value,
+            contact: document.querySelector('input[name="contact"]:checked').value,
+            acceptation: document.getElementById('acceptation').checked
+        };
+
+
+        if (!validateFormData(formData)) {
             return false;
         }
 
 
-        if (!adresse) {
+        sendFormDataToAPI(formData);
+
+
+        return false;
+    }
+
+    function validateFormData(formData) {
+
+        if (formData.conciergerie.trim() === '') {
+            alert('Veuillez sélectionner un type de conciergerie.');
+            return false;
+        }
+
+        if (formData.adresse.trim() === '') {
             alert('Veuillez entrer une adresse.');
+            return false;
+        }
+        if (formData.adresse.trim() === '') {
+            alert('Veuillez entrer une adresse.');
+            return false;
+        }
+
+        if (formData.pays.trim() === '') {
+            alert('Veuillez sélectionner un pays.');
+            return false;
+        }
+
+        if (formData.typeBien.trim() === '') {
+            alert('Veuillez sélectionner un type de bien.');
+            return false;
+        }
+
+        if (formData.typeLocation.trim() === '') {
+            alert('Veuillez sélectionner un type de location.');
+            return false;
+        }
+
+        if (formData.nombreChambres.trim() === '') {
+            alert('Veuillez entrer un nombre de chambres.');
+            return false;
+        }
+
+        if (formData.capacite.trim() === '') {
+            alert('Veuillez sélectionner une capacité.');
+            return false;
+        }
+
+        if (formData.nom.trim() === '') {
+            alert('Veuillez entrer un nom.');
+            return false;
+        }
+
+        if (formData.email.trim() === '') {
+            alert('Veuillez entrer un email.');
+            return false;
+        }
+
+        if (formData.telephone.trim() === '') {
+            alert('Veuillez entrer un numéro de téléphone.');
+            return false;
+        }
+
+        if (formData.contact.trim() === '') {
+            alert('Veuillez sélectionner une heure de contact.');
+            return false;
+        }
+
+        if (!formData.acceptation) {
+            alert('Veuillez accepter la déclaration de confidentialité.');
             return false;
         }
 
@@ -153,4 +239,28 @@ include_once '../template/header.php';
         return true;
     }
 
+    function sendFormDataToAPI(formData) {
+
+        var xhr = new XMLHttpRequest();
+        var url = 'http://localhost/2A-ProjetAnnuel/PCS/API/routes/demandebiens';
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                console.log(xhr.responseText);
+                if (xhr.status === 200) {
+                    console.log(formData);
+
+                    alert('Votre demande a été soumise avec succès !');
+
+                    //window.location.href = 'http://localhost/2a-ProjetAnnuel/PCS/Site/index.php';
+                } else {
+
+                    alert('Une erreur s\'est produite. Veuillez réessayer plus tard.');
+                    console.log(xhr.responseText);
+                }
+            }
+        };
+        xhr.send(JSON.stringify(formData));
+    }
 </script>
