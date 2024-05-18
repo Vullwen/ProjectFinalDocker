@@ -22,7 +22,8 @@ try {
         "success" => true,
         "message" => "Vous êtes connecté.",
         "result" => $result['isAdmin'],
-        "token" => $result['token']
+        "token" => $result['token'],
+        "isBailleur" => $result['isBailleur']
     ]);
 
 

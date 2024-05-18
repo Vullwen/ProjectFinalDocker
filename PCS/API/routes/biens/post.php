@@ -55,6 +55,26 @@ try {
         throw new Exception("Erreur lors de l'ajout du bien.");
     }
 
+    // Répertoire où les fichiers seront sauvegardés
+    $uploadDirectory = "/../../Site/img/photosBI/";
+
+
+    if (isset($body['files']) && !empty($body['files'])) {
+        $uploadedFiles = $_body['files'];
+
+        foreach ($uploadedFiles['tmp_name'] as $key => $tmpName) {
+            $fileName = $uploadedFiles['name'][$key];
+            $filePath = $uploadDirectory . $fileName;
+
+            // Déplacer le fichier téléchargé vers le répertoire d'upload
+            if (!move_uploaded_file($tmpName, $filePath)) {
+                throw new Exception("Erreur lors de l'enregistrement du fichier $fileName.");
+            }
+        }
+    }
+
+
+
     $idbien = $databaseConnection->lastInsertId();
 
     if (isset($body['photos']) && !empty($body['photos'])) {
@@ -69,13 +89,17 @@ try {
         }
     }
 
+
+
     if (!$success && !$successphotos) {
         throw new Exception("Erreur lors de l'ajout du bien.");
     }
 
+
+
     echo jsonResponse(200, ["PCS" => "PCSuccess"], [
         "success" => true,
-        "message" => "Le bien a bien été ajouté."
+        "message" => "Le bien a été ajouté."
     ]);
 
 } catch (Exception $exception) {
