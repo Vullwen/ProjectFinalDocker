@@ -61,7 +61,7 @@ include_once '../template/header.php';
                     <p class="card-text">Nombre de Chambres: {{ property.NbChambres }}</p>
                     <p class="card-text">Tarif: {{ property.Tarif }}€/nuit</p>
                     <p class="card-text">Disponibilité: {{ property.Disponibilite }}</p>
-                    <a :href="'details.html?id=' + property.IDBien" class="btn btn-primary">Voir plus</a>
+                    <a :href="'reservation.php?id=' + property.IDBien" class="btn btn-primary">Voir plus</a>
                 </div>
             </div>
         </div>
