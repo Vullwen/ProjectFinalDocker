@@ -38,7 +38,10 @@ include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
                 if (isset($_SESSION['token'])) {
                     if (estBailleur()) {
                         echo '<li class="nav-item">
-                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/biens/biensList.php">Ajouter un bien</a>
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/biens/ajoutBiens.php">Ajouter un bien</a>
+                </li>';
+                        echo '<li class="nav-item">
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/biens/biensListe.php">Mes Biens</a>
                 </li>';
                     } else {
                         echo '<li class="nav-item">
