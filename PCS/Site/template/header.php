@@ -11,6 +11,7 @@
     <script src="https://www.google.com/recaptcha/api.js" async defer>
     </script>
     <script src="http://localhost/2A-ProjetAnnuel/PCS/Site/javascript/captcha.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpEbABdaOHX1v3pteAwexNXWogevMN1xA"></script>
 
 
 

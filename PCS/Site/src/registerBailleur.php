@@ -24,6 +24,15 @@ include_once '../template/header.php';
                 (obligatoire)</span>:</label><br>
         <input type="text" id="adresse" name="adresse" required>
     </div>
+    <div class="form-group">
+        <label for="ville">Ville <span class="obligatoire">(obligatoire)</span>:</label><br>
+        <input type="text" id="ville" name="ville" required>
+    </div>
+
+    <div class="form-group">
+        <label for="codePostal">Code postal <span class="obligatoire">(obligatoire)</span>:</label><br>
+        <input type="text" id="codePostal" name="codePostal" required>
+    </div>
 
     <div class="form-group">
         <label for="pays">Pays de votre propriété en location courte durée <span class="obligatoire">
@@ -140,33 +149,52 @@ include_once '../template/header.php';
         var token = "<?php echo $_SESSION['token']; ?>";
         console.log(token);
 
-        var formData = {
-            token: token,
-            conciergerie: document.querySelector('input[name="conciergerie"]:checked').value,
-            autreConciergerie: document.getElementById('autreConciergerie').value,
-            adresse: document.getElementById('adresse').value,
-            pays: document.getElementById('pays').value,
-            typeBien: document.getElementById('typeBien').value,
-            typeLocation: document.getElementById('typeLocation').value,
-            nombreChambres: document.getElementById('nombreChambres').value,
-            capacite: document.getElementById('capacite').value,
-            nom: document.getElementById('nom').value,
-            email: document.getElementById('email').value,
-            telephone: document.getElementById('telephone').value,
-            contact: document.querySelector('input[name="contact"]:checked').value,
-            acceptation: document.getElementById('acceptation').checked
-        };
+        var adresse = document.getElementById('adresse').value;
+        var ville = document.getElementById('ville').value;
+        var codePostal = document.getElementById('codePostal').value;
+
+        var adresseComplete = adresse + ", " + codePostal + " " + ville;
+
+        validateAddress(adresseComplete, function (isValid) {
+            if (isValid) {
+                var token = "<?php echo $_SESSION['token']; ?>";
+
+                var formData = {
+                    token: token,
+                    conciergerie: document.querySelector('input[name="conciergerie"]:checked').value,
+                    autreConciergerie: document.getElementById('autreConciergerie').value,
+                    adresse: adresseComplete,
+                    pays: document.getElementById('pays').value,
+                    typeBien: document.getElementById('typeBien').value,
+                    typeLocation: document.getElementById('typeLocation').value,
+                    nombreChambres: document.getElementById('nombreChambres').value,
+                    capacite: document.getElementById('capacite').value,
+                    nom: document.getElementById('nom').value,
+                    email: document.getElementById('email').value,
+                    telephone: document.getElementById('telephone').value,
+                    contact: document.querySelector('input[name="contact"]:checked').value,
+                    acceptation: document.getElementById('acceptation').checked
+                };
+
+                if (validateFormData(formData)) {
+                    sendFormDataToAPI(formData);
+                }
+
+                if (!validateFormData(formData)) {
+                    return false;
+                }
 
 
-        if (!validateFormData(formData)) {
-            return false;
-        }
+                sendFormDataToAPI(formData);
 
 
-        sendFormDataToAPI(formData);
+                return false;
 
+            } else {
+                alert('Adresse invalide. Veuillez entrer une adresse valide.');
+            }
+        });
 
-        return false;
     }
 
     function validateFormData(formData) {
@@ -262,5 +290,17 @@ include_once '../template/header.php';
             }
         };
         xhr.send(JSON.stringify(formData));
+    }
+
+    function validateAddress(address, callback) {
+        var geocoder = new google.maps.Geocoder();
+
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status === 'OK') {
+                callback(true);
+            } else {
+                callback(false);
+            }
+        });
     }
 </script>
