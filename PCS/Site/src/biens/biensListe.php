@@ -8,7 +8,7 @@ if (!$SESSION['estBailleur'] = 1) {
 include_once "../../template/header.php";
 include_once "../../../API/database/connectDB.php";
 
-// Récuperer en BDD la liste des biens de l'utilisateur
+
 
 $db = connectDB();
 
@@ -19,7 +19,6 @@ $user = $query->fetch(PDO::FETCH_ASSOC);
 if ($user) {
     $idutilisateur = $user['idutilisateur'];
 
-    // Récupérer les biens de l'utilisateur
     $biensQuery = $db->prepare("SELECT * FROM bienimmobilier WHERE idutilisateur = :idutilisateur");
     $biensQuery->execute(['idutilisateur' => $idutilisateur]);
     $biens = $biensQuery->fetchAll(PDO::FETCH_ASSOC);
