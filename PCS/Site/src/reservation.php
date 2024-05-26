@@ -1,60 +1,47 @@
 <?php
 include_once '../template/header.php';
 ?>
-<!DOCTYPE html>
-<html lang="fr">
+<div class="container mt-5" id="property-container">
+</div>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réservation de Bien Immobilier</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../../styles.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD08lqylUbFmtiXYQJVlRsiDojk3AvzXO8"></script>
-</head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const propertyId = urlParams.get('id');
 
-<body>
-    <div class="container mt-5" id="property-container">   
-    </div>
+        if (!propertyId) {
+            alert('ID du bien immobilier manquant dans l\'URL');
+            return;
+        }
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const propertyId = urlParams.get('id');
-
-            if (!propertyId) {
-                alert('ID du bien immobilier manquant dans l\'URL');
-                return;
-            }
-
-            fetch(`../../API/routes/biens/bien.php?id=${propertyId}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    if (!data.success) {
-                        alert('Erreur lors de la récupération des données');
-                        return;
-                    }
-
-                    const property = data.property;
-                    displayProperty(property, propertyId);
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
+        fetch(`../../API/routes/biens/bien.php?id=${propertyId}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data.success) {
                     alert('Erreur lors de la récupération des données');
-                });
+                    return;
+                }
 
-            function displayProperty(property, propertyId) {
-                const container = document.getElementById('property-container');
+                const property = data.property;
+                displayProperty(property, propertyId);
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la récupération des données');
+            });
 
-                container.innerHTML = `
+        function displayProperty(property, propertyId) {
+            const container = document.getElementById('property-container');
+
+            container.innerHTML = `
                     <div class="property">
                         <h1>${property.Type} - ${property.Adresse}</h1>
                         <p>${property.Description.replace(/\n/g, '<br>')}</p>
@@ -87,57 +74,57 @@ include_once '../template/header.php';
                     </div>
                 `;
 
-                initMap(property.Adresse);
+            initMap(property.Adresse);
 
-                document.getElementById('reserver').addEventListener('click', function() {
-                    bookProperty(propertyId, property.Tarif);
-                });
-            }
+            document.getElementById('reserver').addEventListener('click', function () {
+                bookProperty(propertyId, property.Tarif);
+            });
+        }
 
-            function initMap(address) {
-                const geocoder = new google.maps.Geocoder();
-                geocoder.geocode({ address: address }, function(results, status) {
-                    if (status === 'OK') {
-                        const location = results[0].geometry.location;
-                        const map = new google.maps.Map(document.getElementById('map'), {
-                            center: location,
-                            zoom: 13
-                        });
-                        new google.maps.Marker({
-                            position: location,
-                            map: map,
-                            title: address
-                        });
-                    } else {
-                        document.getElementById('map').innerText = 'Localisation non disponible : ' + status;
-                    }
-                });
-            }
+        function initMap(address) {
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ address: address }, function (results, status) {
+                if (status === 'OK') {
+                    const location = results[0].geometry.location;
+                    const map = new google.maps.Map(document.getElementById('map'), {
+                        center: location,
+                        zoom: 13
+                    });
+                    new google.maps.Marker({
+                        position: location,
+                        map: map,
+                        title: address
+                    });
+                } else {
+                    document.getElementById('map').innerText = 'Localisation non disponible : ' + status;
+                }
+            });
+        }
 
-            function bookProperty(propertyId, propertyTarif) {
-                var checkin = document.getElementById('checkin').value;
-                var checkout = document.getElementById('checkout').value;
-                var guests = document.getElementById('guests').value;
+        function bookProperty(propertyId, propertyTarif) {
+            var checkin = document.getElementById('checkin').value;
+            var checkout = document.getElementById('checkout').value;
+            var guests = document.getElementById('guests').value;
 
-                var reservationDetails = {
-                    IDUtilisateur: 1,
-                    IDBien: propertyId,
-                    DateDebut: checkin,
-                    DateFin: checkout,
-                    Description: `Réservation de ${propertyId}`,
-                    Tarif: propertyTarif,
-                    Guests: guests,
-                };
+            var reservationDetails = {
+                IDUtilisateur: 1,
+                IDBien: propertyId,
+                DateDebut: checkin,
+                DateFin: checkout,
+                Description: `Réservation de ${propertyId}`,
+                Tarif: propertyTarif,
+                Guests: guests,
+            };
 
-                console.log('Sending reservation details:', reservationDetails);
+            console.log('Sending reservation details:', reservationDetails);
 
-                fetch('../../API/entities/reservationService.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(reservationDetails),
-                })
+            fetch('../../API/entities/reservationService.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reservationDetails),
+            })
                 .then(response => response.text())
                 .then(text => {
                     console.log('Response text:', text);
@@ -158,9 +145,9 @@ include_once '../template/header.php';
                     console.error('Error:', error);
                     alert('Une erreur est survenue lors de la réservation.');
                 });
-            }
-        });
-    </script>
+        }
+    });
+</script>
 
 </body>
 

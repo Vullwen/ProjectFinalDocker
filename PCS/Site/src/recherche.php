@@ -61,6 +61,3 @@ include_once '../template/header.php';
 </div>
 
 <script src="../javascript/searchProperties.js"></script>
-</body>
-
-</html>

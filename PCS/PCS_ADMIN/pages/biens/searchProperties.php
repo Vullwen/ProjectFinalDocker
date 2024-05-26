@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-require_once '../../database/connectDB.php'; 
+require_once '../../../API/database/connectDB.php';
 
 $databaseConnection = connectDB();
 
@@ -10,7 +10,7 @@ $params = [];
 
 if (!empty($_GET['location'])) {
     $query .= " AND adresse LIKE ?";
-    $params[] = '%' . $_GET['location'] . '%'; 
+    $params[] = '%' . $_GET['location'] . '%';
 }
 if (!empty($_GET['arrivalDate'])) {
     $query .= " AND dateArrivee >= ?";
