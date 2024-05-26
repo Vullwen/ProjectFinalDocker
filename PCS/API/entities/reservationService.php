@@ -11,13 +11,13 @@ error_log(print_r($data, true));
 
 if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebut) && isset($data->DateFin) && isset($data->Description) && isset($data->Tarif)) {
     $userQuery = 'SELECT IDUtilisateur FROM utilisateur WHERE IDUtilisateur = ?';
-    $userStmt = $pdo->prepare($userQuery);
+    $userStmt = $conn->prepare($userQuery);
     $userStmt->execute([$data->IDUtilisateur]);
     $userExists = $userStmt->fetch();
     error_log('User exists: ' . print_r($userExists, true));
 
     $bienQuery = 'SELECT IDBien FROM bienimmobilier WHERE IDBien = ?';
-    $bienStmt = $pdo->prepare($bienQuery);
+    $bienStmt = $conn->prepare($bienQuery);
     $bienStmt->execute([$data->IDBien]);
     $bienExists = $bienStmt->fetch();
     error_log('Property exists: ' . print_r($bienExists, true));
@@ -25,7 +25,7 @@ if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebu
     $serviceExists = true;
     if (isset($data->IDService)) {
         $serviceQuery = 'SELECT IDService FROM service WHERE IDService = ?';
-        $serviceStmt = $pdo->prepare($serviceQuery);
+        $serviceStmt = $conn->prepare($serviceQuery);
         $serviceStmt->execute([$data->IDService]);
         $serviceExists = $serviceStmt->fetch();
         error_log('Service exists: ' . print_r($serviceExists, true));
@@ -33,7 +33,7 @@ if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebu
 
     if ($userExists && $bienExists && $serviceExists) {
         $query = 'INSERT INTO reservation (Description, Tarif, DateDebut, DateFin, IDUtilisateur, IDBien, IDService, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-        $stmt = $pdo->prepare($query);
+        $stmt = $conn->prepare($query);
         $result = $stmt->execute([$data->Description, $data->Tarif, $data->DateDebut, $data->DateFin, $data->IDUtilisateur, $data->IDBien, $data->IDService ?? null, 'Pending']);
 
         if ($result) {
