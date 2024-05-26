@@ -7,16 +7,21 @@ header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type
 
 $data = json_decode(file_get_contents("php://input"));
 
-if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebut) && isset($data->DateFin)) {
+error_log(print_r($data, true));
+
+if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebut) && isset($data->DateFin) && isset($data->Description) && isset($data->Tarif)) {
     $userQuery = 'SELECT IDUtilisateur FROM utilisateur WHERE IDUtilisateur = ?';
     $userStmt = $pdo->prepare($userQuery);
     $userStmt->execute([$data->IDUtilisateur]);
     $userExists = $userStmt->fetch();
+    error_log('User exists: ' . print_r($userExists, true));
+
 
     $bienQuery = 'SELECT IDBien FROM bienimmobilier WHERE IDBien = ?';
     $bienStmt = $pdo->prepare($bienQuery);
     $bienStmt->execute([$data->IDBien]);
     $bienExists = $bienStmt->fetch();
+    error_log('Property exists: ' . print_r($bienExists, true));
 
     $serviceExists = true;
     if (isset($data->IDService)) {
@@ -24,6 +29,7 @@ if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebu
         $serviceStmt = $pdo->prepare($serviceQuery);
         $serviceStmt->execute([$data->IDService]);
         $serviceExists = $serviceStmt->fetch();
+        error_log('Service exists: ' . print_r($serviceExists, true));
     }
 
     if ($userExists && $bienExists && $serviceExists) {
