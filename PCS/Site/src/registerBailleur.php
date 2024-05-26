@@ -69,74 +69,80 @@ include_once '../template/header.php';
     </div>
 
     <div class="form-group">
-        <label for="nombreChambres">Nombre de chambres <span class="obligatoire">
+        <label for="superficie">Superficie (en m²)<span class="obligatoire">
                 (obligatoire)</span></label><br>
-        <input type="number" id="nombreChambres" name="nombreChambres" required>
-    </div>
+        <input type="number" id="superficie" name="superficie" required>
 
-    <div class="form-group">
-        <label for="capacite">Quelle est la capacité d'accueil de votre logement ?<span class="obligatoire">
-                (obligatoire)</span></label><br>
-        <select id="capacite" name="capacite" required>
-            <option value="1">1 personne</option>
-            <option value="2">2 personnes</option>
-            <option value="3">3 personnes</option>
-            <option value="4">4 personnes</option>
-            <option value="5">5 personnes</option>
-            <option value="6">6 personnes</option>
-            <option value="7">7 personnes</option>
-            <option value="8">8 personnes</option>
-            <option value="9">9 personnes</option>
-            <option value="10">10 personnes</option>
-            <option value="11">11 personnes</option>
-            <option value="12+">12 personnes et plus</option>
-        </select>
-    </div>
+        <div class="form-group">
+            <label for="nombreChambres">Nombre de chambres <span class="obligatoire">
+                    (obligatoire)</span></label><br>
+            <input type="number" id="nombreChambres" name="nombreChambres" required>
+        </div>
 
-    <div class="form-group">
-        <label for="nom">Nom et Prénom <span class="obligatoire">
-                (obligatoire)</span></label><br>
-        <input type="text" id="nom" name="nom" required>
-    </div>
+        <div class="form-group">
+            <label for="capacite">Quelle est la capacité d'accueil de votre logement ?<span class="obligatoire">
+                    (obligatoire)</span></label><br>
+            <select id="capacite" name="capacite" required>
+                <option value="1">1 personne</option>
+                <option value="2">2 personnes</option>
+                <option value="3">3 personnes</option>
+                <option value="4">4 personnes</option>
+                <option value="5">5 personnes</option>
+                <option value="6">6 personnes</option>
+                <option value="7">7 personnes</option>
+                <option value="8">8 personnes</option>
+                <option value="9">9 personnes</option>
+                <option value="10">10 personnes</option>
+                <option value="11">11 personnes</option>
+                <option value="12+">12 personnes et plus</option>
+            </select>
+        </div>
 
-    <div class="form-group">
-        <label for="email">Email <span class="obligatoire">
-                (obligatoire)</span></label><br>
-        <input type="email" id="email" name="email" required>
-    </div>
+        <div class="form-group">
+            <label for="nom">Nom et Prénom <span class="obligatoire">
+                    (obligatoire)</span></label><br>
+            <input type="text" id="nom" name="nom" required>
+        </div>
 
-    <div class="form-group">
-        <label for="telephone">Téléphone<span class="obligatoire">
-                (obligatoire)</span></label><br>
-        <input type="tel" id="telephone" name="telephone" required>
-    </div>
+        <div class="form-group">
+            <label for="email">Email <span class="obligatoire">
+                    (obligatoire)</span></label><br>
+            <input type="email" id="email" name="email" required>
+        </div>
 
-    <div class="form-group">
-        <label>A quelle heure souhaitez-vous être contacté ?<span class="obligatoire">
-                (obligatoire)</span></label><br>
-        <input type="radio" id="avant12h" name="contact" value="Avant 12h00">
-        <label for="avant12h">Avant 12h00</label><br>
-        <input type="radio" id="entre12h14h" name="contact" value="Entre 12h00 et 14h00">
-        <label for="entre12h14h">Entre 12h00 et 14h00</label><br>
-        <input type="radio" id="entre14h18h" name="contact" value="Entre 14h00 et 18h00">
-        <label for="entre14h18h">Entre 14h00 et 18h00</label><br>
-        <input type="radio" id="apres18h" name="contact" value="Après 18h00">
-        <label for="apres18h">Après 18h00</label>
-    </div>
+        <div class="form-group">
+            <label for="telephone">Téléphone<span class="obligatoire">
+                    (obligatoire)</span></label><br>
+            <input type="tel" id="telephone" name="telephone" required>
+        </div>
 
-    <div class="form-group">
-        <input type="checkbox" id="acceptation" name="acceptation">
-        <label for="acceptation">Pour soumettre ce formulaire, vous devez accepter notre Déclaration de
-            confidentialité.<span class="obligatoire">
-                (obligatoire)</span></label><br>
-        <a href="#">Déclaration de confidentialité</a>
-    </div>
+        <div class="form-group">
+            <label>A quelle heure souhaitez-vous être contacté ?<span class="obligatoire">
+                    (obligatoire)</span></label><br>
+            <input type="radio" id="avant12h" name="contact" value="Avant 12h00">
+            <label for="avant12h">Avant 12h00</label><br>
+            <input type="radio" id="entre12h14h" name="contact" value="Entre 12h00 et 14h00">
+            <label for="entre12h14h">Entre 12h00 et 14h00</label><br>
+            <input type="radio" id="entre14h18h" name="contact" value="Entre 14h00 et 18h00">
+            <label for="entre14h18h">Entre 14h00 et 18h00</label><br>
+            <input type="radio" id="apres18h" name="contact" value="Après 18h00">
+            <label for="apres18h">Après 18h00</label>
+        </div>
 
-    <div class="g-recaptcha" data-sitekey="6Lelat4pAAAAAICQ5VXhM_NsL35T1LE96e9swlml" data-callback="validateCaptcha">
-    </div>
+        <div class="form-group">
+            <input type="checkbox" id="acceptation" name="acceptation">
+            <label for="acceptation">Pour soumettre ce formulaire, vous devez accepter notre Déclaration de
+                confidentialité.<span class="obligatoire">
+                    (obligatoire)</span></label><br>
+            <a href="#">Déclaration de confidentialité</a>
+        </div>
 
-    <button id="submitButton" type="submit" onclick="return validateCaptcha()">RECEVOIR MON ETUDE DE
-        RENTABILITE</button>
+        <div class="g-recaptcha" data-sitekey="6Lelat4pAAAAAICQ5VXhM_NsL35T1LE96e9swlml"
+            data-callback="validateCaptcha">
+        </div>
+
+        <button id="submitButton" type="submit" onclick="return validateCaptcha()">RECEVOIR MON ETUDE DE
+            RENTABILITE</button>
 
 
 
@@ -167,6 +173,7 @@ include_once '../template/header.php';
                     pays: document.getElementById('pays').value,
                     typeBien: document.getElementById('typeBien').value,
                     typeLocation: document.getElementById('typeLocation').value,
+                    superficie: document.getElementById('superficie').value,
                     nombreChambres: document.getElementById('nombreChambres').value,
                     capacite: document.getElementById('capacite').value,
                     nom: document.getElementById('nom').value,
@@ -225,6 +232,11 @@ include_once '../template/header.php';
 
         if (formData.typeLocation.trim() === '') {
             alert('Veuillez sélectionner un type de location.');
+            return false;
+        }
+
+        if (formData.superficie.trim() === '') {
+            alert('Veuillez entrer une superficie.');
             return false;
         }
 
