@@ -1,6 +1,6 @@
 <?php
 require_once __DIR__ . "/../database/connectDB.php";
-$pdo = connectDB();
+$conn = connectDB();
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
@@ -15,7 +15,6 @@ if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebu
     $userStmt->execute([$data->IDUtilisateur]);
     $userExists = $userStmt->fetch();
     error_log('User exists: ' . print_r($userExists, true));
-
 
     $bienQuery = 'SELECT IDBien FROM bienimmobilier WHERE IDBien = ?';
     $bienStmt = $pdo->prepare($bienQuery);
@@ -33,9 +32,9 @@ if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebu
     }
 
     if ($userExists && $bienExists && $serviceExists) {
-        $query = 'INSERT INTO reservation (Description, Tarif, DateDebut, DateFin, IDUtilisateur, IDBien, IDService) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        $query = 'INSERT INTO reservation (Description, Tarif, DateDebut, DateFin, IDUtilisateur, IDBien, IDService, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
         $stmt = $pdo->prepare($query);
-        $result = $stmt->execute([$data->Description, $data->Tarif, $data->DateDebut, $data->DateFin, $data->IDUtilisateur, $data->IDBien, $data->IDService ?? null]);
+        $result = $stmt->execute([$data->Description, $data->Tarif, $data->DateDebut, $data->DateFin, $data->IDUtilisateur, $data->IDBien, $data->IDService ?? null, 'Pending']);
 
         if ($result) {
             echo json_encode(['message' => 'Booking successful']);
