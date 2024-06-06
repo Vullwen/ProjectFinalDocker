@@ -25,7 +25,7 @@ try {
 
     $userId = $row['idutilisateur'];
 
-    $postDemandeBienQuery = $databaseConnection->prepare("INSERT INTO demandebailleurs (type_conciergerie, autre_conciergerie, adresse, pays, type_bien, type_location, superficie, nombre_chambres, capacite, nom, email, telephone, heure_contact, date_demande, etat, utilisateur_id) VALUES (:type_conciergerie, :autre_conciergerie, :adresse, :pays, :type_bien, :type_location, :nombre_chambres, :capacite, :nom, :email, :telephone, :heure_contact, :date_demande, :etat, :utilisateur_id)");
+    $postDemandeBienQuery = $databaseConnection->prepare("INSERT INTO demandebailleurs (type_conciergerie, autre_conciergerie, adresse, pays, type_bien, type_location, superficie, nombre_chambres, capacite, nom, email, telephone, heure_contact, date_demande, etat, utilisateur_id) VALUES (:type_conciergerie, :autre_conciergerie, :adresse, :pays, :type_bien, :type_location, :superficie, :nombre_chambres, :capacite, :nom, :email, :telephone, :heure_contact, :date_demande, :etat, :utilisateur_id)");
 
     $success = $postDemandeBienQuery->execute([
         "type_conciergerie" => $body['conciergerie'],
@@ -45,9 +45,7 @@ try {
         "etat" => "En attente",
         "utilisateur_id" => $userId
     ]);
-    ?>
-    <script> console.log($body); </script>
-    <?php
+
 
 
     $errorInfo = $postDemandeBienQuery->errorInfo();

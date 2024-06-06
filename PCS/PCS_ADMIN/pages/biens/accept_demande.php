@@ -57,4 +57,3 @@ if ($demande) {
 }
 
 include_once '../../../Site/template/footer.php';
-?>

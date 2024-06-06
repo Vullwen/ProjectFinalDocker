@@ -22,19 +22,11 @@ if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebu
     $bienExists = $bienStmt->fetch();
     error_log('Property exists: ' . print_r($bienExists, true));
 
-    $serviceExists = true;
-    if (isset($data->IDService)) {
-        $serviceQuery = 'SELECT IDService FROM service WHERE IDService = ?';
-        $serviceStmt = $conn->prepare($serviceQuery);
-        $serviceStmt->execute([$data->IDService]);
-        $serviceExists = $serviceStmt->fetch();
-        error_log('Service exists: ' . print_r($serviceExists, true));
-    }
 
-    if ($userExists && $bienExists && $serviceExists) {
-        $query = 'INSERT INTO reservation (Description, Tarif, DateDebut, DateFin, IDUtilisateur, IDBien, IDService, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    if ($userExists && $bienExists) {
+        $query = 'INSERT INTO reservation (Description, Tarif, DateDebut, DateFin, IDUtilisateur, IDBien, NbVoyageurs, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
         $stmt = $conn->prepare($query);
-        $result = $stmt->execute([$data->Description, $data->Tarif, $data->DateDebut, $data->DateFin, $data->IDUtilisateur, $data->IDBien, $data->IDService ?? null, 'Pending']);
+        $result = $stmt->execute([$data->Description, $data->Tarif, $data->DateDebut, $data->DateFin, $data->IDUtilisateur, $data->IDBien ?? null, $data->Guests, 'Pending']);
 
         if ($result) {
             echo json_encode(['message' => 'Booking successful']);
@@ -47,4 +39,3 @@ if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebu
 } else {
     echo json_encode(['message' => 'Invalid data']);
 }
-?>
