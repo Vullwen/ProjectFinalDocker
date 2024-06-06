@@ -32,6 +32,11 @@ include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
                 <li class="nav-item">
                     <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/recherche.php">Logement</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                        href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/demande_prestataire.php">Devenir
+                        Prestataire PCS </a>
+                </li>
                 <?php
                 if (isAdmin()) {
                     echo '<li class="nav-item">
