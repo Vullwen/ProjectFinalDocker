@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../API/database/connectDB.php';
+require_once '../../../API/database/connectDB.php';
 
 if (!isset($_SESSION['IDPrestataire']) || !isset($_SESSION['token'])) {
     header('Location: ../Site/src/login.php');
