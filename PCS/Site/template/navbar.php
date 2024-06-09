@@ -59,6 +59,9 @@ include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
                 </li>';
                     }
                     echo '<li class="nav-item">
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/mesreservation.php">Mes Réservations</a>
+                </li>';
+                    echo '<li class="nav-item">
                     <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/functions/logout.php">Déconnexion</a>
                 </li>';
 
