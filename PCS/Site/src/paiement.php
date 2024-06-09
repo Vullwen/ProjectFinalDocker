@@ -7,8 +7,13 @@
 </head>
 <body>
     <h2>Paiement pour le Logement</h2>
+    <?php
+    $reservationId = $_GET['reservationId'];
+    $prixTotal = $_GET['prixTotal'];
+    ?>
     <form id="payment-form" action="processPaiement.php" method="post">
-        <input type="hidden" name="logement_id" value="123">
+        <input type="hidden" name="reservationId" value="<?php echo htmlspecialchars($reservationId); ?>">
+        <input type="hidden" name="prixTotal" value="<?php echo htmlspecialchars($prixTotal); ?>">
         
         <div>
             <label for="name">Nom :</label>

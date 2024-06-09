@@ -1,5 +1,26 @@
 <?php
+
+require_once '../../API/database/connectDB.php';
 include_once '../template/header.php';
+
+if (!isset($_SESSION['token'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$conn = connectDB();
+
+$query = $conn->prepare("SELECT IDUtilisateur FROM utilisateur WHERE token = :token");
+$query->execute(['token' => $_SESSION['token']]);
+$user = $query->fetch(PDO::FETCH_ASSOC);
+
+if (!$user) {
+    echo "Une erreur s'est produite lors de la récupération de l'utilisateur.";
+    exit();
+}
+
+$IDUtilisateur = $user['IDUtilisateur'];
+
 ?>
 <div class="container mt-5" id="property-container">
 </div>
@@ -12,6 +33,7 @@ include_once '../template/header.php';
     document.addEventListener('DOMContentLoaded', function () {
         const urlParams = new URLSearchParams(window.location.search);
         const propertyId = urlParams.get('id');
+        const userId = <?php echo json_encode($IDUtilisateur); ?>;
 
         if (!propertyId) {
             alert('ID du bien immobilier manquant dans l\'URL');
@@ -43,42 +65,42 @@ include_once '../template/header.php';
             const container = document.getElementById('property-container');
 
             container.innerHTML = `
-                    <div class="property">
-                        <h1>${property.Type} - ${property.Adresse}</h1>
-                        <p>${property.Description.replace(/\n/g, '<br>')}</p>
-                        <div class="additional-info">
-                            <h2>Tarifs et frais supplémentaires</h2>
-                            <p>Tarif par nuit : ${property.Tarif}€</p>
-                        </div>
-                        <div class="location">
-                            <h2>Localisation</h2>
-                            <div id="map" style="height: 300px;"></div>
-                        </div>
-                        <div class="reservation">
-                            <h2>Réservation</h2>
-                            <form id="booking-form">
-                                <div class="mb-3">
-                                    <label for="checkin" class="form-label">Date d'arrivée</label>
-                                    <input type="date" class="form-control" id="checkin" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="checkout" class="form-label">Date de départ</label>
-                                    <input type="date" class="form-control" id="checkout" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="guests" class="form-label">Nombre de personnes</label>
-                                    <input type="number" class="form-control" id="guests" required>
-                                </div>
-                                <button type="button" id="reserver" class="btn btn-primary">Réserver</button>
-                            </form>
-                        </div>
+                <div class="property">
+                    <h1>${property.Type} - ${property.Adresse}</h1>
+                    <p>${property.Description.replace(/\n/g, '<br>')}</p>
+                    <div class="additional-info">
+                        <h2>Tarifs et frais supplémentaires</h2>
+                        <p>Tarif par nuit : ${property.Tarif}€</p>
                     </div>
-                `;
+                    <div class="location">
+                        <h2>Localisation</h2>
+                        <div id="map" style="height: 300px;"></div>
+                    </div>
+                    <div class="reservation">
+                        <h2>Réservation</h2>
+                        <form id="booking-form">
+                            <div class="mb-3">
+                                <label for="checkin" class="form-label">Date d'arrivée</label>
+                                <input type="date" class="form-control" id="checkin" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="checkout" class="form-label">Date de départ</label>
+                                <input type="date" class="form-control" id="checkout" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="guests" class="form-label">Nombre de personnes</label>
+                                <input type="number" class="form-control" id="guests" required>
+                            </div>
+                            <button type="button" id="reserver" class="btn btn-primary">Réserver</button>
+                        </form>
+                    </div>
+                </div>
+            `;
 
             initMap(property.Adresse);
 
             document.getElementById('reserver').addEventListener('click', function () {
-                bookProperty(propertyId, property.Tarif);
+                bookProperty(propertyId, property.Tarif, userId);
             });
         }
 
@@ -102,13 +124,13 @@ include_once '../template/header.php';
             });
         }
 
-        function bookProperty(propertyId, propertyTarif) {
+        function bookProperty(propertyId, propertyTarif, userId) {
             var checkin = document.getElementById('checkin').value;
             var checkout = document.getElementById('checkout').value;
             var guests = document.getElementById('guests').value;
 
             var reservationDetails = {
-                IDUtilisateur: 1,
+                IDUtilisateur: userId,
                 IDBien: propertyId,
                 DateDebut: checkin,
                 DateFin: checkout,
@@ -116,8 +138,6 @@ include_once '../template/header.php';
                 Tarif: propertyTarif,
                 Guests: guests,
             };
-
-            console.log('Sending reservation details:', reservationDetails);
 
             fetch('../../API/entities/reservationService.php', {
                 method: 'POST',
@@ -128,7 +148,6 @@ include_once '../template/header.php';
             })
                 .then(response => response.text())
                 .then(text => {
-                    console.log('Response text:', text);
                     let data;
                     try {
                         data = JSON.parse(text);
