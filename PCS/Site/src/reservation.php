@@ -43,37 +43,37 @@ include_once '../template/header.php';
             const container = document.getElementById('property-container');
 
             container.innerHTML = `
-                    <div class="property">
-                        <h1>${property.Type} - ${property.Adresse}</h1>
-                        <p>${property.Description.replace(/\n/g, '<br>')}</p>
-                        <div class="additional-info">
-                            <h2>Tarifs et frais supplémentaires</h2>
-                            <p>Tarif par nuit : ${property.Tarif}€</p>
+            <div class="property">
+                <h1>${property.Type} - ${property.Adresse}</h1>
+                <p>${property.Description.replace(/\n/g, '<br>')}</p>
+                <div class="additional-info">
+                    <h2>Tarifs et frais supplémentaires</h2>
+                    <p>Tarif par nuit : ${property.Tarif}€</p>
+                </div>
+                <div class="location">
+                    <h2>Localisation</h2>
+                    <div id="map" style="height: 300px;"></div>
+                </div>
+                <div class="reservation">
+                    <h2>Réservation</h2>
+                    <form id="booking-form">
+                        <div class="mb-3">
+                            <label for="checkin" class="form-label">Date d'arrivée</label>
+                            <input type="date" class="form-control" id="checkin" required>
                         </div>
-                        <div class="location">
-                            <h2>Localisation</h2>
-                            <div id="map" style="height: 300px;"></div>
+                        <div class="mb-3">
+                            <label for="checkout" class="form-label">Date de départ</label>
+                            <input type="date" class="form-control" id="checkout" required>
                         </div>
-                        <div class="reservation">
-                            <h2>Réservation</h2>
-                            <form id="booking-form">
-                                <div class="mb-3">
-                                    <label for="checkin" class="form-label">Date d'arrivée</label>
-                                    <input type="date" class="form-control" id="checkin" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="checkout" class="form-label">Date de départ</label>
-                                    <input type="date" class="form-control" id="checkout" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="guests" class="form-label">Nombre de personnes</label>
-                                    <input type="number" class="form-control" id="guests" required>
-                                </div>
-                                <button type="button" id="reserver" class="btn btn-primary">Réserver</button>
-                            </form>
+                        <div class="mb-3">
+                            <label for="guests" class="form-label">Nombre de personnes</label>
+                            <input type="number" class="form-control" id="guests" required>
                         </div>
-                    </div>
-                `;
+                        <button type="button" id="reserver" class="btn btn-primary">Réserver</button>
+                    </form>
+                </div>
+            </div>
+        `;
 
             initMap(property.Adresse);
 
@@ -133,6 +133,7 @@ include_once '../template/header.php';
                     try {
                         data = JSON.parse(text);
                     } catch (error) {
+                        console.error('Invalid JSON:', text);
                         throw new Error('Invalid JSON: ' + text);
                     }
 
@@ -148,4 +149,5 @@ include_once '../template/header.php';
                 });
         }
     });
+
 </script>

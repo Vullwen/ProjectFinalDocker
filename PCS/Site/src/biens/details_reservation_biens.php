@@ -14,6 +14,7 @@ $dbquery = $db->prepare("
 $dbquery->execute(['IDBien' => $_GET['id']]);
 $reservations = $dbquery->fetchAll(PDO::FETCH_ASSOC);
 
+
 $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::NONE, IntlDateFormatter::NONE, 'Europe/Paris');
 $formatter->setPattern('dd/MM/yyyy');
 
@@ -55,31 +56,77 @@ if (!empty($reservations)) {
                 </button>
                 <div id='coordonnees-{$reservation['IDReservation']}' class='coordonnees' style='display:none;'>
                     <p>Email: {$reservation['email']}</p>
-                    <p>Téléphone: {$reservation['telephone']}</p>
+                    <p>Téléphone: {$reservation['telephone']}</
                 </div>
+                </td>";
+
+        echo "<td class='align-middle'>
+                <button onclick='handleAction(\"delete\", {$reservation['IDReservation']}, {$_GET['id']})' class='btn btn-danger btn-sm'>Supprimer</button>
+                <button onclick='handleAction(\"accept\", {$reservation['IDReservation']}, {$_GET['id']})' class='btn btn-primary btn-sm'>Valider</button>
               </td>";
-        echo "<td class='align-middle'><a href='/2A-ProjetAnnuel/PCS/Site/src/biens/details_reservation_biens.php?id={$reservation['IDReservation']}' class='btn btn-primary'>Gérer</a></td>";
+
         echo "</tr>";
+
     }
     echo "</tbody>";
     echo "</table>";
     echo "</div>";
 } else {
+
     echo "<div class='container mt-5'>";
-    echo "<p>Aucune réservation n'a été effectuée pour ce bien.</p>";
+    echo "<p>Aucune réservation n'a été trouvée pour ce bien.</p>";
     echo "</div>";
 }
-
-include_once '../../template/footer.php';
 ?>
 
+
 <script>
+
     function toggleCoordonnees(id) {
-        var element = document.getElementById('coordonnees-' + id);
-        if (element.style.display === 'none') {
-            element.style.display = 'block';
+        const coordonneesDiv = document.getElementById(`coordonnees-${id}`);
+        if (coordonneesDiv.style.display === 'none') {
+            coordonneesDiv.style.display = 'block';
         } else {
-            element.style.display = 'none';
+            coordonneesDiv.style.display = 'none';
         }
     }
+
+    function handleAction(action, reservationId, idBien) {
+        let endpoint = '';
+        if (action === 'delete') {
+            endpoint = `../../../API/routes/biens/delete_reservation.php`;
+        } else if (action === 'accept') {
+            endpoint = `../../../API/routes/biens/accept_reservation.php`;
+        }
+
+        console.log('ID Reservation:', reservationId);
+        console.log('ID Bien:', idBien);
+        fetch(endpoint, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                idReservation: reservationId,
+                idBien: idBien
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Réponse JSON reçue:', data);
+                if (data.success) {
+                    location.reload();
+                } else {
+                    console.error('Erreur:', data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Erreur:', error);
+            });
+    }
+
 </script>
+
+
+<?php
+include_once '../../template/footer.php';

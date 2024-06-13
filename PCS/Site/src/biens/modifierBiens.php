@@ -6,7 +6,6 @@ include_once "../../../API/database/connectDB.php";
 $db = connectDB();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Traitement du formulaire après soumission
     $idBien = $_POST['id'];
     $type = $_POST['type'];
     $adresse = $_POST['adresse'];
@@ -15,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nbChambres = $_POST['nbChambres'];
     $tarif = $_POST['tarif'];
 
-    // Mettre à jour les informations du bien immobilier
     $updateQuery = $db->prepare("UPDATE bienimmobilier SET Type = :type, Adresse = :adresse, Description = :description, Superficie = :superficie, NbChambres = :nbChambres, Tarif = :tarif WHERE IDBien = :idBien");
     $updateQuery->execute([
         'type' => $type,
@@ -32,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "<a href='details_bien.php?id={$idBien}' class='btn btn-primary'>Retour aux détails</a>";
     echo "</div>";
 } else {
-    // Afficher le formulaire avec les données actuelles du bien
     $idBien = $_GET['id'];
 
     $dbquery = $db->prepare("SELECT * FROM bienimmobilier WHERE IDBien = :IDBien");

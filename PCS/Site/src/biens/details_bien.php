@@ -3,6 +3,7 @@
 include_once "../../template/header.php";
 include_once "../../../API/database/connectDB.php";
 
+
 $db = connectDB();
 
 $dbquery = $db->prepare("SELECT * FROM bienimmobilier WHERE IDBien = :IDBien");
