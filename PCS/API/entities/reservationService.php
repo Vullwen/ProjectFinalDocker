@@ -43,4 +43,3 @@ if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebu
     error_log('Invalid data'); // Log de données invalides
     echo json_encode(['message' => 'Invalid data']);
 }
-?>
