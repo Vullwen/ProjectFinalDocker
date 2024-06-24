@@ -6,7 +6,6 @@ header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST');
 header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-// Lecture des données de la requête
 $data = json_decode(file_get_contents("php://input"));
 
 if (isset($data->idReservation)) {

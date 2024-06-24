@@ -12,10 +12,5 @@ include_once '../template/header.php';
         <input type="submit" value="Se connecter">
     </form>
 
-    <!-- <script src="../javascript/login.js">
-    </script> -->
-
-
-</body>
-
-</html>
+    <?php
+    include_once '../template/footer.php';

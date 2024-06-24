@@ -9,9 +9,9 @@ $dbquery = $db->prepare("
     SELECT r.*, u.nom, u.email, u.telephone 
     FROM reservation r
     JOIN utilisateur u ON r.IDUtilisateur = u.IDUtilisateur
-    WHERE r.IDBien = :IDBien
+    WHERE r.IDReservation = :IDReservation
 ");
-$dbquery->execute(['IDBien' => $_GET['id']]);
+$dbquery->execute(['IDReservation' => $_GET['id']]);
 $reservations = $dbquery->fetchAll(PDO::FETCH_ASSOC);
 
 

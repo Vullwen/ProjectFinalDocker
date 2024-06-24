@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$url = 'http://localhost/2A-ProjetAnnuel/PCS/API/user?email=' . $_GET['email'] . "&mdp=" . $_GET['mdp'];
+$url = 'http://localhost/2A-ProjetAnnuel/PCS/API/user/login?email=' . $_GET['email'] . "&mdp=" . $_GET['mdp'];
 
 
 $response = json_decode(file_get_contents($url, true));

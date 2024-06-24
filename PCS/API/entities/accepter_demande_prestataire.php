@@ -26,7 +26,7 @@ try {
         $email = $demande['email'];
         $telephone = $demande['telephone'];
         $domaine = $demande['domaine'];
-        $mdp = bin2hex(random_bytes(4)); // Générer un mot de passe aléatoire
+        $mdp = bin2hex(random_bytes(4));
         $hashed_mdp = password_hash($mdp, PASSWORD_BCRYPT);
 
 
@@ -44,13 +44,10 @@ try {
         ]);
 
 
-        // Mettre à jour le statut de la demande
         $query = "UPDATE demandes_prestataires SET status = 'Acceptée' WHERE id = :id";
         $stmt = $pdo->prepare($query);
         $stmt->execute([':id' => $id]);
 
-        // Optionnel : Envoyer un e-mail avec les détails de connexion
-        // mail($email, "Votre compte a été créé", "Votre mot de passe est : " . $mdp);
 
         http_response_code(200);
         echo json_encode(['success' => true, 'message' => 'Demande acceptée et prestataire ajouté.']);

@@ -20,37 +20,44 @@ $getDemandeQuery = $db->prepare("SELECT * FROM demandebailleurs WHERE id = :id")
 $getDemandeQuery->execute(['id' => $idDemande]);
 $demande = $getDemandeQuery->fetch(PDO::FETCH_ASSOC);
 
+
 if ($demande) {
+
+    if (($demande['type_conciergerie'] == "Autre")) {
+        $type_conciergerie = $demande['autre_conciergerie'];
+    } else {
+        $type_conciergerie = null;
+    }
+
     $insertQuery = $db->prepare("
         INSERT INTO bienimmobilier 
-        (type_conciergerie, autre_conciergerie, adresse, pays, type_bien, type_location, nombre_chambres, capacite, nom, telephone, email, heure_contact, etat)
-        VALUES
-        (:type_conciergerie, :autre_conciergerie, :adresse, :pays, :type_bien, :type_location, :nombre_chambres, :capacite, :nom, :telephone, :email, :heure_contact, :etat)
+        (adresse, type_bien, description, superficie, nbchambres, tarif, type_conciergerie, idutilisateur, pays, type_location, capacite)
+        VALUES 
+        (:adresse, :type_bien, :description, :superficie, :nbchambres, :tarif, :type_conciergerie, :idutilisateur, :pays, :type_location, :capacite)
     ");
 
     $result = $insertQuery->execute([
-        'type_conciergerie' => $demande['type_conciergerie'],
-        'autre_conciergerie' => $demande['autre_conciergerie'],
         'adresse' => $demande['adresse'],
-        'pays' => $demande['pays'],
         'type_bien' => $demande['type_bien'],
+        'description' => $demande['description'],
+        'superficie' => $demande['superficie'],
+        'nbchambres' => $demande['nombre_chambres'],
+        'tarif' => 55, // A CHANGER !! ! ! !! ! ! !! !! ! ! ! !! ! !
+        'type_conciergerie' => $type_conciergerie,
+        'idutilisateur' => $demande['utilisateur_id'],
+        'pays' => $demande['pays'],
         'type_location' => $demande['type_location'],
-        'nombre_chambres' => $demande['nombre_chambres'],
-        'capacite' => $demande['capacite'],
-        'nom' => $demande['nom'],
-        'telephone' => $demande['telephone'],
-        'email' => $demande['email'],
-        'heure_contact' => $demande['heure_contact'],
-        'etat' => 'Acceptée'
+        'capacite' => $demande['capacite']
     ]);
 
     if ($result) {
-        $deleteQuery = $db->prepare("DELETE FROM demandebailleurs WHERE id = :id");
-        $deleteQuery->execute(['id' => $idDemande]);
+        $query = $db->prepare("UPDATE demandebailleurs SET etat = 'Acceptée' WHERE id = :id");
+        $query->execute(['id' => $idDemande]);
 
-        echo "<div class='container mt-5'><p>La demande a été acceptée avec succès et les informations ont été enregistrées.</p></div>";
+        echo "<div class='container mt-5'><p>Demande acceptée avec succès.</p></div>";
+
     } else {
-        echo "<div class='container mt-5'><p>Erreur lors de l'acceptation de la demande. Veuillez réessayer plus tard.</p></div>";
+        echo "<div class='container mt-5'><p>Une erreur s'est produite lors de l'acceptation de la demande.</p></div>";
     }
 } else {
     echo "<div class='container mt-5'><p>Aucune demande trouvée avec l'ID fourni.</p></div>";

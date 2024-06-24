@@ -19,7 +19,7 @@ include_once '../../../Site/template/header.php';
 
             function fetchDemandesPrestataires() {
                 $.ajax({
-                    url: 'http://localhost/2A-ProjetAnnuel/PCS/API/routes/prestataires/get.php',
+                    url: 'http://localhost/2A-ProjetAnnuel/PCS/API/prestataires/demandes',
                     method: 'GET',
                     dataType: 'json',
                     success: function (response) {
@@ -79,7 +79,6 @@ include_once '../../../Site/template/header.php';
 
 
         function refuserDemande(id) {
-            // Ajouter le code pour refuser la demande
             alert('Demande refusée: ' + id);
         }
     </script>

@@ -1,12 +1,11 @@
 <?php
-require_once '../../API/database/connectDB.php';
 require_once '../template/header.php';
 require_once 'librairies/autoload.php';
 
 $secret_key = 'sk_test_51PJWq3IfbvrWQjMk8MxdQLumkbyVZFhRI96IOQwcp0z58Q5nD7mu7iJtzZ9Ct1e2b9phwFkXOuYpc39vpXVdI6re00vDc09xiV';
 \Stripe\Stripe::setApiKey($secret_key);
 
-$conn = connectDB();
+$api_base_url = "http://localhost/2A-ProjetAnnuel/PCS/API";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $reservationId = filter_input(INPUT_POST, 'reservationId', FILTER_SANITIZE_NUMBER_INT);
@@ -21,24 +20,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     try {
-        $charge = \Stripe\Charge::create([
-            'amount' => $prixTotal * 100,
-            'currency' => 'eur',
-            'description' => 'Paiement pour le logement',
-            'source' => $stripeToken,
-            'receipt_email' => $email,
-            'metadata' => [
-                'name' => $name,
-                'reservationId' => $reservationId,
-            ],
+        $response = callAPI('POST', "$api_base_url/payment", [
+            'reservationId' => $reservationId,
+            'prixTotal' => $prixTotal,
+            'name' => $name,
+            'email' => $email,
+            'stripeToken' => $stripeToken
         ]);
 
-        $query = $conn->prepare("UPDATE reservation SET isPaid = 1 WHERE IDReservation = :reservationId");
-        $query->execute(['reservationId' => $reservationId]);
+        $responseData = json_decode($response, true);
 
-        echo json_encode(['success' => 'Paiement effectué avec succès']);
-    } catch (\Stripe\Exception\CardException $e) {
+        if (isset($responseData['success'])) {
+            $update_response = callAPI('PUT', "$api_base_url/reservation/$reservationId", [
+                'isPaid' => true
+            ]);
+
+            echo json_encode(['success' => 'Paiement effectué avec succès']);
+        } else {
+            echo json_encode(['error' => 'Erreur de paiement : ' . $responseData['error']]);
+        }
+    } catch (Exception $e) {
         echo json_encode(['error' => 'Erreur de paiement : ' . $e->getMessage()]);
     }
 }
-?>

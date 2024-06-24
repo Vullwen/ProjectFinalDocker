@@ -130,6 +130,12 @@ include_once '../template/header.php';
         </div>
 
         <div class="form-group">
+            <label> Ajoutez une description à votre bien !<span class="obligatoire">
+                    (obligatoire)</span></label><br>
+            <textarea id="description" name="description" required></textarea>
+        </div>
+
+        <div class="form-group">
             <input type="checkbox" id="acceptation" name="acceptation">
             <label for="acceptation">Pour soumettre ce formulaire, vous devez accepter notre Déclaration de
                 confidentialité.<span class="obligatoire">
@@ -153,7 +159,6 @@ include_once '../template/header.php';
         event.preventDefault();
 
         var token = "<?php echo $_SESSION['token']; ?>";
-        console.log(token);
 
         var adresse = document.getElementById('adresse').value;
         var ville = document.getElementById('ville').value;
@@ -180,7 +185,8 @@ include_once '../template/header.php';
                     email: document.getElementById('email').value,
                     telephone: document.getElementById('telephone').value,
                     contact: document.querySelector('input[name="contact"]:checked').value,
-                    acceptation: document.getElementById('acceptation').checked
+                    acceptation: document.getElementById('acceptation').checked,
+                    description: document.getElementById('description').value
                 };
 
                 if (validateFormData(formData)) {
@@ -190,9 +196,6 @@ include_once '../template/header.php';
                 if (!validateFormData(formData)) {
                     return false;
                 }
-
-
-                sendFormDataToAPI(formData);
 
 
                 return false;
@@ -275,6 +278,11 @@ include_once '../template/header.php';
             return false;
         }
 
+        if (formData.description.trim() === '') {
+            alert('Veuillez entrer une description.');
+            return false;
+        }
+
 
         return true;
     }
@@ -293,7 +301,7 @@ include_once '../template/header.php';
 
                     alert('Votre demande a été soumise avec succès !');
 
-                    //window.location.href = 'http://localhost/2a-ProjetAnnuel/PCS/Site/index.php';
+                    window.location.href = 'http://localhost/2a-ProjetAnnuel/PCS/Site/index.php';
                 } else {
 
                     alert('Une erreur s\'est produite. Veuillez réessayer plus tard.');

@@ -266,3 +266,9 @@ button[type="submit"]:hover {
   color: white;
   border-color: #cc0000;
 }
+
+.btn-center {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+}

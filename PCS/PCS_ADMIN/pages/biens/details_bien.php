@@ -31,7 +31,6 @@ if (isset($_GET['id'])) {
         echo "<p><strong>Tarif:</strong> {$bien['Tarif']} € / nuit</p>";
         echo "<p><strong>Propriétaire:</strong> {$bien['nom']} {$bien['prenom']} (Téléphone: {$bien['telephone']})</p>";
 
-        // Afficher les photos du bien
         if (!empty($photos)) {
             echo "<h3>Photos</h3>";
             echo "<div class='row'>";

@@ -47,6 +47,18 @@ include_once '../Site/template/header.php';
             </div>
         </div>
 
+        <div class="col-md-4">
+            <div class="card" onclick="window.location.href='pages/biens/demandeBailleurs.php';"
+                style="cursor: pointer;">
+                <img src="img/plus_icon.png" class="card-img-top small-image" alt="demandesBailleurs">
+                <div class="card-body">
+                    <h5 class="card-title ">Demandes de Bailleurs</h5>
+                    <p class="card-text">Accepter ou refuser les demandes de bailleurs.</p>
+
+                </div>
+            </div>
+        </div>
+
 
         <script src=" https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js">
         </script>
