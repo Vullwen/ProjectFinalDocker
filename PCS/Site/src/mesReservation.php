@@ -1,97 +1,88 @@
 <?php
-require_once '../../API/database/connectDB.php';
-include_once '../template/header.php';
+require_once '../template/header.php';
 
 if (!isset($_SESSION['token'])) {
     header('Location: login.php');
     exit();
 }
-
-$conn = connectDB();
-
-$query = $conn->prepare("SELECT IDUtilisateur FROM utilisateur WHERE token = :token");
-$query->execute(['token' => $_SESSION['token']]);
-$user = $query->fetch(PDO::FETCH_ASSOC);
-
-if ($user) {
-    $IDUtilisateur = $user['IDUtilisateur'];
-
-    $query = $conn->prepare("SELECT r.IDReservation, r.DateDebut, r.DateFin, b.Adresse AS NomBien, r.isPaid, b.Tarif
-                             FROM reservation r 
-                             JOIN bienimmobilier b ON r.IDBien = b.IDBien 
-                             WHERE r.IDUtilisateur = :IDUtilisateur AND r.Status = 'Accepted'");
-    $query->execute(['IDUtilisateur' => $IDUtilisateur]);
-    $reservations = $query->fetchAll(PDO::FETCH_ASSOC);
-
-    if (!empty($reservations)) {
-        echo "<div class='container mt-5'>";
-        echo "<h2>Mes Réservations</h2>";
-        echo "<table class='table'>";
-        echo "<thead>";
-        echo "<tr>";
-        echo "<th scope='col'>Date de Début</th>";
-        echo "<th scope='col'>Date de Fin</th>";
-        echo "<th scope='col'>Bien</th>";
-        echo "<th scope='col'>Prix Total</th>";
-        echo "<th scope='col'>Actions</th>";
-        echo "</tr>";
-        echo "</thead>";
-        echo "<tbody>";
-        foreach ($reservations as $reservation) {
-            $dateDebut = new DateTime($reservation['DateDebut']);
-            $dateFin = new DateTime($reservation['DateFin']);
-            $interval = $dateDebut->diff($dateFin);
-            $nbJours = $interval->days;
-            $prixTotal = $nbJours * $reservation['Tarif'];
-
-            echo "<tr>";
-            echo "<td>" . htmlspecialchars($reservation['DateDebut']) . "</td>";
-            echo "<td>" . htmlspecialchars($reservation['DateFin']) . "</td>";
-            echo "<td>" . htmlspecialchars($reservation['NomBien']) . "</td>";
-            echo "<td>" . htmlspecialchars($prixTotal) . " €</td>";
-            echo "<td>";
-            if (!$reservation['isPaid']) {
-                echo "<button class='btn btn-primary' onclick='redirectToPayment({$reservation['IDReservation']}, {$prixTotal})'>Payer</button>";
-            } else {
-                echo "Payé";
-            }
-            echo "</td>";
-            echo "</tr>";
-        }
-        echo "</tbody>";
-        echo "</table>";
-        echo "</div>";
-    } else {
-        echo "<div class='container mt-5'>";
-        echo "<p>Aucune réservation trouvée.</p>";
-        echo "</div>";
-    }
-} else {
-    echo "<div class='container mt-5'>";
-    echo "<p>Une erreur s'est produite lors de la récupération de vos réservations.</p>";
-    echo "</div>";
-}
-
-include_once '../template/footer.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mes Réservations</title>
-    <link rel="stylesheet" href="../style.css">
-</head>
-<body>
-<div class="container">
-    <h1>Mes Réservations</h1>
+<div class="container mt-5">
+    <h2>Mes Réservations</h2>
+    <div id="reservations-content"></div>
 </div>
 
 <script>
-    function redirectToPayment(reservationId, prixTotal) {
-        window.location.href = `paiement.php?reservationId=${reservationId}&prixTotal=${prixTotal}`;
+    document.addEventListener('DOMContentLoaded', function () {
+        const token = <?php echo json_encode($_SESSION['token']); ?>;
+
+        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/user/id', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + token }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data.success) {
+                    alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
+                    return;
+                }
+                const userId = data.user_id;
+                return fetch('http://localhost/2A-ProjetAnnuel/PCS/API/reservation?id=' + userId, {
+                    method: 'GET'
+                });
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data.success) {
+                    document.getElementById('reservations-content').innerHTML = '<p>Aucune réservation trouvée pour cet utilisateur.</p>';
+                    return;
+                }
+                displayReservations(data.data);
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la récupération des réservations');
+            });
+    });
+
+    function displayReservations(reservations) {
+        const container = document.getElementById('reservations-content');
+        if (reservations.length === 0) {
+            container.innerHTML = '<p>Aucune réservation n\'a été trouvée.</p>';
+            return;
+        }
+
+        let table = '<table class="table table-striped">';
+        table += '<thead><tr>';
+        table += '<th scope="col">Numéro de réservation</th>';
+        table += '<th scope="col">Nom de la propriété</th>';
+        table += '<th scope="col">Date d\'arrivée</th>';
+        table += '<th scope="col">Date de départ</th>';
+        table += '<th scope="col">Statut</th>';
+        table += '</tr></thead>';
+        table += '<tbody>';
+
+        reservations.forEach(reservation => {
+            console.log(reservation);
+            table += '<tr>';
+            table += '<th scope="row">' + reservation.IDReservation + '</th>';
+            table += '<td>' + reservation.adresse + '</td>';
+            table += '<td>' + reservation.DateDebut + '</td>';
+            table += '<td>' + reservation.DateFin + '</td>';
+            table += '<td>' + reservation.Status + '</td>';
+            table += '</tr>';
+        });
+
+        table += '</tbody></table>';
+        container.innerHTML = table;
     }
 </script>
-</body>
-</html>

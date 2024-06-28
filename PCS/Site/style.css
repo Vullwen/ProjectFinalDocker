@@ -5,6 +5,7 @@ body {
 h2 {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: bold;
+  color: #333;
 }
 
 h5 {
@@ -265,4 +266,143 @@ button[type="submit"]:hover {
   background-color: #dc3545;
   color: white;
   border-color: #cc0000;
+}
+
+.btn {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+}
+
+.btn-danger:hover {
+  background-color: #cc0000;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-center {
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.location {
+  margin-top: 20px;
+}
+
+#map {
+  height: 300px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.disponibilites {
+  margin-top: 20px;
+}
+
+.date-disponible {
+  display: inline-block;
+  background-color: #28a745;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.date-indisponible {
+  display: inline-block;
+  background-color: #dc3545;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.calendar {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.calendar th,
+.calendar td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.calendar th {
+  background-color: #f2f2f2;
+}
+
+.today {
+  background-color: rgb(88, 177, 255);
+}
+
+.unavailable {
+  background-color: red;
+  color: white;
+}
+
+.pending {
+  background-color: orange;
+  color: white;
+}
+
+.legend {
+  margin-top: 20px;
+}
+
+.legend p {
+  margin: 0;
+  padding: 5px;
+}
+
+.legend span {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.legend .unavailable {
+  background-color: red;
+}
+
+.legend .pending {
+  background-color: orange;
 }

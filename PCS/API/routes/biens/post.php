@@ -16,6 +16,10 @@ try {
         throw new Exception("Le type est obligatoire.");
     }
 
+    if (!isset($body['type_conciergerie']) || empty($body['type_conciergerie'])) {
+        throw new Exception("Le type de conciergerie est obligatoire.");
+    }
+
     if (!isset($body['description']) || empty($body['description'])) {
         throw new Exception("La description est obligatoire.");
     }
@@ -55,7 +59,6 @@ try {
         throw new Exception("Erreur lors de l'ajout du bien.");
     }
 
-    // Répertoire où les fichiers seront sauvegardés
     $uploadDirectory = "/../../Site/img/photosBI/";
 
 
@@ -66,7 +69,6 @@ try {
             $fileName = $uploadedFiles['name'][$key];
             $filePath = $uploadDirectory . $fileName;
 
-            // Déplacer le fichier téléchargé vers le répertoire d'upload
             if (!move_uploaded_file($tmpName, $filePath)) {
                 throw new Exception("Erreur lors de l'enregistrement du fichier $fileName.");
             }
@@ -91,7 +93,7 @@ try {
 
 
 
-    if (!$success && !$successphotos) {
+    if (!$success) {
         throw new Exception("Erreur lors de l'ajout du bien.");
     }
 
@@ -105,6 +107,6 @@ try {
 } catch (Exception $exception) {
     echo jsonResponse(200, ["PCS" => "PCSFail"], [
         "success" => false,
-        "errors" => "Erreur lors de l'ajout du bien."
+        "errors" => explode("\n", $exception->getMessage())
     ]);
 }

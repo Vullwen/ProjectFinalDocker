@@ -2,10 +2,10 @@
 
 session_start();
 
-include __DIR__ . "/../../libraries/parameters.php";
-include __DIR__ . "/../../libraries/body.php";
-include __DIR__ . "/../../libraries/response.php";
-include __DIR__ . "/../../database/connectDB.php";
+include __DIR__ . "/../../../libraries/parameters.php";
+include __DIR__ . "/../../../libraries/body.php";
+include __DIR__ . "/../../../libraries/response.php";
+include __DIR__ . "/../../../database/connectDB.php";
 
 try {
     $body = getBody();
@@ -20,12 +20,11 @@ try {
 
     $getUserIDQuery = $databaseConnection->prepare("SELECT idutilisateur FROM utilisateur WHERE token = :token");
     $getUserIDQuery->bindParam(':token', $token);
-    $getUserIDQuery->execute();
     $row = $getUserIDQuery->fetch(PDO::FETCH_ASSOC);
 
     $userId = $row['idutilisateur'];
 
-    $postDemandeBienQuery = $databaseConnection->prepare("INSERT INTO demandebailleurs (type_conciergerie, autre_conciergerie, adresse, pays, type_bien, type_location, superficie, nombre_chambres, capacite, nom, email, telephone, heure_contact, date_demande, etat, utilisateur_id) VALUES (:type_conciergerie, :autre_conciergerie, :adresse, :pays, :type_bien, :type_location, :superficie, :nombre_chambres, :capacite, :nom, :email, :telephone, :heure_contact, :date_demande, :etat, :utilisateur_id)");
+    $postDemandeBienQuery = $databaseConnection->prepare("INSERT INTO demandebailleurs (type_conciergerie, autre_conciergerie, adresse, pays, type_bien, type_location, superficie, nombre_chambres, capacite, nom, description, email, telephone, heure_contact, date_demande, etat, utilisateur_id) VALUES (:type_conciergerie, :autre_conciergerie, :adresse, :pays, :type_bien, :type_location, :superficie, :nombre_chambres, :capacite, :nom, :description, :email, :telephone, :heure_contact, :date_demande, :etat, :utilisateur_id)");
 
     $success = $postDemandeBienQuery->execute([
         "type_conciergerie" => $body['conciergerie'],
@@ -37,6 +36,7 @@ try {
         "superficie" => $body['superficie'],
         "nombre_chambres" => $body['nombreChambres'],
         "capacite" => $body['capacite'],
+        "description" => $body['description'],
         "nom" => $body['nom'],
         "email" => $body['email'],
         "telephone" => $body['telephone'],

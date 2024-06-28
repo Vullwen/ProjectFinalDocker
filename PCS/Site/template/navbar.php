@@ -20,12 +20,12 @@ include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
                         href="http://localhost/2A-ProjetAnnuel/PCS/Site/index.php">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/services.php">Services</a>
                 </li>
 
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/contact.php">Contact</a>
                 </li>
 
                 </li>
@@ -48,22 +48,25 @@ include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
                 if (isset($_SESSION['token'])) {
                     if (estBailleur()) {
                         echo '<li class="nav-item">
-                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/biens/ajoutBiens.php">Ajouter un bien</a>
-                </li>';
-                        echo '<li class="nav-item">
                     <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/biens/biensListe.php">Mes Biens</a>
                 </li>';
+                        echo '<li class="nav-item">
+                <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/remplirTicket.php">Assistance</a>
+            </li>';
                     } else {
                         echo '<li class="nav-item">
                     <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/registerBailleur.php">Devenir Bailleur</a>
                 </li>';
+
                     }
                     echo '<li class="nav-item">
                     <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/mesreservation.php">Mes Réservations</a>
                 </li>';
+
                     echo '<li class="nav-item">
                     <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/functions/logout.php">Déconnexion</a>
                 </li>';
+
 
                 } else {
                     echo '<li class="nav-item">

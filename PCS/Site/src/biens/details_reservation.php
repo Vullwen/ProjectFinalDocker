@@ -1,81 +1,120 @@
 <?php
-
 include_once '../../template/header.php';
-include_once "../../../API/database/connectDB.php";
+?>
 
-$db = connectDB();
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Liste des réservations liées au bien</h2>
+    <table id="reservations-table" class="table table-striped table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Date de début</th>
+                <th scope="col">Date de fin</th>
+                <th scope="col">Nombre de voyageurs</th>
+                <th scope="col">Prix total</th>
+                <th scope="col">Client</th>
+                <th scope="col">Statut</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="reservations-body">
+        </tbody>
+    </table>
+</div>
 
-$dbquery = $db->prepare("
-    SELECT r.*, u.nom, u.email, u.telephone 
-    FROM reservation r
-    JOIN utilisateur u ON r.IDUtilisateur = u.IDUtilisateur
-    WHERE r.IDBien = :IDBien
-");
-$dbquery->execute(['IDBien' => $_GET['id']]);
-$reservations = $dbquery->fetchAll(PDO::FETCH_ASSOC);
-
-$formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::NONE, IntlDateFormatter::NONE, 'Europe/Paris');
-$formatter->setPattern('dd/MM/yyyy');
-
-if (!empty($reservations)) {
-    echo "<div class='container mt-5'>";
-    echo "<h2 class='text-center mb-4'>Liste des réservations liées au bien</h2>";
-    echo "<table class='table table-striped table-hover'>";
-    echo "<thead class='thead-dark'>";
-    echo "<tr>";
-    echo "<th scope='col'>Date de début</th>";
-    echo "<th scope='col'>Date de fin</th>";
-    echo "<th scope='col'>Nombre de voyageurs</th>";
-    echo "<th scope='col'>Prix total</th>";
-    echo "<th scope='col'>Client</th>";
-    echo "<th scope='col'>Actions</th>";
-    echo "</tr>";
-    echo "</thead>";
-    echo "<tbody>";
-    foreach ($reservations as $reservation) {
-
-        $dateDebut = new DateTime($reservation['DateDebut']);
-        $dateFin = new DateTime($reservation['DateFin']);
-        $interval = $dateDebut->diff($dateFin);
-        $nbJours = $interval->days;
-
-        $prixTotal = $nbJours * $reservation['Tarif'];
-
-        $dateDebutFormatted = $formatter->format($dateDebut);
-        $dateFinFormatted = $formatter->format($dateFin);
-
-        echo "<tr>";
-        echo "<td class='align-middle'>{$dateDebutFormatted}</td>";
-        echo "<td class='align-middle'>{$dateFinFormatted}</td>";
-        echo "<td class='align-middle text-center'>{$reservation['NbVoyageurs']}</td>";
-        echo "<td class='align-middle'>{$prixTotal} €</td>";
-        echo "<td class='align-middle'>{$reservation['nom']}
-                <button class='btn btn-info btn-sm ml-2' type='button' onclick='toggleCoordonnees({$reservation['IDReservation']})'>
-                    Coordonnées
-                </button>
-                <div id='coordonnees-{$reservation['IDReservation']}' class='coordonnees' style='display:none;'>
-                    <p>Email: {$reservation['email']}</p>
-                    <p>Téléphone: {$reservation['telephone']}</p>
-                </div>
-              </td>";
-        echo "<td class='align-middle'><a href='/2A-ProjetAnnuel/PCS/Site/src/reservations/details_reservation.php?id={$reservation['IDReservation']}' class='btn btn-primary'>Gérer</a></td>";
-        echo "</tr>";
-    }
-    echo "</tbody>";
-    echo "</table>";
-    echo "</div>";
-} else {
-    echo "<div class='container mt-5'>";
-    echo "<p>Aucune réservation n'a été effectuée pour ce bien.</p>";
-    echo "</div>";
-}
-
+<?php
 include_once '../../template/footer.php';
 ?>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const bienId = <?php echo json_encode($_GET['id']); ?>;
+
+        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/user/id', {
+            method: 'GET',
+            headers: { 'Authorization': 'Bearer ' + <?php echo json_encode($_SESSION['token']); ?> }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data.success) {
+                    alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
+                    return;
+                }
+
+                const userId = data.user_id;
+
+                const apiEndpoint = `http://localhost/2A-ProjetAnnuel/PCS/API/biens/reservations?bienId=${bienId}&userId=${userId}`;
+
+                return fetch(apiEndpoint, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer <?php echo json_encode($_SESSION['token']); ?>',
+                        'Content-Type': 'application/json'
+                    }
+                });
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP! Statut : ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const reservationsTable = document.getElementById('reservations-body');
+                reservationsTable.innerHTML = '';
+
+                if (data.success) {
+                    const reservations = data.reservations;
+                    const formatter = new Intl.DateTimeFormat('fr', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+                    reservations.forEach(reservation => {
+                        const dateDebut = new Date(reservation.DateDebut);
+                        const dateFin = new Date(reservation.DateFin);
+                        const interval = (dateFin - dateDebut) / (1000 * 3600 * 24);
+                        const prixTotal = interval * reservation.Tarif;
+
+                        reservationsTable.innerHTML += `
+                        <tr>
+                            <td class="align-middle">${formatter.format(dateDebut)}</td>
+                            <td class="align-middle">${formatter.format(dateFin)}</td>
+                            <td class="align-middle text-center">${reservation.NbVoyageurs}</td>
+                            <td class="align-middle">${prixTotal} €</td>
+                            <td class="align-middle">${reservation.nom}
+                                <button class="btn btn-info btn-sm ml-2" type="button" onclick="toggleCoordonnees(${reservation.IDReservation})">
+                                    Coordonnées
+                                </button>
+                                <div id="coordonnees-${reservation.IDReservation}" class="coordonnees" style="display:none;">
+                                    <p>Email: ${reservation.email}</p>
+                                    <p>Téléphone: ${reservation.telephone}</p>
+                                </div>
+                            </td>
+                            <td class="align-middle">${reservation.Status}</td>
+                            <td class="align-middle">
+                                <a href="/2A-ProjetAnnuel/PCS/Site/src/biens/details_reservation_biens.php?id=${reservation.IDReservation}" class="btn btn-primary">Gérer</a>
+                            </td>
+                        </tr>
+                    `;
+                    });
+                } else {
+                    reservationsTable.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center">Aucune réservation trouvée pour ce bien.</td>
+                    </tr>
+                `;
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la récupération des réservations.');
+            });
+    });
+
     function toggleCoordonnees(id) {
-        var element = document.getElementById('coordonnees-' + id);
+        const element = document.getElementById(`coordonnees-${id}`);
         if (element.style.display === 'none') {
             element.style.display = 'block';
         } else {

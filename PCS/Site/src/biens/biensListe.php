@@ -41,7 +41,7 @@ if ($user) {
         echo "<tbody>";
         foreach ($biens as $bien) {
             echo "<tr>";
-            echo "<td>{$bien['Type']}</td>";
+            echo "<td>{$bien['Type_bien']}</td>";
             echo "<td>{$bien['Adresse']}</td>";
             echo "<td>{$bien['Description']}</td>";
             echo "<td>{$bien['Superficie']}</td>";
@@ -53,6 +53,11 @@ if ($user) {
         echo "</tbody>";
         echo "</table>";
         echo "</div>";
+
+        echo ' <div class="container mt-2 btn-center">
+        <a class="btn btn-primary" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/biens/ajoutBiens.php">Ajouter un bien</a>
+        </div>';
+
     } else {
         echo "<div class='container mt-5'>";
         echo "<p>Vous n'avez pas encore ajouté de bien immobilier.</p>";

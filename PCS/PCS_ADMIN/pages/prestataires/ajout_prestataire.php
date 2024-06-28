@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $Domaine = $_POST['Domaine'];
     $Mdp = password_hash($_POST['Mdp'], PASSWORD_BCRYPT);
 
-    // Appel à l'API pour ajouter un nouveau prestataire
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, "http://localhost/API/entities/ajout_prestataire_admin.php");
     curl_setopt($ch, CURLOPT_POST, 1);
@@ -32,9 +31,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Ajout d'un Prestataire</title>
 </head>
+
 <body>
     <h1>Ajouter un Nouveau Prestataire</h1>
     <form method="post" action="">
@@ -49,4 +50,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <button type="submit">Ajouter le Prestataire</button>
     </form>
 </body>
+
 </html>

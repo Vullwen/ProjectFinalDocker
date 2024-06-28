@@ -70,6 +70,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
                                 </td>
                                 <td><?php echo htmlspecialchars($demande['heure_contact']); ?></td>
                                 <td><?php echo htmlspecialchars($demande['etat']); ?></td>
+
                                 <td><a class='btn btn-info btn-sm ml-2'
                                         href="accept_demande.php?id=<?php echo htmlspecialchars($demande['id']); ?>">Accepter la
                                         demande</a>

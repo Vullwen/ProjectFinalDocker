@@ -14,6 +14,8 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpEbABdaOHX1v3pteAwexNXWogevMN1xA"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
 
 
 
