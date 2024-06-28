@@ -60,6 +60,12 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/biens/reservations")) {
         die();
     }
 }
+if (isPath("/2A-ProjetAnnuel/PCS/API/biens/reservationsCalendar")) {
+    if (isGetMethod()) {
+        require_once __DIR__ . "/routes/biens/getReservationsBiens.php";
+        die();
+    }
+}
 
 if (isPath("/2A-ProjetAnnuel/PCS/API/user/bailleurs")) {
     if (isGetMethod()) {
@@ -123,6 +129,28 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/reservation")) {
 
     if (isGetMethod() && isset($_GET['id'])) {
         require_once __DIR__ . "/routes/reservation/get.php";
+        die();
+    }
+}
+
+if (isPath("/2A-ProjetAnnuel/PCS/API/reservation/details")) {
+    if (isGetMethod()) {
+        require_once __DIR__ . "/routes/biens/getReservationsDetails.php";
+        die();
+    }
+}
+
+if (isPath("/2A-ProjetAnnuel/PCS/API/biens/disponibilite")) {
+    if (isGetMethod()) {
+        require_once __DIR__ . "/routes/biens/disponibilite/get.php";
+        die();
+    }
+
+}
+
+if (isPath("/2A-ProjetAnnuel/PCS/API/prestataires")) {
+    if (isGetMethod()) {
+        require_once __DIR__ . "/routes/prestataires/get.php";
         die();
     }
 }

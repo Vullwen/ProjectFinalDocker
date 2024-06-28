@@ -20,12 +20,12 @@ include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
                         href="http://localhost/2A-ProjetAnnuel/PCS/Site/index.php">Accueil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/services.php">Services</a>
                 </li>
 
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/contact.php">Contact</a>
                 </li>
 
                 </li>

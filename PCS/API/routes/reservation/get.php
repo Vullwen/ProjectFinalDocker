@@ -1,5 +1,5 @@
 <?php
-
+// GET EN FONCTION DE LID UTILISATEUR POUR SES RESERVATIONS
 include "database/connectDB.php";
 
 $pdo = connectDB();

@@ -42,8 +42,6 @@ function getUserIdFromToken()
     $authorizationHeader = $_SERVER['HTTP_AUTHORIZATION'];
     $token = str_replace('Bearer ', '', $authorizationHeader);
 
-    // Vous devez implémenter la logique pour valider et décoder le token
-    // Dans ce cas, vous pourriez vérifier le token en BDD et récupérer l'ID utilisateur associé
     $db = connectDB();
     $stmt = $db->prepare("SELECT IDUtilisateur FROM utilisateur WHERE token = ?");
     $stmt->execute([$token]);
@@ -55,4 +53,3 @@ function getUserIdFromToken()
 
     return $row['IDUtilisateur'];
 }
-?>

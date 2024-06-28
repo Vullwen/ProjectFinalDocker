@@ -19,7 +19,7 @@ include_once '../../../Site/template/header.php';
 
             function fetchDemandesPrestataires() {
                 $.ajax({
-                    url: 'http://localhost/2A-ProjetAnnuel/PCS/API/prestataires/demandes',
+                    url: 'http://localhost/2A-ProjetAnnuel/PCS/API/prestataires',
                     method: 'GET',
                     dataType: 'json',
                     success: function (response) {

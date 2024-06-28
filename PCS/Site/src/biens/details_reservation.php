@@ -12,6 +12,7 @@ include_once '../../template/header.php';
                 <th scope="col">Nombre de voyageurs</th>
                 <th scope="col">Prix total</th>
                 <th scope="col">Client</th>
+                <th scope="col">Statut</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -46,7 +47,6 @@ include_once '../../template/footer.php';
 
                 const userId = data.user_id;
 
-                // Utilisation de userId pour appeler l'API des réservations
                 const apiEndpoint = `http://localhost/2A-ProjetAnnuel/PCS/API/biens/reservations?bienId=${bienId}&userId=${userId}`;
 
                 return fetch(apiEndpoint, {
@@ -92,6 +92,7 @@ include_once '../../template/footer.php';
                                     <p>Téléphone: ${reservation.telephone}</p>
                                 </div>
                             </td>
+                            <td class="align-middle">${reservation.Status}</td>
                             <td class="align-middle">
                                 <a href="/2A-ProjetAnnuel/PCS/Site/src/biens/details_reservation_biens.php?id=${reservation.IDReservation}" class="btn btn-primary">Gérer</a>
                             </td>

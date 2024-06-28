@@ -7,7 +7,7 @@ include_once "database/connectDB.php";
 $pdo = connectDB();
 
 try {
-    $query = "SELECT IDPrestataire, Nom, Email, Telephone, Domaine FROM prestataire";
+    $query = "SELECT * FROM prestataire";
     $stmt = $pdo->prepare($query);
     $stmt->execute();
 

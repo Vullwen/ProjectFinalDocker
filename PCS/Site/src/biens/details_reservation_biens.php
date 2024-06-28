@@ -1,119 +1,114 @@
 <?php
-
 include_once '../../template/header.php';
-include_once "../../../API/database/connectDB.php";
-
-$db = connectDB();
-
-$dbquery = $db->prepare("
-    SELECT r.*, u.nom, u.email, u.telephone 
-    FROM reservation r
-    JOIN utilisateur u ON r.IDUtilisateur = u.IDUtilisateur
-    WHERE r.IDReservation = :IDReservation
-");
-$dbquery->execute(['IDReservation' => $_GET['id']]);
-$reservations = $dbquery->fetchAll(PDO::FETCH_ASSOC);
-
-
-$formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::NONE, IntlDateFormatter::NONE, 'Europe/Paris');
-$formatter->setPattern('dd/MM/yyyy');
-
-if (!empty($reservations)) {
-    echo "<div class='container mt-5'>";
-    echo "<h2 class='text-center mb-4'>Liste des réservations liées au bien</h2>";
-    echo "<table class='table table-striped table-hover'>";
-    echo "<thead class='thead-dark'>";
-    echo "<tr>";
-    echo "<th scope='col'>Date de début</th>";
-    echo "<th scope='col'>Date de fin</th>";
-    echo "<th scope='col'>Nombre de voyageurs</th>";
-    echo "<th scope='col'>Prix total</th>";
-    echo "<th scope='col'>Client</th>";
-    echo "<th scope='col'>Actions</th>";
-    echo "</tr>";
-    echo "</thead>";
-    echo "<tbody>";
-    foreach ($reservations as $reservation) {
-
-        $dateDebut = new DateTime($reservation['DateDebut']);
-        $dateFin = new DateTime($reservation['DateFin']);
-        $interval = $dateDebut->diff($dateFin);
-        $nbJours = $interval->days;
-
-        $prixTotal = $nbJours * $reservation['Tarif'];
-
-        $dateDebutFormatted = $formatter->format($dateDebut);
-        $dateFinFormatted = $formatter->format($dateFin);
-
-        echo "<tr>";
-        echo "<td class='align-middle'>{$dateDebutFormatted}</td>";
-        echo "<td class='align-middle'>{$dateFinFormatted}</td>";
-        echo "<td class='align-middle text-center'>{$reservation['NbVoyageurs']}</td>";
-        echo "<td class='align-middle'>{$prixTotal} €</td>";
-        echo "<td class='align-middle'>{$reservation['nom']}
-                <button class='btn btn-info btn-sm ml-2' type='button' onclick='toggleCoordonnees({$reservation['IDReservation']})'>
-                    Coordonnées
-                </button>
-                <div id='coordonnees-{$reservation['IDReservation']}' class='coordonnees' style='display:none;'>
-                    <p>Email: {$reservation['email']}</p>
-                    <p>Téléphone: {$reservation['telephone']}</
-                </div>
-                </td>";
-
-        echo "<td class='align-middle'>
-                <button onclick='handleAction(\"delete\", {$reservation['IDReservation']}, {$_GET['id']})' class='btn btn-danger btn-sm'>Supprimer</button>
-                <button onclick='handleAction(\"accept\", {$reservation['IDReservation']}, {$_GET['id']})' class='btn btn-primary btn-sm'>Valider</button>
-              </td>";
-
-        echo "</tr>";
-
-    }
-    echo "</tbody>";
-    echo "</table>";
-    echo "</div>";
-} else {
-
-    echo "<div class='container mt-5'>";
-    echo "<p>Aucune réservation n'a été trouvée pour ce bien.</p>";
-    echo "</div>";
-}
 ?>
 
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Détails de la réservation</h2>
+    <div id="reservation-details" class="card">
+        <div class="card-body">
+            <h5 class="card-title" id="reservation-title"></h5>
+            <p class="card-text" id="reservation-description"></p>
+            <ul class="list-group list-group-flush" id="reservation-info">
+            </ul>
+            <button id="toggle-coordonnees" class="btn btn-info mt-3">Afficher les coordonnées</button>
+            <div id="coordonnees" class="mt-3" style="display: none;">
+                <p>Email: <span id="client-email"></span></p>
+                <p>Téléphone: <span id="client-telephone"></span></p>
+            </div>
+
+            <div class="mt-4">
+                <button id="delete-reservation" class="btn btn-danger">Supprimer</button>
+                <button id="accept-reservation" class="btn btn-primary">Valider</button>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5">
+        <a href="biensListe.php" class="btn btn-primary">Retour</a>
+    </div>
+</div>
+
+<?php
+include_once '../../template/footer.php';
+?>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const reservationId = <?php echo json_encode($_GET['id']); ?>;
 
-    function toggleCoordonnees(id) {
-        const coordonneesDiv = document.getElementById(`coordonnees-${id}`);
-        if (coordonneesDiv.style.display === 'none') {
-            coordonneesDiv.style.display = 'block';
-        } else {
-            coordonneesDiv.style.display = 'none';
-        }
-    }
+        fetch(`http://localhost/2A-ProjetAnnuel/PCS/API/reservation/details?id=${reservationId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + <?php echo json_encode($_SESSION['token']); ?>,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP! Statut : ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    const reservation = data.reservation;
 
-    function handleAction(action, reservationId, idBien) {
+                    const dateDebut = new Date(reservation.DateDebut);
+                    const dateFin = new Date(reservation.DateFin);
+                    const interval = (dateFin - dateDebut) / (1000 * 3600 * 24);
+                    const prixTotal = interval * reservation.Tarif;
+                    const formatter = new Intl.DateTimeFormat('fr', { year: 'numeric', month: '2-digit', day: '2-digit' });
+
+                    document.getElementById('reservation-title').textContent = `Réservation du ${formatter.format(dateDebut)} au ${formatter.format(dateFin)}`;
+                    document.getElementById('reservation-description').textContent = `Nombre de voyageurs : ${reservation.NbVoyageurs}`;
+                    document.getElementById('reservation-info').innerHTML = `
+                    <li class="list-group-item">Prix total : ${prixTotal} €</li>
+                    <li class="list-group-item">Client : ${reservation.nom}</li>
+                    <li class="list-group-item">Status : ${reservation.Status}</li>
+                `;
+                    document.getElementById('client-email').textContent = reservation.email;
+                    document.getElementById('client-telephone').textContent = reservation.telephone;
+
+                    document.getElementById('toggle-coordonnees').addEventListener('click', () => {
+                        const coordonnees = document.getElementById('coordonnees');
+                        coordonnees.style.display = coordonnees.style.display === 'none' ? 'block' : 'none';
+                    });
+
+                    document.getElementById('delete-reservation').addEventListener('click', () => handleAction('delete', reservationId));
+                    if (reservation.Status === 'Accepted') {
+                        document.getElementById('accept-reservation').style.display = 'none';
+                    }
+
+                    document.getElementById('accept-reservation').addEventListener('click', () => handleAction('accept', reservationId));
+                } else {
+                    alert('Erreur lors de la récupération de la réservation.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur lors de la récupération de la réservation.');
+            });
+    });
+
+    function handleAction(action, reservationId) {
         let endpoint = '';
         if (action === 'delete') {
             endpoint = `../../../API/routes/biens/delete_reservation.php`;
+            window.location.href = 'biensListe.php';
         } else if (action === 'accept') {
             endpoint = `../../../API/routes/biens/accept_reservation.php`;
         }
 
-        console.log('ID Reservation:', reservationId);
-        console.log('ID Bien:', idBien);
         fetch(endpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                idReservation: reservationId,
-                idBien: idBien
+                idReservation: reservationId
             })
         })
             .then(response => response.json())
             .then(data => {
-                console.log('Réponse JSON reçue:', data);
                 if (data.success) {
                     location.reload();
                 } else {
@@ -124,9 +119,4 @@ if (!empty($reservations)) {
                 console.error('Erreur:', error);
             });
     }
-
 </script>
-
-
-<?php
-include_once '../../template/footer.php';
