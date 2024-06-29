@@ -1,6 +1,6 @@
 {
     "functions": {
-        "API/*.php": {
+        "API/index.php": {
             "runtime": "vercel-php@0.6.0"
         }
     },
@@ -10,7 +10,7 @@
             "dest": "Site/src/index.php"
         },
         {
-            "src": "/(.*)",
+            "src": "/API/(.*)",
             "dest": "API/$1"
         }
     ]
