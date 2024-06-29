@@ -131,6 +131,11 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/reservation")) {
         require_once __DIR__ . "/routes/reservation/get.php";
         die();
     }
+
+    if (isDeleteMethod() && isset($_GET['id'])) {
+        require_once __DIR__ . "/routes/reservation/delete.php";
+        die();
+    }
 }
 
 if (isPath("/2A-ProjetAnnuel/PCS/API/reservation/details")) {

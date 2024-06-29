@@ -1,24 +1,34 @@
-<?php include_once '../../../Site/template/header.php'; ?>
+<?php include_once '../../../Site/template/header.php';
+if (isAdmin()) {
+    ?>
 
-<div class="container mt-5">
-    <h2>Liste des Utilisateurs</h2>
-    <input type="text" id="searchInput" class="form-control" onkeyup="searchUsers()"
-        placeholder="Rechercher des utilisateurs par nom...">
-    <br>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Email</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="usersTable">
-        </tbody>
-    </table>
-    <a href="../../index.php" class="btn btn-primary">Retour au menu Admin</a>
-</div>
+    <div class="container mt-5">
+        <h2>Liste des Utilisateurs</h2>
+        <input type="text" id="searchInput" class="form-control" onkeyup="searchUsers()"
+            placeholder="Rechercher des utilisateurs par nom...">
+        <br>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prénom</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="usersTable">
+            </tbody>
+        </table>
+        <a href="../../index.php" class="btn btn-primary">Retour au menu Admin</a>
+    </div>
+    <?php
+} else {
+    echo "<div class='container mt-5'>";
+    echo "<p>Vous n'êtes pas autorisé à accéder à cette page.</p>";
+    echo "</div>";
+
+}
+?>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -9,11 +9,12 @@ try {
         $db = connectDB();
 
         $query = $db->prepare("
-            SELECT r.*, u.nom, u.email, u.telephone 
-            FROM reservation r
-            JOIN utilisateur u ON r.IDUtilisateur = u.IDUtilisateur
-            WHERE r.IDReservation = :IDReservation
-        ");
+        SELECT r.*, u.nom, u.email, u.telephone, b.adresse
+        FROM reservation r
+        JOIN utilisateur u ON r.IDUtilisateur = u.IDUtilisateur
+        JOIN bienimmobilier b ON r.IDBien = b.IDBien
+        WHERE r.IDReservation = :IDReservation
+    ");
         $query->execute(['IDReservation' => $reservationId]);
         $reservation = $query->fetch(PDO::FETCH_ASSOC);
 

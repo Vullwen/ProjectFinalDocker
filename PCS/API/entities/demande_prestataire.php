@@ -22,7 +22,7 @@ $telephone = htmlspecialchars(strip_tags($data['telephone']));
 $domaine = htmlspecialchars(strip_tags($data['domaine']));
 
 
-$sql = "INSERT INTO demandes_prestataires (nom, prenom, siret, adresse, email, telephone, domaine) VALUES (:nom, :prenom, :siret, :adresse, :email, :telephone, :domaine)";
+$sql = "INSERT INTO demandes_prestataires (nom, prenom, siret, adresse, email, telephone, domaine, status) VALUES (:nom, :prenom, :siret, :adresse, :email, :telephone, :domaine, :status)";
 $stmt = $pdo->prepare($sql);
 
 
@@ -34,7 +34,8 @@ try {
         ':adresse' => $adresse,
         ':email' => $email,
         ':telephone' => $telephone,
-        ':domaine' => $domaine
+        ':domaine' => $domaine,
+        ':status' => 'En attente'
     ]);
     http_response_code(200);
     echo json_encode(['success' => true, 'message' => 'Demande de prestataire ajoutée avec succès.']);

@@ -1,24 +1,33 @@
 <?php
 include_once '../../../Site/template/header.php';
-?>
+if (isAdmin()) {
+    ?>
 
-<div class="container mt-5">
-    <h2>Demandes des bailleurs</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col">Numéro de demande</th>
-                <th scope="col">Nom du propriétaire</th>
-                <th scope="col">Téléphone</th>
-                <th scope="col">Email</th>
-                <th scope="col">Adresse</th>
-                <th scope="col">Détails</th>
-            </tr>
-        </thead>
-        <tbody id="demandesTableBody">
-        </tbody>
-    </table>
-</div>
+    <div class="container mt-5">
+        <h2>Demandes des bailleurs</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Numéro de demande</th>
+                    <th scope="col">Nom du propriétaire</th>
+                    <th scope="col">Téléphone</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Détails</th>
+                </tr>
+            </thead>
+            <tbody id="demandesTableBody">
+            </tbody>
+        </table>
+    </div>
+    <?php
+} else {
+    echo "<div class='container mt-5'>";
+    echo "<p>Vous n'êtes pas autorisé à accéder à cette page.</p>";
+    echo "</div>";
+
+}
+?>
 
 <?php include_once '../../../Site/template/footer.php'; ?>
 

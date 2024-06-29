@@ -50,7 +50,6 @@ a {
   color: inherit;
 }
 
-/* Styles de base */
 .form-group {
   margin-bottom: 20px;
 }
@@ -119,17 +118,14 @@ button[type="submit"]:hover {
 .table th,
 .table td {
   vertical-align: middle;
-  /* Aligne le texte au milieu des cellules */
 }
 
 .table th {
   text-align: center;
-  /* Centre le texte dans les en-têtes */
 }
 
 .table td {
   text-align: left;
-  /* Aligne le texte à gauche dans les cellules */
 }
 
 .table {
@@ -158,7 +154,6 @@ button[type="submit"]:hover {
   background-color: #f1f1f1;
 }
 
-/* Ajout de largeurs minimales pour certaines colonnes */
 .table th:nth-child(1),
 .table td:nth-child(1) {
   min-width: 50px;

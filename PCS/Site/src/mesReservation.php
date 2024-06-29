@@ -68,6 +68,7 @@ if (!isset($_SESSION['token'])) {
         table += '<th scope="col">Date d\'arrivée</th>';
         table += '<th scope="col">Date de départ</th>';
         table += '<th scope="col">Statut</th>';
+        table += '<th scope="col">Actions</th>';
         table += '</tr></thead>';
         table += '<tbody>';
 
@@ -79,10 +80,16 @@ if (!isset($_SESSION['token'])) {
             table += '<td>' + reservation.DateDebut + '</td>';
             table += '<td>' + reservation.DateFin + '</td>';
             table += '<td>' + reservation.Status + '</td>';
+            table += '<td><button class="btn btn-primary btn-sm" onclick="voirDetails(' + reservation.IDReservation + ')">Voir détails</button></td>';
             table += '</tr>';
         });
 
         table += '</tbody></table>';
         container.innerHTML = table;
     }
+
+    function voirDetails(id) {
+        window.location.href = 'detailsMesReservation.php?id=' + id;
+    }
+
 </script>
