@@ -134,7 +134,7 @@ require_once "../template/header.php";
                     const location = results[0].geometry.location;
                     const map = new google.maps.Map(document.getElementById('map'), {
                         center: location,
-                        zoom: 13
+                        zoom: 14
                     });
                     new google.maps.Marker({
                         position: location,
@@ -208,7 +208,6 @@ require_once "../template/header.php";
                 .then(data => {
                     if (data.success) {
                         const userId = data.user_id;
-                        console.log('User ID:', userId);
 
                         if (!selectedDates.start || !selectedDates.end) {
                             alert('Veuillez sélectionner des dates dans le calendrier.');
@@ -232,7 +231,6 @@ require_once "../template/header.php";
                             Guests: guests,
                             DomainePrestataire: document.getElementById('prestataire').value
                         };
-                        console.log(reservationDetails);
 
 
                         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/entities/reservationService.php', {
