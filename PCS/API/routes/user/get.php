@@ -14,7 +14,7 @@ try {
 
     $databaseConnection = connectDB();
 
-    $query = $databaseConnection->prepare("SELECT idutilisateur, nom, prenom, email, telephone FROM utilisateur WHERE EstBailleur = 1");
+    $query = $databaseConnection->prepare("SELECT idutilisateur, nom, prenom, email, telephone FROM utilisateur");
     $query->execute();
 
     $bailleurs = $query->fetchAll(PDO::FETCH_ASSOC);

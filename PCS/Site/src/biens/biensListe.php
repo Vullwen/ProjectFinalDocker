@@ -6,66 +6,68 @@ if (!$SESSION['estBailleur'] = 1) {
 }
 
 include_once "../../template/header.php";
-include_once "../../../API/database/connectDB.php";
+include_once "../../functions/callApi.php";
 
+$token = $_SESSION['token'];
+$apiUrlUser = "http://localhost/2A-ProjetAnnuel/PCS/API/user/id";
+$headers = array(
+    "Authorization: Bearer $token"
+);
 
-// APPEL API A METTRE A LA PLACE DE CTHORREUR
-$db = connectDB();
+$responseUser = callAPI('GET', $apiUrlUser, false, $headers);
+$userData = json_decode($responseUser, true);
 
-$query = $db->prepare("SELECT idutilisateur FROM utilisateur WHERE token = :token");
-$query->execute(['token' => $_SESSION['token']]);
-$user = $query->fetch(PDO::FETCH_ASSOC);
+if (!$userData || !isset($userData['idutilisateur'])) {
+    echo "<div class='container mt-5'>";
+    echo "<p>Une erreur s'est produite lors de la récupération de l'utilisateur.</p>";
+    echo "</div>";
+    include_once "../../template/footer.php";
+    exit;
+}
 
-if ($user) {
-    $idutilisateur = $user['idutilisateur'];
+$idutilisateur = $userData['idutilisateur'];
 
-    $biensQuery = $db->prepare("SELECT * FROM bienimmobilier WHERE idutilisateur = :idutilisateur");
-    $biensQuery->execute(['idutilisateur' => $idutilisateur]);
-    $biens = $biensQuery->fetchAll(PDO::FETCH_ASSOC);
+$apiUrlBiens = "http://localhost/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires?id=$idutilisateur";
+$responseBiens = callAPI('GET', $apiUrlBiens);
+$biensData = json_decode($responseBiens, true);
 
-    if (!empty($biens)) {
-        echo "<div class='container mt-5'>";
-        echo "<h2>Liste de vos biens immobiliers</h2>";
-        echo "<table class='table'>";
-        echo "<thead>";
+if ($biensData && !empty($biensData)) {
+    echo "<div class='container mt-5'>";
+    echo "<h2>Liste de vos biens immobiliers</h2>";
+    echo "<table class='table'>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th scope='col'>Type</th>";
+    echo "<th scope='col'>Adresse</th>";
+    echo "<th scope='col'>Description</th>";
+    echo "<th scope='col'>Superficie</th>";
+    echo "<th scope='col'>Nombre de chambres</th>";
+    echo "<th scope='col'>Tarif</th>";
+    echo "<th scope='col'>Actions</th>";
+    echo "</tr>";
+    echo "</thead>";
+    echo "<tbody>";
+    foreach ($biensData as $bien) {
         echo "<tr>";
-        echo "<th scope='col'>Type</th>";
-        echo "<th scope='col'>Adresse</th>";
-        echo "<th scope='col'>Description</th>";
-        echo "<th scope='col'>Superficie</th>";
-        echo "<th scope='col'>Nombre de chambres</th>";
-        echo "<th scope='col'>Tarif</th>";
-        echo "<th scope='col'>Actions</th>";
+        echo "<td>" . htmlspecialchars($bien['Type_bien']) . "</td>";
+        echo "<td>" . htmlspecialchars($bien['Adresse']) . "</td>";
+        echo "<td>" . htmlspecialchars($bien['Description']) . "</td>";
+        echo "<td>" . htmlspecialchars($bien['Superficie']) . "</td>";
+        echo "<td>" . htmlspecialchars($bien['NbChambres']) . "</td>";
+        echo "<td>" . htmlspecialchars($bien['Tarif']) . " € / nuit</td>";
+        echo "<td><a href='/2A-ProjetAnnuel/PCS/Site/src/biens/details_bien.php?id=" . htmlspecialchars($bien['IDBien']) . "' class='btn btn-primary'>Détails</a></td>";
         echo "</tr>";
-        echo "</thead>";
-        echo "<tbody>";
-        foreach ($biens as $bien) {
-            echo "<tr>";
-            echo "<td>{$bien['Type_bien']}</td>";
-            echo "<td>{$bien['Adresse']}</td>";
-            echo "<td>{$bien['Description']}</td>";
-            echo "<td>{$bien['Superficie']}</td>";
-            echo "<td>{$bien['NbChambres']}</td>";
-            echo "<td>{$bien['Tarif']} € / nuit</td>";
-            echo "<td><a href='/2A-ProjetAnnuel/PCS/Site/src/biens/details_bien.php?id={$bien['IDBien']}' class='btn btn-primary'>Détails</a></td>";
-            echo "</tr>";
-        }
-        echo "</tbody>";
-        echo "</table>";
-        echo "</div>";
-
-        echo ' <div class="container mt-2 btn-center">
-        <a class="btn btn-primary" href="http://localhost/2A-ProjetAnnuel/PCS/Site/src/biens/ajoutBiens.php">Ajouter un bien</a>
-        </div>';
-
-    } else {
-        echo "<div class='container mt-5'>";
-        echo "<p>Vous n'avez pas encore ajouté de bien immobilier.</p>";
-        echo "</div>";
     }
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
+
+    echo '<div class="container mt-2 btn-center">
+        <a class="btn btn-primary" href="/2A-ProjetAnnuel/PCS/Site/src/biens/ajoutBiens.php">Ajouter un bien</a>
+        </div>';
 } else {
     echo "<div class='container mt-5'>";
-    echo "<p>Une erreur s'est produite lors de la récupération de vos biens immobiliers.</p>";
+    echo "<p>Vous n'avez pas encore ajouté de bien immobilier.</p>";
     echo "</div>";
 }
 

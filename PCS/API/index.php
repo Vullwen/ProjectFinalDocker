@@ -54,6 +54,13 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/biens")) {
     }
 }
 
+if (isPath("/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires")) {
+    if (isGetMethod()) {
+        require_once __DIR__ . "/routes/biens/getIDBailleurs.php";
+        die();
+    }
+}
+
 if (isPath("/2A-ProjetAnnuel/PCS/API/biens/reservations")) {
     if (isGetMethod()) {
         require_once __DIR__ . "/routes/biens/getReservations.php";
