@@ -26,7 +26,7 @@ $idBien = $_GET['id'];
             })
             .then(data => {
                 if (data.success) {
-                    const bien = data.property;
+                    const bien = data.properties;
                     displayBienDetails(bien);
                     fetchDisponibilites(bienId);
                     fetchReservations(bienId);
