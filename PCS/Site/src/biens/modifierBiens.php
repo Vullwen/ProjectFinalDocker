@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($updateResponse['success']) {
 
-        header("Location: details_bien.php?id={$idBien}");
+        header("Location: biensListe.php");
         exit;
     } else {
         header("Location: details_bien.php?id={$idBien}");
@@ -67,7 +67,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 } else {
     $bien = getBienDetails($idBien);
-    var_dump($bien['properties'][0]['IDBien']);
 
 
     if ($bien) {
