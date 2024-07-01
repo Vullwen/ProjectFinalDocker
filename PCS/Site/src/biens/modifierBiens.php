@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: biensListe.php");
         exit;
     } else {
-        header("Location: biensListe.php");
+        //header("Location: biensListe.php");
         echo "<div class='container mt-5'>";
         echo "<p>Erreur lors de la mise à jour du bien immobilier : {$updateResponse['message']}</p>";
         echo "</div>";
