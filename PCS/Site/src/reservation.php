@@ -252,6 +252,7 @@ require_once "../template/header.php";
 
                                 if (data.message === 'Booking successful') {
                                     alert('Votre réservation a été effectuée avec succès.');
+                                    window.location.href = 'mesReservation.php';
                                 } else {
                                     alert('La réservation a échoué : ' + data.message);
                                 }
