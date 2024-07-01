@@ -10,8 +10,7 @@ document.getElementById('registrationForm').addEventListener('submit', function 
         mdp_confirm: document.getElementById('mdp_confirm').value
     };
 
-    console.log(formData);
-    fetch('http://localhost/2A-ProjetAnnuel/PCS/API/user', {
+    fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

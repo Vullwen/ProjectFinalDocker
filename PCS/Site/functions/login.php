@@ -5,7 +5,7 @@ $url = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/login?email=' . $_GET['
 
 
 $response = json_decode(file_get_contents($url, true));
-
+var_dump($response);
 
 if ($response->success) {
     $_SESSION['login'] = 1;
