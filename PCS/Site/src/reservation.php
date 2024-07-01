@@ -199,24 +199,23 @@ require_once "../template/header.php";
             }
         }
 
-        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', {
-            method: 'GET',
-            headers: { 'Authorization': 'Bearer ' + <?php echo json_encode($_SESSION['token']); ?> }
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    userId = data.user_id;
-                } else {
-                    alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
-                }
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-                alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
-            });
-
         function bookProperty(propertyId, propertyTarif, userId) {
+            fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', {
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + <?php echo json_encode($_SESSION['token']); ?> }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        userId = data.user_id;
+                    } else {
+                        alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
+                });
             if (!selectedDates.start || !selectedDates.end) {
                 alert('Veuillez sélectionner des dates dans le calendrier.');
                 return;
