@@ -41,13 +41,13 @@ include_once "../../template/header.php";
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', { headers: headers })
             .then(response => response.json())
             .then(userData => {
-                if (!userData || !userData.idutilisateur) {
+                if (!userData || !userData.user_id) {
                     throw new Error('Erreur lors de la récupération de l\'utilisateur');
                 }
-                return userData.idutilisateur;
+                return userData.user_id;
             })
-            .then(idutilisateur => {
-                return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires?id=' + idutilisateur)
+            .then(user_id => {
+                return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires?id=' + user_id)
                     .then(response => response.json())
             })
             .then(biensData => {
