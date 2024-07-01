@@ -238,6 +238,7 @@ require_once "../template/header.php";
                 Guests: guests,
                 DomainePrestataire: document.getElementById('prestataire').value
             };
+            console.log(reservationDetails);
 
             fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/entities/reservationService.php', {
                 method: 'POST',
