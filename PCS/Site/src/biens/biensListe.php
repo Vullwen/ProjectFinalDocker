@@ -1,6 +1,5 @@
 <?php
 
-
 if (!$SESSION['estBailleur'] = 1) {
     header("Location: /2A-ProjetAnnuel/PCS/Site/src/login.php");
 }
@@ -9,7 +8,7 @@ include_once "../../template/header.php";
 include_once "../../functions/callApi.php";
 
 $token = $_SESSION['token'];
-$apiUrlUser = "http://localhost/2A-ProjetAnnuel/PCS/API/user/id";
+$apiUrlUser = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id";
 $headers = array(
     "Authorization: Bearer $token"
 );
@@ -27,7 +26,7 @@ if (!$userData || !isset($userData['idutilisateur'])) {
 
 $idutilisateur = $userData['idutilisateur'];
 
-$apiUrlBiens = "http://localhost/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires?id=$idutilisateur";
+$apiUrlBiens = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires?id=$idutilisateur";
 $responseBiens = callAPI('GET', $apiUrlBiens);
 $biensData = json_decode($responseBiens, true);
 
