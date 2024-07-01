@@ -1,11 +1,10 @@
 <?php
 
+include_once "../../template/header.php";
 if ($_SESSION['estBailleur'] != 1) {
     header("Location: /2A-ProjetAnnuel/PCS/Site/src/login.php");
     exit;
 }
-
-include_once "../../template/header.php";
 ?>
 
 <div class='container mt-5'>
