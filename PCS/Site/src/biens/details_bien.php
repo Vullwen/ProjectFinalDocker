@@ -21,7 +21,7 @@ $idBien = $_GET['id'];
                 if (!response.ok) {
                     throw new Error('Erreur lors de la récupération des détails du bien');
                 }
-                console.log(response.jsons());
+                console.log(response.json());
                 return response.json();
             })
             .then(data => {
