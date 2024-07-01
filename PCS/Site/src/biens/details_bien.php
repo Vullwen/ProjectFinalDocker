@@ -16,7 +16,7 @@ $idBien = $_GET['id'];
 
         const bienId = new URLSearchParams(window.location.search).get('id');
 
-        fetch(`http://localhost/2A-ProjetAnnuel/PCS/API/biens?id=${bienId}`)
+        fetch(`http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens?id=${bienId}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Erreur lors de la récupération des détails du bien');
@@ -90,7 +90,7 @@ $idBien = $_GET['id'];
 
 
         function fetchDisponibilites(idBien) {
-            fetch(`http://localhost/2A-ProjetAnnuel/PCS/API/biens/disponibilite?id=${idBien}`)
+            fetch(`http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/disponibilite?id=${idBien}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erreur lors de la récupération des disponibilités');
@@ -212,7 +212,7 @@ $idBien = $_GET['id'];
 
         function deleteBien(idBien) {
             if (confirm("Êtes-vous sûr de vouloir supprimer ce bien ?")) {
-                fetch(`../../../API/routes/biens/delete.php?id=${idBien}`, {
+                fetch(`http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/biens/delete.php?id=${idBien}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -257,7 +257,7 @@ $idBien = $_GET['id'];
         }
 
         function fetchReservations(idBien) {
-            fetch(`http://localhost/2A-ProjetAnnuel/PCS/API/biens/reservationsCalendar?id=${idBien}`)
+            fetch(`http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/reservationsCalendar?id=${idBien}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erreur lors de la récupération des réservations');

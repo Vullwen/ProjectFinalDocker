@@ -29,7 +29,7 @@ include_once '../../template/footer.php';
     document.addEventListener("DOMContentLoaded", function () {
         const bienId = <?php echo json_encode($_GET['id']); ?>;
 
-        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/user/id', {
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + <?php echo json_encode($_SESSION['token']); ?> }
         })
@@ -47,7 +47,7 @@ include_once '../../template/footer.php';
 
                 const userId = data.user_id;
 
-                const apiEndpoint = `http://localhost/2A-ProjetAnnuel/PCS/API/biens/reservations?bienId=${bienId}&userId=${userId}`;
+                const apiEndpoint = `http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/reservations?bienId=${bienId}&userId=${userId}`;
 
                 return fetch(apiEndpoint, {
                     method: 'GET',

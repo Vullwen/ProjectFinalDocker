@@ -59,7 +59,7 @@ require_once "../template/header.php";
                 document.getElementById('property-description').innerHTML = property.Description.replace(/\n/g, '<br>');
                 document.getElementById('property-tarif').textContent = `Tarif par nuit : ${property.Tarif}€`;
 
-                fetch(`http://localhost/2A-ProjetAnnuel/PCS/API/biens/reservationsCalendar?id=${propertyId}`)
+                fetch(`http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/reservationsCalendar?id=${propertyId}`)
                     .then(response => response.json())
                     .then(resData => {
                         if (resData.success) {
@@ -83,7 +83,7 @@ require_once "../template/header.php";
                         alert('Erreur lors de la récupération des réservations');
                     });
 
-                fetch(`http://localhost/2A-ProjetAnnuel/PCS/API/prestataires`)
+                fetch(`http://51.75.69.184/2A-ProjetAnnuel/PCS/API/prestataires`)
                     .then(response => response.json())
                     .then(data => {
                         if (!data.success) {
@@ -199,7 +199,7 @@ require_once "../template/header.php";
             }
         }
 
-        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/user/id', {
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + <?php echo json_encode($_SESSION['token']); ?> }
         })
@@ -240,7 +240,7 @@ require_once "../template/header.php";
                 DomainePrestataire: document.getElementById('prestataire').value
             };
 
-            fetch('../../API/entities/reservationService.php', {
+            fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/entities/reservationService.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

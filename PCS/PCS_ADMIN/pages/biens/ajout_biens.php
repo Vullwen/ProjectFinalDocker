@@ -53,7 +53,6 @@ if (isAdmin()) {
 <a href="../../index.php" class="btn btn-primary">Retour au menu Admin</a>
 
 <script>
-    // Code JavaScript pour afficher l'aperçu de l'image
     document.getElementById('photos').addEventListener('change', function () {
         const preview = document.getElementById('imagePreview');
         preview.innerHTML = '';
@@ -92,7 +91,6 @@ if (isAdmin()) {
             photoNames.push(uniqueFileName);
         }
 
-        // Fonction pour générer un nom de fichier unique
         function generateUniqueFileName(fileName) {
 
             var timestamp = new Date().getTime();
@@ -118,7 +116,7 @@ if (isAdmin()) {
 
         console.log(formData);
 
-        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/biens', {
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -133,7 +131,7 @@ if (isAdmin()) {
 
                 } else {
                     alert('Bien ajouté avec succès');
-                    //window.location.href = 'bien.php';
+                    window.location.href = 'bien.php';
                 }
             });
     });
@@ -142,7 +140,7 @@ if (isAdmin()) {
 
 <script>
     // Code JS pour récuperer bailleurs et mettre dans la liste déroulante
-    fetch('http://localhost/2A-ProjetAnnuel/PCS/API/user/bailleurs')
+    fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/bailleurs')
         .then(response => response.json())
         .then(data => {
             const bailleurSelect = document.getElementById('bailleur');

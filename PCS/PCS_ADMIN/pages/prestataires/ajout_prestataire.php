@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $Mdp = password_hash($_POST['Mdp'], PASSWORD_BCRYPT);
 
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, "http://localhost/API/entities/ajout_prestataire_admin.php");
+    curl_setopt($ch, CURLOPT_URL, "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/entities/ajout_prestataire_admin.php");
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query(['Nom' => $Nom, 'Prenom' => $Prenom, 'NSiret' => $NSiret, 'Adresse' => $Adresse, 'Email' => $Email, 'Telephone' => $Telephone, 'Domaine' => $Domaine, 'Mdp' => $Mdp]));
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

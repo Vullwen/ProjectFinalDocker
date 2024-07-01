@@ -28,7 +28,7 @@ if (isAdmin()) {
 
                 function fetchDemandesPrestataires() {
                     $.ajax({
-                        url: 'http://localhost/2A-ProjetAnnuel/PCS/API/prestataires/demandes',
+                        url: 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/prestataires/demandes',
                         method: 'GET',
                         dataType: 'json',
                         success: function (response) {
@@ -66,7 +66,7 @@ if (isAdmin()) {
 
             function accepterDemande(id) {
                 $.ajax({
-                    url: 'http://localhost/2A-ProjetAnnuel/PCS/API/entities/accepter_demande_prestataire.php',
+                    url: 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/entities/accepter_demande_prestataire.php',
                     method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify({ id: id }),

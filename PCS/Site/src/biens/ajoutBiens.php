@@ -54,7 +54,7 @@ include_once "../../template/header.php";
     </form>
 </div>
 
-<script src="http://localhost/2A-ProjetAnnuel/PCS/Site/javascript/ajout_biens.js"></script>
+<script src="http://51.75.69.184/2A-ProjetAnnuel/PCS/Site/javascript/ajout_biens.js"></script>
 </script>
 <?php
 

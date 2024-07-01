@@ -37,7 +37,7 @@ form.addEventListener('submit', async (e) => {
     const token = document.getElementById('userToken').value;
 
     try {
-        const userApiUrl = `http://localhost/2A-ProjetAnnuel/PCS/API/user/id?token=${encodeURIComponent(token)}`;
+        const userApiUrl = `http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id?token=${encodeURIComponent(token)}`;
         const userResponse = await fetch(userApiUrl);
         const userData = await userResponse.json();
         console.log(userData);
@@ -45,7 +45,7 @@ form.addEventListener('submit', async (e) => {
         if (userData) {
             const idUtilisateur = userData[0].idutilisateur;
 
-            const apiUrl = 'http://localhost/2A-ProjetAnnuel/PCS/API/biens';
+            const apiUrl = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens';
             const data = {
                 idutilisateur: idUtilisateur,
                 type: type,

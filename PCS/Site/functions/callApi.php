@@ -20,23 +20,18 @@ function callAPI($method, $url, $data = false, $headers = [])
                 $url = sprintf("%s?%s", $url, http_build_query($data));
     }
 
-    // Set the URL and other options
     curl_setopt($curl, CURLOPT_URL, $url);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 
-    // Add headers if provided
     if (!empty($headers)) {
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
     }
 
-    // Set options to catch errors
     curl_setopt($curl, CURLOPT_FAILONERROR, true);
     curl_setopt($curl, CURLOPT_VERBOSE, true);
 
-    // Execute the request
     $result = curl_exec($curl);
 
-    // Check for errors
     if ($result === false) {
         $error = curl_error($curl);
         curl_close($curl);

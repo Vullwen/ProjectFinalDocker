@@ -19,7 +19,7 @@ if (!isset($_SESSION['token'])) {
     document.addEventListener('DOMContentLoaded', function () {
         const idReservation = <?php echo json_encode($_GET['id']); ?>;
 
-        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/reservation/details?id=' + idReservation, {
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/reservation/details?id=' + idReservation, {
             method: 'GET'
         })
             .then(response => {
@@ -98,7 +98,7 @@ if (!isset($_SESSION['token'])) {
     }
 
     function cancelReservation(id) {
-        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/reservation?id=' + id, {
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/reservation?id=' + id, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'

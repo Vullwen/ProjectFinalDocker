@@ -290,7 +290,7 @@ include_once '../template/header.php';
     function sendFormDataToAPI(formData) {
 
         var xhr = new XMLHttpRequest();
-        var url = 'http://localhost/2A-ProjetAnnuel/PCS/API/routes/demandebiens';
+        var url = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/demandebiens';
         xhr.open('POST', url, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onreadystatechange = function () {
@@ -301,7 +301,7 @@ include_once '../template/header.php';
 
                     alert('Votre demande a été soumise avec succès !');
 
-                    window.location.href = 'http://localhost/2a-ProjetAnnuel/PCS/Site/index.php';
+                    window.location.href = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/Site/index.php';
                 } else {
 
                     alert('Une erreur s\'est produite. Veuillez réessayer plus tard.');

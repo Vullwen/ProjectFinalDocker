@@ -15,7 +15,7 @@ if (!isset($_SESSION['token'])) {
     document.addEventListener('DOMContentLoaded', function () {
         const token = <?php echo json_encode($_SESSION['token']); ?>;
 
-        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/user/id', {
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + token }
         })
@@ -31,7 +31,7 @@ if (!isset($_SESSION['token'])) {
                     return;
                 }
                 const userId = data.user_id;
-                return fetch('http://localhost/2A-ProjetAnnuel/PCS/API/reservation?id=' + userId, {
+                return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/reservation?id=' + userId, {
                     method: 'GET'
                 });
             })

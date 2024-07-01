@@ -5,7 +5,7 @@ require_once 'librairies/autoload.php';
 $secret_key = 'sk_test_51PJWq3IfbvrWQjMk8MxdQLumkbyVZFhRI96IOQwcp0z58Q5nD7mu7iJtzZ9Ct1e2b9phwFkXOuYpc39vpXVdI6re00vDc09xiV';
 \Stripe\Stripe::setApiKey($secret_key);
 
-$api_base_url = "http://localhost/2A-ProjetAnnuel/PCS/API";
+$api_base_url = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $reservationId = filter_input(INPUT_POST, 'reservationId', FILTER_SANITIZE_NUMBER_INT);

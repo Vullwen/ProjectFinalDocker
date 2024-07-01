@@ -36,7 +36,7 @@ if (isAdmin()) {
     });
 
     function fetchUsers() {
-        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/user')
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

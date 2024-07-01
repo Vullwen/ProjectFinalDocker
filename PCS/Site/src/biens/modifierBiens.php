@@ -9,14 +9,14 @@ $idBien = $_GET['id'];
 
 function getBienDetails($id)
 {
-    $url = "http://localhost/2A-ProjetAnnuel/PCS/API/biens?id={$id}";
+    $url = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens?id={$id}";
     $response = file_get_contents($url);
     return json_decode($response, true);
 }
 
 function updateBien($id, $data)
 {
-    $url = "http://localhost/2A-ProjetAnnuel/PCS/API/biens?id={$id}";
+    $url = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens?id={$id}";
     $options = [
         'http' => [
             'method' => 'PATCH',

@@ -33,7 +33,7 @@ if (isAdmin()) {
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/routes/demandebiens')
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/demandebiens')
             .then(response => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);

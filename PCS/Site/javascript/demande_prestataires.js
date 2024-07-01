@@ -11,7 +11,7 @@ document.getElementById('prestataireForm').addEventListener('submit', function (
         domaine: document.getElementById('domaine').value
     };
 
-    fetch('http://localhost/2A-ProjetAnnuel/PCS/API/entities/demande_prestataire.php', {
+    fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/entities/demande_prestataire.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

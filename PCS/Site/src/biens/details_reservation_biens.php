@@ -35,7 +35,7 @@ include_once '../../template/footer.php';
     document.addEventListener("DOMContentLoaded", function () {
         const reservationId = <?php echo json_encode($_GET['id']); ?>;
 
-        fetch(`http://localhost/2A-ProjetAnnuel/PCS/API/reservation/details?id=${reservationId}`, {
+        fetch(`http://51.75.69.184/2A-ProjetAnnuel/PCS/API/reservation/details?id=${reservationId}`, {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + <?php echo json_encode($_SESSION['token']); ?>,
@@ -92,10 +92,10 @@ include_once '../../template/footer.php';
     function handleAction(action, reservationId) {
         let endpoint = '';
         if (action === 'delete') {
-            endpoint = `../../../API/routes/biens/delete_reservation.php`;
+            endpoint = `http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/biens/delete_reservation.php`;
             window.location.href = 'biensListe.php';
         } else if (action === 'accept') {
-            endpoint = `../../../API/routes/biens/accept_reservation.php`;
+            endpoint = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/biens/accept_reservation.php`;
         }
 
         fetch(endpoint, {
