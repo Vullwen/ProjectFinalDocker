@@ -208,6 +208,7 @@ require_once "../template/header.php";
                 .then(data => {
                     if (data.success) {
                         userId = data.user_id;
+                        console.log('User ID:', userId);
                     } else {
                         alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
                     }
