@@ -50,10 +50,10 @@ include_once "../../template/header.php";
                 return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires?id=' + user_id)
                     .then(response => response.json())
             })
-            .then(biensData => {
+            .then(property => {
                 const biensTable = document.getElementById('biensTable').getElementsByTagName('tbody')[0];
-                if (biensData && biensData.length > 0) {
-                    biensData.forEach(bien => {
+                if (property && property.length > 0) {
+                    property.forEach(bien => {
                         const row = biensTable.insertRow();
                         row.insertCell(0).innerText = bien.Type_bien;
                         row.insertCell(1).innerText = bien.Adresse;
