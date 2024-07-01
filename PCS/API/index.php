@@ -55,7 +55,7 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/biens")) {
 }
 
 if (isPath("/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires")) {
-    if (isGetMethod()) {
+    if (isGetMethod() && isset($_GET['id'])) {
         require_once __DIR__ . "/routes/biens/getIDBailleurs.php";
         die();
     }
