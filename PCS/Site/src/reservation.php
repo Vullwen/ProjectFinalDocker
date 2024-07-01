@@ -233,6 +233,41 @@ require_once "../template/header.php";
                             DomainePrestataire: document.getElementById('prestataire').value
                         };
                         console.log(reservationDetails);
+
+
+                        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/entities/reservationService.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(reservationDetails),
+                        })
+                            .then(response => response.text())
+                            .then(text => {
+                                let data;
+                                try {
+                                    data = JSON.parse(text);
+                                } catch (error) {
+                                    console.error('Invalid JSON:', text);
+                                    throw new Error('Invalid JSON: ' + text);
+                                }
+
+                                if (data.message === 'Booking successful') {
+                                    alert('Votre réservation a été effectuée avec succès.');
+                                    calendar.addEvent({
+                                        title: 'En attente',
+                                        start: selectedDates.start,
+                                        end: selectedDates.end,
+                                        color: 'orange'
+                                    });
+                                } else {
+                                    alert('La réservation a échoué : ' + data.message);
+                                }
+                            })
+                            .catch((error) => {
+                                console.error('Error:', error);
+                                alert('Une erreur est survenue lors de la réservation.');
+                            });
                     } else {
                         alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
                     }
@@ -240,40 +275,6 @@ require_once "../template/header.php";
                 .catch(error => {
                     console.error('Erreur:', error);
                     alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
-                });
-
-            fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/entities/reservationService.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(reservationDetails),
-            })
-                .then(response => response.text())
-                .then(text => {
-                    let data;
-                    try {
-                        data = JSON.parse(text);
-                    } catch (error) {
-                        console.error('Invalid JSON:', text);
-                        throw new Error('Invalid JSON: ' + text);
-                    }
-
-                    if (data.message === 'Booking successful') {
-                        alert('Votre réservation a été effectuée avec succès.');
-                        calendar.addEvent({
-                            title: 'En attente',
-                            start: selectedDates.start,
-                            end: selectedDates.end,
-                            color: 'orange'
-                        });
-                    } else {
-                        alert('La réservation a échoué : ' + data.message);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    alert('Une erreur est survenue lors de la réservation.');
                 });
         }
     });
