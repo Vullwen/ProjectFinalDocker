@@ -54,7 +54,7 @@ require_once "../template/header.php";
                     return;
                 }
 
-                const property = data.property;
+                const property = data.properties[0];
                 document.getElementById('property-title').textContent = `${property.Type_bien} - ${property.Adresse}`;
                 document.getElementById('property-description').innerHTML = property.Description.replace(/\n/g, '<br>');
                 document.getElementById('property-tarif').textContent = `Tarif par nuit : ${property.Tarif}€`;
