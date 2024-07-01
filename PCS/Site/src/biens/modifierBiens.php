@@ -38,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $superficie = $_POST['superficie'];
     $nbChambres = $_POST['nbChambres'];
 
-
     $data = [
         'Type_bien' => $type,
         'Adresse' => $adresse,
@@ -47,28 +46,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'NbChambres' => $nbChambres
     ];
 
-    $updateResponse = updateBien($idBien, $data);
-    var_dump($updateResponse);
+    $bienActuel = getBienDetails($idBien);
+    if ($bienActuel) {
+        $bienActuel = $bienActuel['properties'][0];
 
-    if ($updateResponse['success']) {
+        $dataDiff = array_diff_assoc($data, $bienActuel);
+        if (empty($dataDiff)) {
+            echo "<div class='container mt-5'>";
+            echo "<p>Aucune modification détectée. Veuillez apporter des modifications avant de soumettre.</p>";
+            echo "</div>";
+        } else {
+            $updateResponse = updateBien($idBien, $dataDiff);
 
-        header("Location: biensListe.php");
-        exit;
+            var_dump($updateResponse);
+
+            if (isset($updateResponse['success']) && $updateResponse['success']) {
+                header("Location: biensListe.php");
+                exit;
+            } else {
+                echo "<div class='container mt-5'>";
+                echo "<p>Erreur lors de la mise à jour du bien immobilier : " . ($updateResponse['message'] ?? 'Erreur inconnue') . "</p>";
+                echo "</div>";
+            }
+        }
     } else {
-        //header("Location: biensListe.php");
         echo "<div class='container mt-5'>";
-        echo "<p>Erreur lors de la mise à jour du bien immobilier : {$updateResponse['message']}</p>";
+        echo "<p>Erreur lors de la récupération des détails actuels du bien immobilier.</p>";
         echo "</div>";
     }
 } else if (!isset($idBien)) {
     echo "<div class='container mt-5'>";
     echo "<p>Formulaire incomplet : tous les champs sont requis.</p>";
     echo "</div>";
-
-
 } else {
     $bien = getBienDetails($idBien);
-
 
     if ($bien) {
         echo "<div class='container mt-5'>";
