@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
     if ($bien) {
         echo "<div class='container mt-5'>";
         echo "<h2>Détails du Bien Immobilier</h2>";
-        echo "<p><strong>Type:</strong> {$bien['Type']}</p>";
+        echo "<p><strong>Type:</strong> {$bien['Type_bien']}</p>";
         echo "<p><strong>Adresse:</strong> {$bien['Adresse']}</p>";
         echo "<p><strong>Description:</strong> {$bien['Description']}</p>";
         echo "<p><strong>Superficie:</strong> {$bien['Superficie']}</p>";
