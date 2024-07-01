@@ -95,7 +95,7 @@ include_once '../../template/footer.php';
             endpoint = `http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/biens/delete_reservation.php`;
             window.location.href = 'biensListe.php';
         } else if (action === 'accept') {
-            endpoint = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/biens/accept_reservation.php`;
+            endpoint = `http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/biens/accept_reservation.php`;
         }
 
         fetch(endpoint, {
