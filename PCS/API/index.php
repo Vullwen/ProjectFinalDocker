@@ -79,7 +79,11 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/routes/demandebiens")) {
         require_once __DIR__ . "/routes/biens/demandes/post.php";
         die();
     } else if (isGetMethod()) {
-        require_once __DIR__ . "/routes/biens/demandes/get.php";
+        if (isset($_GET['id']) && !empty($_GET['id'])) {
+            require_once __DIR__ . "/routes/biens/demandes/getID.php";
+        } else {
+            require_once __DIR__ . "/routes/biens/demandes/get.php";
+        }
         die();
     }
 }

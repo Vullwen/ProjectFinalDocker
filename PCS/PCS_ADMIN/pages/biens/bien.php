@@ -21,7 +21,7 @@ if (isAdmin()) {
                 echo "<div class='card' style='cursor: pointer;'>";
                 echo "<img src='../../img/home_icon.png' class='card-img-top small-image' alt='...'>";
                 echo "<div class='card-body'>";
-                echo "<h5 class='card-title'>{$bien['Type']}</h5>";
+                echo "<h5 class='card-title'>{$bien['Type_bien']}</h5>";
                 echo "<p class='card-text'>Adresse: {$bien['Adresse']}</p>";
                 echo "<p class='card-text'>Description: {$bien['Description']}</p>";
                 echo "<p class='card-text'>Superficie: {$bien['Superficie']}</p>";
