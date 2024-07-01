@@ -32,13 +32,8 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/biens")) {
     }
 
     if (isGetMethod()) {
-        if (isset($_GET['id'])) {
-            require_once __DIR__ . "/routes/biens/get.php";
-            die();
-        } else {
-            require_once __DIR__ . "/routes/biens/get.php";
-            die();
-        }
+        require_once __DIR__ . "/routes/biens/get.php";
+        die();
     }
 
     if (isDeleteMethod()) {
