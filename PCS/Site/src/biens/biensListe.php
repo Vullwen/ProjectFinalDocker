@@ -6,6 +6,7 @@ if (!isset($_SESSION['estBailleur']) || $_SESSION['estBailleur'] != 1) {
 }
 
 include_once "../../template/header.php";
+var_dump($_SESSION);
 ?>
 
 <div class='container mt-5'>
