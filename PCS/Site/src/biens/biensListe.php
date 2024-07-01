@@ -50,38 +50,38 @@ include_once "../../template/header.php";
                 return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires?id=' + user_id)
                     .then(response => response.json())
             })
-            .then(data. => {
+            .then(data => {
                 const biensTable = document.getElementById('biensTable').getElementsByTagName('tbody')[0];
-                if(data.property && data.property.length > 0) {
-            data.property.forEach(bien => {
-                const row = biensTable.insertRow();
-                row.insertCell(0).innerText = bien.Type_bien;
-                row.insertCell(1).innerText = bien.Adresse;
-                row.insertCell(2).innerText = bien.Description;
-                row.insertCell(3).innerText = bien.Superficie;
-                row.insertCell(4).innerText = bien.NbChambres;
-                row.insertCell(5).innerText = bien.Tarif + ' € / nuit';
-                const actionsCell = row.insertCell(6);
-                const detailsLink = document.createElement('a');
-                detailsLink.href = '/2A-ProjetAnnuel/PCS/Site/src/biens/details_bien.php?id=' + bien.IDBien;
-                detailsLink.className = 'btn btn-primary';
-                detailsLink.innerText = 'Détails';
-                actionsCell.appendChild(detailsLink);
+                if (data.property && data.property.length > 0) {
+                    data.property.forEach(bien => {
+                        const row = biensTable.insertRow();
+                        row.insertCell(0).innerText = bien.Type_bien;
+                        row.insertCell(1).innerText = bien.Adresse;
+                        row.insertCell(2).innerText = bien.Description;
+                        row.insertCell(3).innerText = bien.Superficie;
+                        row.insertCell(4).innerText = bien.NbChambres;
+                        row.insertCell(5).innerText = bien.Tarif + ' € / nuit';
+                        const actionsCell = row.insertCell(6);
+                        const detailsLink = document.createElement('a');
+                        detailsLink.href = '/2A-ProjetAnnuel/PCS/Site/src/biens/details_bien.php?id=' + bien.IDBien;
+                        detailsLink.className = 'btn btn-primary';
+                        detailsLink.innerText = 'Détails';
+                        actionsCell.appendChild(detailsLink);
+                    });
+                } else {
+                    const container = document.createElement('div');
+                    container.className = 'container mt-5';
+                    container.innerHTML = '<p>Vous n\'avez pas encore ajouté de bien immobilier.</p>';
+                    document.body.insertBefore(container, document.getElementById('biensTable').parentNode);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                const container = document.createElement('div');
+                container.className = 'container mt-5';
+                container.innerHTML = '<p>Une erreur s\'est produite lors de la récupération de vos biens immobiliers.</p>';
+                document.body.insertBefore(container, document.getElementById('biensTable').parentNode);
             });
-        } else {
-            const container = document.createElement('div');
-            container.className = 'container mt-5';
-            container.innerHTML = '<p>Vous n\'avez pas encore ajouté de bien immobilier.</p>';
-            document.body.insertBefore(container, document.getElementById('biensTable').parentNode);
-        }
-    })
-        .catch(error => {
-            console.error('Erreur:', error);
-            const container = document.createElement('div');
-            container.className = 'container mt-5';
-            container.innerHTML = '<p>Une erreur s\'est produite lors de la récupération de vos biens immobiliers.</p>';
-            document.body.insertBefore(container, document.getElementById('biensTable').parentNode);
-        });
     });
 </script>
 
