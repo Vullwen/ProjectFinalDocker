@@ -252,12 +252,6 @@ require_once "../template/header.php";
 
                                 if (data.message === 'Booking successful') {
                                     alert('Votre réservation a été effectuée avec succès.');
-                                    calendar.addEvent({
-                                        title: 'En attente',
-                                        start: selectedDates.start,
-                                        end: selectedDates.end,
-                                        color: 'orange'
-                                    });
                                 } else {
                                     alert('La réservation a échoué : ' + data.message);
                                 }
