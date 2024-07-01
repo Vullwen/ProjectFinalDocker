@@ -46,7 +46,7 @@ require_once "../template/header.php";
             return;
         }
 
-        fetch(`../../API/routes/biens/get.php?id=${propertyId}`)
+        fetch(`http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/biens/get.php?id=${propertyId}`)
             .then(response => response.json())
             .then(data => {
                 if (!data.success) {
