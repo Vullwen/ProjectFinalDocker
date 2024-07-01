@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 } else {
     $bien = getBienDetails($idBien);
-    var_dump($bien['properties']['IDBien']);
+    var_dump($bien['properties'][0]['IDBien']);
 
 
     if ($bien) {
@@ -77,23 +77,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<input type='hidden' name='id' value='{$bien['properties']['IDBien']}'>";
         echo "<div class='form-group'>";
         echo "<label for='type'>Type</label>";
-        echo "<input type='text' class='form-control' id='type' name='type_bien' value='{$bien['properties']['Type_bien']}' required>";
+        echo "<input type='text' class='form-control' id='type' name='type_bien' value='{$bien['properties'][0]['Type_bien']}' required>";
         echo "</div>";
         echo "<div class='form-group'>";
         echo "<label for='adresse'>Adresse</label>";
-        echo "<input type='text' class='form-control' id='adresse' name='adresse' value='{$bien['properties']['Adresse']}' required>";
+        echo "<input type='text' class='form-control' id='adresse' name='adresse' value='{$bien['properties'][0]['Adresse']}' required>";
         echo "</div>";
         echo "<div class='form-group'>";
         echo "<label for='description'>Description</label>";
-        echo "<textarea class='form-control' id='description' name='description' rows='3' required>{$bien['properties']['Description']}</textarea>";
+        echo "<textarea class='form-control' id='description' name='description' rows='3' required>{$bien['properties'][0]['Description']}</textarea>";
         echo "</div>";
         echo "<div class='form-group'>";
         echo "<label for='superficie'>Superficie</label>";
-        echo "<input type='number' class='form-control' id='superficie' name='superficie' value='{$bien['properties']['Superficie']}' required>";
+        echo "<input type='number' class='form-control' id='superficie' name='superficie' value='{$bien['properties'][0]['Superficie']}' required>";
         echo "</div>";
         echo "<div class='form-group'>";
         echo "<label for='nbChambres'>Nombre de Chambres</label>";
-        echo "<input type='number' class='form-control' id='nbChambres' name='nbChambres' value='{$bien['properties']['NbChambres']}' required>";
+        echo "<input type='number' class='form-control' id='nbChambres' name='nbChambres' value='{$bien['properties'][0]['NbChambres']}' required>";
         echo "</div>";
         echo "<button type='submit' class='btn btn-primary'>Enregistrer les modifications</button>";
         echo "</form>";
