@@ -1,73 +1,90 @@
 <?php
+session_start();
 
-if (!$SESSION['estBailleur'] = 1) {
+if (!isset($_SESSION['estBailleur']) || $_SESSION['estBailleur'] != 1) {
     header("Location: /2A-ProjetAnnuel/PCS/Site/src/login.php");
-}
-
-include_once "../../template/header.php";
-include_once "../../functions/callApi.php";
-
-$token = $_SESSION['token'];
-$apiUrlUser = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id";
-$headers = array(
-    "Authorization: Bearer $token"
-);
-
-$responseUser = callAPI('GET', $apiUrlUser, false, $headers);
-$userData = json_decode($responseUser, true);
-
-if (!$userData || !isset($userData['idutilisateur'])) {
-    echo "<div class='container mt-5'>";
-    echo "<p>Une erreur s'est produite lors de la récupération de l'utilisateur.</p>";
-    echo "</div>";
-    include_once "../../template/footer.php";
     exit;
 }
 
-$idutilisateur = $userData['idutilisateur'];
+include_once "../../template/header.php";
+?>
 
-$apiUrlBiens = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires?id=$idutilisateur";
-$responseBiens = callAPI('GET', $apiUrlBiens);
-$biensData = json_decode($responseBiens, true);
+<div class='container mt-5'>
+    <h2>Liste de vos biens immobiliers</h2>
+    <table class='table' id='biensTable'>
+        <thead>
+            <tr>
+                <th scope='col'>Type</th>
+                <th scope='col'>Adresse</th>
+                <th scope='col'>Description</th>
+                <th scope='col'>Superficie</th>
+                <th scope='col'>Nombre de chambres</th>
+                <th scope='col'>Tarif</th>
+                <th scope='col'>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <div class='container mt-2 btn-center'>
+        <a class='btn btn-primary' href='/2A-ProjetAnnuel/PCS/Site/src/biens/ajoutBiens.php'>Ajouter un bien</a>
+    </div>
+</div>
 
-if ($biensData && !empty($biensData)) {
-    echo "<div class='container mt-5'>";
-    echo "<h2>Liste de vos biens immobiliers</h2>";
-    echo "<table class='table'>";
-    echo "<thead>";
-    echo "<tr>";
-    echo "<th scope='col'>Type</th>";
-    echo "<th scope='col'>Adresse</th>";
-    echo "<th scope='col'>Description</th>";
-    echo "<th scope='col'>Superficie</th>";
-    echo "<th scope='col'>Nombre de chambres</th>";
-    echo "<th scope='col'>Tarif</th>";
-    echo "<th scope='col'>Actions</th>";
-    echo "</tr>";
-    echo "</thead>";
-    echo "<tbody>";
-    foreach ($biensData as $bien) {
-        echo "<tr>";
-        echo "<td>" . htmlspecialchars($bien['Type_bien']) . "</td>";
-        echo "<td>" . htmlspecialchars($bien['Adresse']) . "</td>";
-        echo "<td>" . htmlspecialchars($bien['Description']) . "</td>";
-        echo "<td>" . htmlspecialchars($bien['Superficie']) . "</td>";
-        echo "<td>" . htmlspecialchars($bien['NbChambres']) . "</td>";
-        echo "<td>" . htmlspecialchars($bien['Tarif']) . " € / nuit</td>";
-        echo "<td><a href='/2A-ProjetAnnuel/PCS/Site/src/biens/details_bien.php?id=" . htmlspecialchars($bien['IDBien']) . "' class='btn btn-primary'>Détails</a></td>";
-        echo "</tr>";
-    }
-    echo "</tbody>";
-    echo "</table>";
-    echo "</div>";
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const token = '<?php echo $_SESSION['token']; ?>';
+        const headers = new Headers({
+            'Authorization': 'Bearer ' + token
+        });
 
-    echo '<div class="container mt-2 btn-center">
-        <a class="btn btn-primary" href="/2A-ProjetAnnuel/PCS/Site/src/biens/ajoutBiens.php">Ajouter un bien</a>
-        </div>';
-} else {
-    echo "<div class='container mt-5'>";
-    echo "<p>Vous n'avez pas encore ajouté de bien immobilier.</p>";
-    echo "</div>";
-}
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', { headers: headers })
+            .then(response => response.json())
+            .then(userData => {
+                if (!userData || !userData.idutilisateur) {
+                    throw new Error('Erreur lors de la récupération de l\'utilisateur');
+                }
+                return userData.idutilisateur;
+            })
+            .then(idutilisateur => {
+                return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/listeBiensProprietaires?id=' + idutilisateur)
+                    .then(response => response.json())
+            })
+            .then(biensData => {
+                const biensTable = document.getElementById('biensTable').getElementsByTagName('tbody')[0];
+                if (biensData && biensData.length > 0) {
+                    biensData.forEach(bien => {
+                        const row = biensTable.insertRow();
+                        row.insertCell(0).innerText = bien.Type_bien;
+                        row.insertCell(1).innerText = bien.Adresse;
+                        row.insertCell(2).innerText = bien.Description;
+                        row.insertCell(3).innerText = bien.Superficie;
+                        row.insertCell(4).innerText = bien.NbChambres;
+                        row.insertCell(5).innerText = bien.Tarif + ' € / nuit';
+                        const actionsCell = row.insertCell(6);
+                        const detailsLink = document.createElement('a');
+                        detailsLink.href = '/2A-ProjetAnnuel/PCS/Site/src/biens/details_bien.php?id=' + bien.IDBien;
+                        detailsLink.className = 'btn btn-primary';
+                        detailsLink.innerText = 'Détails';
+                        actionsCell.appendChild(detailsLink);
+                    });
+                } else {
+                    const container = document.createElement('div');
+                    container.className = 'container mt-5';
+                    container.innerHTML = '<p>Vous n\'avez pas encore ajouté de bien immobilier.</p>';
+                    document.body.insertBefore(container, document.getElementById('biensTable').parentNode);
+                }
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                const container = document.createElement('div');
+                container.className = 'container mt-5';
+                container.innerHTML = '<p>Une erreur s\'est produite lors de la récupération de vos biens immobiliers.</p>';
+                document.body.insertBefore(container, document.getElementById('biensTable').parentNode);
+            });
+    });
+</script>
 
+<?php
 include_once "../../template/footer.php";
+?>
