@@ -143,7 +143,7 @@ include_once '../template/header.php';
             <a href="#">Déclaration de confidentialité</a>
         </div>
 
-        <div class="g-recaptcha" data-sitekey="6Ldc0AUqAAAAAEDHoRI7yEwkGApoK36A9JbqJjOg"
+        <div class="g-recaptcha" data-sitekey="6Lfn0QUqAAAAAF24UURdWPBTF8yOzfEe9la8AhX_"
             data-callback="validateCaptcha">
         </div>
 
@@ -155,6 +155,15 @@ include_once '../template/header.php';
 </form>
 
 <script>
+
+    function validateCaptcha() {
+        var response = grecaptcha.getResponse();
+        if (response.length === 0) {
+            alert('Veuillez valider le captcha.');
+            return false;
+        }
+        return true;
+    }
     function validateForm() {
         event.preventDefault();
 
