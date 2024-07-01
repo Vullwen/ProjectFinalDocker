@@ -9,7 +9,7 @@ include_once "../../template/header.php";
 include_once "../../../API/database/connectDB.php";
 
 
-
+// APPEL API A METTRE A LA PLACE DE CTHORREUR
 $db = connectDB();
 
 $query = $db->prepare("SELECT idutilisateur FROM utilisateur WHERE token = :token");

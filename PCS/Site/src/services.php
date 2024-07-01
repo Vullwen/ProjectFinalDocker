@@ -1,5 +1,5 @@
 <?php
-require_once "../template/header.php"; // Inclusion de l'en-tête commun
+require_once "../template/header.php";
 ?>
 
 <div class="container mt-5">
@@ -7,7 +7,7 @@ require_once "../template/header.php"; // Inclusion de l'en-tête commun
 
     <div id="prestataires-list" class="mt-4">
         <?php
-        $apiUrl = 'http://localhost/2A-ProjetAnnuel/PCS/API/prestataires';
+        $apiUrl = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/prestataires';
 
         $response = file_get_contents($apiUrl);
 
