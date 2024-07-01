@@ -207,7 +207,7 @@ require_once "../template/header.php";
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        userId = data.user_id;
+                        const userId = data.user_id;
                         console.log('User ID:', userId);
                     } else {
                         alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
