@@ -209,6 +209,30 @@ require_once "../template/header.php";
                     if (data.success) {
                         const userId = data.user_id;
                         console.log('User ID:', userId);
+
+                        if (!selectedDates.start || !selectedDates.end) {
+                            alert('Veuillez sélectionner des dates dans le calendrier.');
+                            return;
+                        }
+
+                        var guests = document.getElementById('guests').value;
+
+                        if (!guests) {
+                            alert('Veuillez remplir le nombre de personnes.');
+                            return;
+                        }
+
+                        var reservationDetails = {
+                            IDUtilisateur: userId,
+                            IDBien: propertyId,
+                            DateDebut: selectedDates.start,
+                            DateFin: selectedDates.end,
+                            Description: `Réservation de ${propertyId}`,
+                            Tarif: propertyTarif,
+                            Guests: guests,
+                            DomainePrestataire: document.getElementById('prestataire').value
+                        };
+                        console.log(reservationDetails);
                     } else {
                         alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
                     }
@@ -217,29 +241,6 @@ require_once "../template/header.php";
                     console.error('Erreur:', error);
                     alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
                 });
-            if (!selectedDates.start || !selectedDates.end) {
-                alert('Veuillez sélectionner des dates dans le calendrier.');
-                return;
-            }
-
-            var guests = document.getElementById('guests').value;
-
-            if (!guests) {
-                alert('Veuillez remplir le nombre de personnes.');
-                return;
-            }
-
-            var reservationDetails = {
-                IDUtilisateur: userId,
-                IDBien: propertyId,
-                DateDebut: selectedDates.start,
-                DateFin: selectedDates.end,
-                Description: `Réservation de ${propertyId}`,
-                Tarif: propertyTarif,
-                Guests: guests,
-                DomainePrestataire: document.getElementById('prestataire').value
-            };
-            console.log(reservationDetails);
 
             fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/entities/reservationService.php', {
                 method: 'POST',
