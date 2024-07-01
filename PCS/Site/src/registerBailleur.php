@@ -143,7 +143,7 @@ include_once '../template/header.php';
             <a href="#">Déclaration de confidentialité</a>
         </div>
 
-        <div class="g-recaptcha" data-sitekey="6Lelat4pAAAAAICQ5VXhM_NsL35T1LE96e9swlml"
+        <div class="g-recaptcha" data-sitekey="6Ldc0AUqAAAAAEDHoRI7yEwkGApoK36A9JbqJjOg"
             data-callback="validateCaptcha">
         </div>
 
