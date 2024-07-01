@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 } else {
     $bien = getBienDetails($idBien);
-    var_dump($bien['properties'][0]['IDBien']);
+    var_dump($bien['properties']['IDBien']);
 
 
     if ($bien) {
