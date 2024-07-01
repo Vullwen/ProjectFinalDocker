@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ];
 
     $updateResponse = updateBien($idBien, $data);
+    var_dump($updateResponse);
 
     if ($updateResponse['success']) {
 

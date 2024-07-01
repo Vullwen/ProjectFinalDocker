@@ -1,6 +1,5 @@
 <?php
 include_once '../Site/template/header.php';
-var_dump($_SESSION['estBailleur']);
 if (isAdmin()) {
     ?>
     <div class="container mt-5">

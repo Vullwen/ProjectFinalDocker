@@ -1,7 +1,7 @@
 <?php
 
-
 include_once "../../template/header.php";
+
 if (!isset($_SESSION['estBailleur']) || $_SESSION['estBailleur'] != 1) {
     header("Location: /2A-ProjetAnnuel/PCS/Site/src/login.php");
     exit;
