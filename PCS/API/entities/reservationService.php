@@ -11,7 +11,7 @@ error_log(print_r($data, true));
 
 if (isset($data->IDUtilisateur) && isset($data->IDBien) && isset($data->DateDebut) && isset($data->DateFin) && isset($data->Description) && isset($data->Tarif) && isset($data->Guests)) {
 
-    $query = 'INSERT INTO reservation (Description, Tarif, DateDebut, DateFin, IDUtilisateur, IDBien, NbVoyageurs, Prestations, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    $query = 'INSERT INTO reservation (Description, Tarif, DateDebut, DateFin, IDUtilisateur, IDBien, NbVoyageurs, Prestations, Status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
     $stmt = $conn->prepare($query);
     $result = $stmt->execute([$data->Description, $data->Tarif, $data->DateDebut, $data->DateFin, $data->IDUtilisateur, $data->IDBien, $data->Guests, $data->DomainePrestataire, 'Pending']);
 

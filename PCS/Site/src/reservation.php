@@ -93,7 +93,6 @@ require_once "../template/header.php";
                         const prestataires = data.data;
                         const selectPrestataire = document.createElement('select');
                         selectPrestataire.classList.add('form-select');
-                        selectPrestataire.setAttribute('id', 'prestataire');
                         selectPrestataire.setAttribute('name', 'prestataire');
                         selectPrestataire.required = true;
 
