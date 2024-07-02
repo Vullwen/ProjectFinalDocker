@@ -26,7 +26,7 @@ try {
 
     $userId = $row['idutilisateur'];
 
-    $targetDir = '/2A-ProjetAnnuel/PCS/Site/img/PhotosBienImmobilier/';
+    $targetDir = '/var/www/html/2A-ProjetAnnuel/PCS/Site/img/PhotosBienImmobilier/';
 
     $photoPaths = [];
     if (isset($_FILES['propertyPhotos'])) {
