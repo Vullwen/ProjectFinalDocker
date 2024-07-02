@@ -9,6 +9,7 @@ include __DIR__ . "/../../../database/connectDB.php";
 
 try {
     $body = getBody();
+    var_dump($body);
 
     $databaseConnection = connectDB();
 
@@ -25,9 +26,6 @@ try {
     $userId = $row['idutilisateur'];
 
     $targetDir = '/2A-ProjetAnnuel/PCS/Site/img/PhotosBienImmobilier/';
-    if (!is_dir($targetDir)) {
-        mkdir($targetDir, 0777, true);
-    }
 
     $photoPaths = [];
     if (isset($_FILES['propertyPhotos'])) {
