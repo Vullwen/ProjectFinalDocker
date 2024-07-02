@@ -11,6 +11,7 @@ $apiUrl = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/demandebiens?id=' 
 
 $response = file_get_contents($apiUrl);
 
+
 if ($response === FALSE) {
     die("L'appel à l'API a échoué.");
 }
