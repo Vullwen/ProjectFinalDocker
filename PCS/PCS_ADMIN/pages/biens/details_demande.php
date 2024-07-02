@@ -80,6 +80,9 @@ $demande = $responseData['data'];
                     <div id="photo-container"></div>
                 </div>
             </div>
+            <div id="image-overlay" onclick="hideImage()">
+                <img id="overlay-img" src="" alt="Agrandissement de l'image">
+            </div>
             <div class="row mt-3">
                 <div class="col-md-12">
                     <h5>Actions :</h5>
@@ -174,3 +177,6 @@ $demande = $responseData['data'];
 
     document.addEventListener('DOMContentLoaded', initMap);
 </script>
+
+<?php
+include_once '../../../Site/template/footer.php';
