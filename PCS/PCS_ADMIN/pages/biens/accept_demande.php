@@ -18,6 +18,7 @@ if (!$responseData || !$responseData['success']) {
 
 $demande = $responseData['data'];
 $demande['tarif'] = $_GET['tarif'];
+
 ?>
 
 <script>
@@ -47,7 +48,7 @@ $demande['tarif'] = $_GET['tarif'];
             Superficie: <?php echo $demande['superficie']; ?>,
             NbChambres: <?php echo $demande['nombre_chambres']; ?>,
             Capacite: <?php echo $demande['capacite']; ?>,
-            Description: <?php echo $demande['description']; ?>,
+            Description: "<?php echo $demande['description']; ?>",
             Type_conciergerie: "<?php echo $demande['type_conciergerie']; ?>"
 
         }));
