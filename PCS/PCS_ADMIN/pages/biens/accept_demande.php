@@ -1,9 +1,9 @@
 <?php
 include "../../../Site/template/header.php";
 
-$apiUrl = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/demandebiens?id=' . $_GET['id'];
+$apiUrlDemandes = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/demandebiens?id=' . $_GET['id'];
 
-$response = file_get_contents($apiUrl);
+$response = file_get_contents($apiUrlDemandes);
 
 
 if ($response === FALSE) {
@@ -17,7 +17,40 @@ if (!$responseData || !$responseData['success']) {
 }
 
 $demande = $responseData['data'];
-$demande += ['tarif' => $_GET['tarif']];
+$demande['tarif'] = $_GET['tarif'];
+?>
 
-var_dump($demande);
-// Appel API a l'url http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens en method POST et ranger 
+<script>
+
+    function acceptDemande() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                if (response.success) {
+                    alert("La demande a été acceptée.");
+                    window.location.href = "demandeBailleurs.php";
+                } else {
+                    alert("Une erreur s'est produite.");
+                }
+            }
+        };
+        xhr.send(JSON.stringify({
+            IDUtilisateur: <?php echo $demande['utilisateur_id']; ?>,
+            Tarif: <?php echo $demande['tarif']; ?>,
+            Adresse: "<?php echo $demande['adresse']; ?>",
+            Pays: "<?php echo $demande['pays']; ?>",
+            Type_bien: "<?php echo $demande['type_bien']; ?>",
+            type_location: "<?php echo $demande['type_location']; ?>",
+            Superficie: <?php echo $demande['superficie']; ?>,
+            NbChambres: <?php echo $demande['nombre_chambres']; ?>,
+            Capacite: <?php echo $demande['capacite']; ?>,
+            Description: <?php echo $demande['description']; ?>,
+            Type_conciergerie: "<?php echo $demande['type_conciergerie']; ?>"
+
+        }));
+
+    }
+</script>
