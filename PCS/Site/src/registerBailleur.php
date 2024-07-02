@@ -242,6 +242,7 @@ include_once '../template/header.php';
     }
 
     function validateFormData(formData) {
+        console.log(formData);
         if (!formData.get('conciergerie')) {
             alert('Veuillez sélectionner un type de conciergerie.');
             return false;
@@ -316,7 +317,6 @@ include_once '../template/header.php';
     }
 
     function sendFormDataToAPI(formData) {
-        console.log(formData);
 
         var xhr = new XMLHttpRequest();
         var url = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/demandebiens';
