@@ -12,7 +12,7 @@ try {
         throw new Exception("L'adresse est obligatoire.");
     }
 
-    if (!isset($body['_bien']) || empty($body['type_bien'])) {
+    if (!isset($body['type_bien']) || empty($body['type_bien'])) {
         throw new Exception("Le type est obligatoire.");
     }
 
