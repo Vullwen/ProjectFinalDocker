@@ -17,5 +17,7 @@ if (!$responseData || !$responseData['success']) {
 }
 
 $demande = $responseData['data'];
+$demande += ['tarif' => $_GET['tarif']];
 
 var_dump($demande);
+// Appel API a l'url http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens en method POST et ranger 
