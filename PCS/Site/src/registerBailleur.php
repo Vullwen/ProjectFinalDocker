@@ -6,7 +6,7 @@ include_once '../template/header.php';
 
 <h1 id="titleFormBailleur"> Devenir Bailleur chez ParisCareTaker ! </h1>
 
-<form id="devenirBailleurForm" onsubmit="validateForm()" enctype="multipart/form-data">
+<form id="devenirBailleurForm" onsubmit="validateForm(event)" enctype="multipart/form-data">
     <div class="form-group">
         <label for="conciergerie">Quel type de conciergerie souhaitez-vous ?<span class="obligatoire">
                 (obligatoire)</span></label><br>
