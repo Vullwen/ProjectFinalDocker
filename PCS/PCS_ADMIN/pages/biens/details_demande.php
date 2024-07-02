@@ -191,7 +191,7 @@ $demande = $responseData['data'];
             tarif: tarif,
         };
 
-        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/biens', {
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
