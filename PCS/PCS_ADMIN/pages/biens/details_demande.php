@@ -117,12 +117,28 @@ $demande = $responseData['data'];
                         imgElement.alt = 'Photo de bien immobilier';
                         imgElement.classList.add('img-thumbnail', 'mr-2', 'mb-2');
 
+                        imgElement.addEventListener('click', function () {
+                            showImage(imgElement.src);
+                        });
+
                         photoContainer.appendChild(imgElement);
                     });
                 }
             })
             .catch(error => console.error('Erreur lors du chargement des photos :', error));
     });
+
+    function showImage(src) {
+        const overlay = document.getElementById('image-overlay');
+        const overlayImg = document.getElementById('overlay-img');
+        overlayImg.src = src;
+        overlay.style.display = 'flex';
+    }
+
+    function hideImage() {
+        const overlay = document.getElementById('image-overlay');
+        overlay.style.display = 'none';
+    }
 
     function initMap() {
         window.map = new google.maps.Map(document.getElementById('map'), {
