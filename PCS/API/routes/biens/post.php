@@ -83,7 +83,7 @@ try {
     $updatePhotosQuery = $databaseConnection->prepare("
     UPDATE photobienimmobilier 
     SET IDbien = :idBienImmobilier 
-    WHERE IDdemande = idDemande
+    WHERE IDdemande = :idDemande
 ");
 
     $updatePhotosQuery->execute([
