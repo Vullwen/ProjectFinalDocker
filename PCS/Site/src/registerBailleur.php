@@ -226,7 +226,13 @@ include_once '../template/header.php';
                 for (var i = 0; i < photoFiles.length; i++) {
                     formData.append('propertyPhotos[]', photoFiles[i]);
                 }
-                console.log(formData);
+                console.log(formData.get('conciergerie'));
+                console.log(formData.get('autreConciergerie'));
+                console.log(formData.get('adresse'));
+                console.log(formData.get('pays'));
+                console.log(formData.get('typeBien'));
+                console.log(formData.get('typeLocation'));
+                console.log(formData.get('superficie'));
 
                 if (validateFormData(formData)) {
                     sendFormDataToAPI(formData);
