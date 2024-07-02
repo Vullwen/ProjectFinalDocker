@@ -233,6 +233,7 @@ include_once '../template/header.php';
                 console.log(formData.get('typeBien'));
                 console.log(formData.get('typeLocation'));
                 console.log(formData.get('superficie'));
+                console.log(validateFormData(formData));
 
                 if (validateFormData(formData)) {
                     sendFormDataToAPI(formData);
@@ -248,7 +249,6 @@ include_once '../template/header.php';
     }
 
     function validateFormData(formData) {
-        console.log(formData);
         if (!formData.get('conciergerie')) {
             alert('Veuillez sélectionner un type de conciergerie.');
             return false;
