@@ -172,4 +172,5 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/demandesBiens/photos")) {
         die();
     }
 }
+
 // PowerPoint soutenance PA : Présentation personnes, présentation du projet, présentation des technologies utilisées. 5 min
