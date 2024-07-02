@@ -327,7 +327,6 @@ include_once '../template/header.php';
         var xhr = new XMLHttpRequest();
         var url = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/demandebiens';
         xhr.open('POST', url, true);
-        xhr.setRequestHeader('Content-Type', 'multipart/form-data');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 console.log(xhr.responseText);
