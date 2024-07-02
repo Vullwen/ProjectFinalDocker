@@ -45,9 +45,9 @@ try {
 
     $postbiensQuery = $databaseConnection->prepare("
         INSERT INTO bienimmobilier 
-        (adresse, type_bien, description, superficie, nbChambres, tarif, type_conciergerie, idutilisateur, pays, type_location, capacite)
+        (adresse, type_bien, description, superficie, NbChambres, tarif, type_conciergerie, idutilisateur, pays, type_location, capacite)
         VALUES 
-        (:adresse, :type_bien, :description, :superficie, :nbChambres, :tarif, :type_conciergerie, :idutilisateur, :pays, :type_location, :capacite)
+        (:adresse, :type_bien, :description, :superficie, :NbChambres, :tarif, :type_conciergerie, :idutilisateur, :pays, :type_location, :capacite)
     ");
 
     $success = $postbiensQuery->execute([
@@ -55,7 +55,7 @@ try {
         "type_bien" => $body['type_bien'],
         "description" => $body['description'],
         "superficie" => $body['superficie'],
-        "nbChambres" => $body['nbChambres'],
+        "NbChambres" => $body['nbChambres'],
         "tarif" => $body['tarif'],
         "type_conciergerie" => $body['type_conciergerie'],
         "idutilisateur" => $body['idutilisateur'],
