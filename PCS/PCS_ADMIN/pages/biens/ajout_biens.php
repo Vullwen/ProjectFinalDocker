@@ -114,7 +114,7 @@ if (isAdmin()) {
 
 
 
-        console.log(formData);
+        console.log(photoNames);
 
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens', {
             method: 'POST',
@@ -131,7 +131,7 @@ if (isAdmin()) {
 
                 } else {
                     alert('Bien ajouté avec succès');
-                    window.location.href = 'bien.php';
+                    //window.location.href = 'bien.php';  // ICI FAUT REPRENDRE 
                 }
             });
     });

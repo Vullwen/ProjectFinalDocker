@@ -6,7 +6,7 @@ include_once '../template/header.php';
 
 <h1 id="titleFormBailleur"> Devenir Bailleur chez ParisCareTaker ! </h1>
 
-<form id="devenirBailleurForm" onsubmit="validateForm()">
+<form id="devenirBailleurForm" onsubmit="validateForm()" enctype="multipart/form-data">
     <div class="form-group">
         <label for="conciergerie">Quel type de conciergerie souhaitez-vous ?<span class="obligatoire">
                 (obligatoire)</span></label><br>
@@ -130,6 +130,12 @@ include_once '../template/header.php';
         </div>
 
         <div class="form-group">
+            <label for="propertyPhotos">Photos de votre bien immobilier :</label><br>
+            <input type="file" id="propertyPhotos" name="propertyPhotos[]" multiple required>
+            <div id="photoPreview"></div>
+        </div>
+
+        <div class="form-group">
             <label> Ajoutez une description à votre bien !<span class="obligatoire">
                     (obligatoire)</span></label><br>
             <textarea id="description" name="description" required></textarea>
@@ -155,6 +161,27 @@ include_once '../template/header.php';
 </form>
 
 <script>
+    document.getElementById('propertyPhotos').addEventListener('change', function (event) {
+        var files = event.target.files;
+        var photoPreview = document.getElementById('photoPreview');
+        photoPreview.innerHTML = '';
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '200px';
+                img.style.margin = '10px';
+                photoPreview.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
 
     function validateCaptcha() {
         var response = grecaptcha.getResponse();
@@ -177,37 +204,34 @@ include_once '../template/header.php';
 
         validateAddress(adresseComplete, function (isValid) {
             if (isValid) {
-                var token = "<?php echo $_SESSION['token']; ?>";
+                var formData = new FormData();
+                formData.append('token', token);
+                formData.append('conciergerie', document.querySelector('input[name="conciergerie"]:checked').value);
+                formData.append('autreConciergerie', document.getElementById('autreConciergerie').value);
+                formData.append('adresse', adresseComplete);
+                formData.append('pays', document.getElementById('pays').value);
+                formData.append('typeBien', document.getElementById('typeBien').value);
+                formData.append('typeLocation', document.getElementById('typeLocation').value);
+                formData.append('superficie', document.getElementById('superficie').value);
+                formData.append('nombreChambres', document.getElementById('nombreChambres').value);
+                formData.append('capacite', document.getElementById('capacite').value);
+                formData.append('nom', document.getElementById('nom').value);
+                formData.append('email', document.getElementById('email').value);
+                formData.append('telephone', document.getElementById('telephone').value);
+                formData.append('contact', document.querySelector('input[name="contact"]:checked').value);
+                formData.append('acceptation', document.getElementById('acceptation').checked);
+                formData.append('description', document.getElementById('description').value);
 
-                var formData = {
-                    token: token,
-                    conciergerie: document.querySelector('input[name="conciergerie"]:checked').value,
-                    autreConciergerie: document.getElementById('autreConciergerie').value,
-                    adresse: adresseComplete,
-                    pays: document.getElementById('pays').value,
-                    typeBien: document.getElementById('typeBien').value,
-                    typeLocation: document.getElementById('typeLocation').value,
-                    superficie: document.getElementById('superficie').value,
-                    nombreChambres: document.getElementById('nombreChambres').value,
-                    capacite: document.getElementById('capacite').value,
-                    nom: document.getElementById('nom').value,
-                    email: document.getElementById('email').value,
-                    telephone: document.getElementById('telephone').value,
-                    contact: document.querySelector('input[name="contact"]:checked').value,
-                    acceptation: document.getElementById('acceptation').checked,
-                    description: document.getElementById('description').value
-                };
+                var photoFiles = document.getElementById('propertyPhotos').files;
+                for (var i = 0; i < photoFiles.length; i++) {
+                    formData.append('propertyPhotos[]', photoFiles[i]);
+                }
 
                 if (validateFormData(formData)) {
                     sendFormDataToAPI(formData);
-                }
-
-                if (!validateFormData(formData)) {
+                } else {
                     return false;
                 }
-
-
-                return false;
 
             } else {
                 alert('Adresse invalide. Veuillez entrer une adresse valide.');
@@ -217,81 +241,75 @@ include_once '../template/header.php';
     }
 
     function validateFormData(formData) {
-
-        if (formData.conciergerie.trim() === '') {
+        if (!formData.get('conciergerie')) {
             alert('Veuillez sélectionner un type de conciergerie.');
             return false;
         }
 
-        if (formData.adresse.trim() === '') {
-            alert('Veuillez entrer une adresse.');
-            return false;
-        }
-        if (formData.adresse.trim() === '') {
+        if (!formData.get('adresse')) {
             alert('Veuillez entrer une adresse.');
             return false;
         }
 
-        if (formData.pays.trim() === '') {
-            alert('Veuillez sélectionner un pays.');
+        if (!formData.get('pays')) {
+            alert('Veuillez entrer un pays.');
             return false;
         }
 
-        if (formData.typeBien.trim() === '') {
-            alert('Veuillez sélectionner un type de bien.');
+        if (!formData.get('typeBien')) {
+            alert('Veuillez entrer un type de bien.');
             return false;
         }
 
-        if (formData.typeLocation.trim() === '') {
-            alert('Veuillez sélectionner un type de location.');
+        if (!formData.get('typeLocation')) {
+            alert('Veuillez entrer un type de location.');
             return false;
         }
 
-        if (formData.superficie.trim() === '') {
+        if (!formData.get('superficie')) {
             alert('Veuillez entrer une superficie.');
             return false;
         }
 
-        if (formData.nombreChambres.trim() === '') {
-            alert('Veuillez entrer un nombre de chambres.');
+        if (!formData.get('nombreChambres')) {
+            alert('Veuillez entrer le nombre de chambres.');
             return false;
         }
 
-        if (formData.capacite.trim() === '') {
-            alert('Veuillez sélectionner une capacité.');
+        if (!formData.get('capacite')) {
+            alert('Veuillez entrer la capacité.');
             return false;
         }
 
-        if (formData.nom.trim() === '') {
+        if (!formData.get('nom')) {
             alert('Veuillez entrer un nom.');
             return false;
         }
 
-        if (formData.email.trim() === '') {
+        if (!formData.get('email')) {
             alert('Veuillez entrer un email.');
             return false;
         }
 
-        if (formData.telephone.trim() === '') {
+        if (!formData.get('telephone')) {
             alert('Veuillez entrer un numéro de téléphone.');
             return false;
         }
 
-        if (formData.contact.trim() === '') {
-            alert('Veuillez sélectionner une heure de contact.');
+        if (!formData.get('contact')) {
+            alert('Veuillez sélectionner un type de contact.');
             return false;
         }
 
-        if (!formData.acceptation) {
-            alert('Veuillez accepter la déclaration de confidentialité.');
+        if (!formData.get('acceptation')) {
+            alert('Vous devez accepter les termes et conditions.');
             return false;
         }
 
-        if (formData.description.trim() === '') {
+        if (!formData.get('description')) {
             alert('Veuillez entrer une description.');
             return false;
         }
-
 
         return true;
     }

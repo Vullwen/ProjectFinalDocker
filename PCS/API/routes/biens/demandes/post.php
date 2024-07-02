@@ -24,6 +24,24 @@ try {
 
     $userId = $row['idutilisateur'];
 
+    $targetDir = '/2A-ProjetAnnuel/PCS/Site/img/PhotosBienImmobilier/';
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0777, true);
+    }
+
+    $photoPaths = [];
+    if (isset($_FILES['propertyPhotos'])) {
+        foreach ($_FILES['propertyPhotos']['tmp_name'] as $index => $tmpName) {
+            $originalName = basename($_FILES['propertyPhotos']['name'][$index]);
+            $uniqueName = uniqid() . '-' . $originalName;
+            $targetFilePath = $targetDir . $uniqueName;
+
+            if (move_uploaded_file($tmpName, $targetFilePath)) {
+                $photoPaths[] = 'img/PhotosBienImmobilier/' . $uniqueName;
+            }
+        }
+    }
+
     $postDemandeBienQuery = $databaseConnection->prepare("INSERT INTO demandebailleurs (type_conciergerie, autre_conciergerie, adresse, pays, type_bien, type_location, superficie, nombre_chambres, capacite, nom, description, email, telephone, heure_contact, date_demande, etat, utilisateur_id) VALUES (:type_conciergerie, :autre_conciergerie, :adresse, :pays, :type_bien, :type_location, :superficie, :nombre_chambres, :capacite, :nom, :description, :email, :telephone, :heure_contact, :date_demande, :etat, :utilisateur_id)");
 
     $success = $postDemandeBienQuery->execute([
@@ -46,6 +64,17 @@ try {
         "utilisateur_id" => $userId
     ]);
 
+    $demandeId = $databaseConnection->lastInsertId();
+
+    if ($success && !empty($photoPaths)) {
+        $insertPhotosQuery = $databaseConnection->prepare("INSERT INTO photobienimmobilier (IDdemande, cheminPhoto) VALUES (:IDdemande, :cheminPhoto)");
+        foreach ($photoPaths as $path) {
+            $insertPhotosQuery->execute([
+                'IDdemande' => $demandeId,
+                'cheminPhoto' => $path
+            ]);
+        }
+    }
 
 
     $errorInfo = $postDemandeBienQuery->errorInfo();
