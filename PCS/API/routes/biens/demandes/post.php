@@ -9,7 +9,11 @@ include __DIR__ . "/../../../database/connectDB.php";
 
 try {
     $body = getBody();
-    var_dump($body);
+    ?>
+    <script>
+        console.log(<?php echo json_encode($body); ?>);
+    </script>
+    <?php
 
     $databaseConnection = connectDB();
 
