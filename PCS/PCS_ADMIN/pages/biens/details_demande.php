@@ -186,32 +186,10 @@ $demande = $responseData['data'];
             return;
         }
 
-        const data = {
-            id: id,
-            tarif: tarif,
-        };
-
-        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('La demande a été acceptée avec succès.');
-                    window.location.href = 'demandeBailleurs.php';
-                } else {
-                    alert('Une erreur s\'est produite lors de l\'acceptation de la demande.');
-                }
-            })
-            .catch(error => {
-                console.error('Erreur lors de la demande d\'acceptation :', error);
-                alert('Erreur lors de la demande d\'acceptation.');
-            });
+        window.location.href = 'accept_demande.php?id=' + id + '&tarif=' + tarif;
     }
+
+
 
     document.addEventListener('DOMContentLoaded', initMap);
 </script>

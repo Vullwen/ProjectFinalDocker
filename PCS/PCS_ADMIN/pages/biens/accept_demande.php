@@ -1,66 +1,21 @@
 <?php
-include_once '../../../Site/template/header.php';
-include_once '../../../API/database/connectDB.php';
+include "../../../Site/template/header.php";
 
-if (!isset($_GET['id']) || empty($_GET['id'])) {
-    die("L'identifiant de la demande est obligatoire.");
-} else if (!isset($_SESSION['isAdmin'])) {
-    die("Vous n'êtes pas autorisé à accéder à cette page.");
+$apiUrl = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/demandebiens?id=' . $_GET['id'];
+
+$response = file_get_contents($apiUrl);
+
+
+if ($response === FALSE) {
+    die("L'appel à l'API a échoué.");
 }
 
-$db = connectDB();
+$responseData = json_decode($response, true);
 
-if (!$db) {
-    die("La connexion à la base de données a échoué.");
+if (!$responseData || !$responseData['success']) {
+    die("Aucune demande de bailleur n'a été trouvée ou une erreur s'est produite.");
 }
 
-$idDemande = $_GET['id'];
+$demande = $responseData['data'];
 
-$getDemandeQuery = $db->prepare("SELECT * FROM demandebailleurs WHERE id = :id");
-$getDemandeQuery->execute(['id' => $idDemande]);
-$demande = $getDemandeQuery->fetch(PDO::FETCH_ASSOC);
-
-
-if ($demande) {
-
-    if (($demande['type_conciergerie'] == "Autre")) {
-        $type_conciergerie = $demande['autre_conciergerie'];
-    } else {
-        $type_conciergerie = null;
-    }
-
-    $insertQuery = $db->prepare("
-        INSERT INTO bienimmobilier 
-        (adresse, type_bien, description, superficie, nbchambres, tarif, type_conciergerie, idutilisateur, pays, type_location, capacite)
-        VALUES 
-        (:adresse, :type_bien, :description, :superficie, :nbchambres, :tarif, :type_conciergerie, :idutilisateur, :pays, :type_location, :capacite)
-    ");
-
-    $result = $insertQuery->execute([
-        'adresse' => $demande['adresse'],
-        'type_bien' => $demande['type_bien'],
-        'description' => $demande['description'],
-        'superficie' => $demande['superficie'],
-        'nbchambres' => $demande['nombre_chambres'],
-        'tarif' => 55, // A CHANGER !! ! ! !! ! ! !! !! ! ! ! !! ! !
-        'type_conciergerie' => $type_conciergerie,
-        'idutilisateur' => $demande['utilisateur_id'],
-        'pays' => $demande['pays'],
-        'type_location' => $demande['type_location'],
-        'capacite' => $demande['capacite']
-    ]);
-
-    if ($result) {
-        $query = $db->prepare("UPDATE demandebailleurs SET etat = 'Acceptée' WHERE id = :id");
-        $query->execute(['id' => $idDemande]);
-
-        echo "<div class='container mt-5'><p>Demande acceptée avec succès.</p></div>";
-
-    } else {
-        echo "<div class='container mt-5'><p>Une erreur s'est produite lors de l'acceptation de la demande.</p></div>";
-    }
-} else {
-    echo "<div class='container mt-5'><p>Aucune demande trouvée avec l'ID fourni.</p></div>";
-}
-
-include_once '../../../Site/template/footer.php';
+var_dump($demande);
