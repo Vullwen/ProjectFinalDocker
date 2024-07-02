@@ -226,6 +226,7 @@ include_once '../template/header.php';
                 for (var i = 0; i < photoFiles.length; i++) {
                     formData.append('propertyPhotos[]', photoFiles[i]);
                 }
+                console.log(formData);
 
                 if (validateFormData(formData)) {
                     sendFormDataToAPI(formData);
