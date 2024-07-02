@@ -9,11 +9,6 @@ include __DIR__ . "/../../../database/connectDB.php";
 
 try {
     $body = getBody();
-    ?>
-    <script>
-        console.log(<?php echo json_encode($body); ?>);
-    </script>
-    <?php
 
     $databaseConnection = connectDB();
 
@@ -21,7 +16,7 @@ try {
         die("La connexion à la base de données a échoué.");
     }
 
-    $token = $_SESSION['token'];
+    $token = $body['token'];
 
     $getUserIDQuery = $databaseConnection->prepare("SELECT idutilisateur FROM utilisateur WHERE token = :token");
     $getUserIDQuery->bindParam(':token', $token);
