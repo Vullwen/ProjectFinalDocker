@@ -45,17 +45,17 @@ echo "<script>
             }
         };
         xhr.send(JSON.stringify({
-            IDUtilisateur: <?php echo $demande['utilisateur_id']; ?>,
-            Tarif: <?php echo $demande['tarif']; ?>,
-            Adresse: "<?php echo $demande['adresse']; ?>",
-            Pays: "<?php echo $demande['pays']; ?>",
-            Type_bien: "<?php echo $demande['type_bien']; ?>",
+            idutilisateur: <?php echo $demande['utilisateur_id']; ?>,
+            tarif: <?php echo $demande['tarif']; ?>,
+            adresse: "<?php echo $demande['adresse']; ?>",
+            pays: "<?php echo $demande['pays']; ?>",
+            type_bien: "<?php echo $demande['type_bien']; ?>",
             type_location: "<?php echo $demande['type_location']; ?>",
-            Superficie: <?php echo $demande['superficie']; ?>,
-            NbChambres: <?php echo $demande['nombre_chambres']; ?>,
-            Capacite: <?php echo $demande['capacite']; ?>,
-            Description: "<?php echo $demande['description']; ?>",
-            Type_conciergerie: "<?php echo $demande['type_conciergerie']; ?>"
+            superficie: <?php echo $demande['superficie']; ?>,
+            nbchambres: <?php echo $demande['nombre_chambres']; ?>,
+            capacite: <?php echo $demande['capacite']; ?>,
+            description: "<?php echo $demande['description']; ?>",
+            type_conciergerie: "<?php echo $demande['type_conciergerie']; ?>"
 
         }));
 
