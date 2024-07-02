@@ -191,7 +191,7 @@ include_once '../template/header.php';
         }
         return true;
     }
-    function validateForm() {
+    function validateForm(event) {
         event.preventDefault();
 
         var token = "<?php echo $_SESSION['token']; ?>";
