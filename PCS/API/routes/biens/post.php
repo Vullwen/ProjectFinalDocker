@@ -12,7 +12,7 @@ try {
         throw new Exception("L'adresse est obligatoire.");
     }
 
-    if (!isset($body['type']) || empty($body['type'])) {
+    if (!isset($body['_bien']) || empty($body['type_bien'])) {
         throw new Exception("Le type est obligatoire.");
     }
 
@@ -43,16 +43,25 @@ try {
 
     $databaseConnection = connectDB();
 
-    $postbiensQuery = $databaseConnection->prepare("INSERT INTO bienimmobilier (adresse, type, description, superficie, nbChambres, tarif, idutilisateur) VALUES (:adresse, :type, :description, :superficie, :nbChambres, :tarif, :idutilisateur)");
+    $postbiensQuery = $databaseConnection->prepare("
+        INSERT INTO bienimmobilier 
+        (adresse, type_bien, description, superficie, nbChambres, tarif, type_conciergerie, idutilisateur, pays, type_location, capacite)
+        VALUES 
+        (:adresse, :type_bien, :description, :superficie, :nbChambres, :tarif, :type_conciergerie, :idutilisateur, :pays, :type_location, :capacite)
+    ");
 
     $success = $postbiensQuery->execute([
         "adresse" => $body['adresse'],
-        "type" => $body['type'],
+        "type_bien" => $body['type_bien'],
         "description" => $body['description'],
         "superficie" => $body['superficie'],
-        "nbChambres" => $body['nbchambres'],
+        "nbChambres" => $body['nbChambres'],
         "tarif" => $body['tarif'],
-        "idutilisateur" => $body['idutilisateur']
+        "type_conciergerie" => $body['type_conciergerie'],
+        "idutilisateur" => $body['idutilisateur'],
+        "pays" => $body['pays'],
+        "type_location" => $body['type_location'],
+        "capacite" => $body['capacite']
     ]);
 
     if (!$success) {

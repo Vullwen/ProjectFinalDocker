@@ -74,6 +74,10 @@ $demande = $responseData['data'];
                     <p><?php echo htmlspecialchars($demande['etat']); ?></p>
                 </div>
             </div>
+            <div>
+                <label for="tarif">Tarif à la nuit :</label>
+                <input type="number" id="tarif" name="tarif">
+            </div>
             <div class="row mt-3">
                 <div class="col-md-12">
                     <h5>Photos :</h5>
@@ -86,9 +90,9 @@ $demande = $responseData['data'];
             <div class="row mt-3">
                 <div class="col-md-12">
                     <h5>Actions :</h5>
-                    <a class='btn btn-info btn-sm ml-2'
-                        href="accept_demande.php?id=<?php echo htmlspecialchars($demande['id']); ?>">Accepter la
-                        demande</a>
+                    <button class='btn btn-info btn-sm ml-2'
+                        onclick="acceptDemande(<?php echo htmlspecialchars($demande['id']); ?>)">Accepter la
+                        demande</button>
                     <a class='btn btn-info btn-sm ml-2 btn-red'
                         href="refuse_demande.php?id=<?php echo htmlspecialchars($demande['id']); ?>">Refuser la
                         demande</a>
@@ -173,6 +177,40 @@ $demande = $responseData['data'];
     function hideMap() {
         document.getElementById('map-overlay').style.display = 'none';
         document.getElementById('map-widget').style.display = 'none';
+    }
+
+    function acceptDemande(id) {
+        const tarif = document.getElementById('tarif').value;
+        if (!tarif) {
+            alert('Veuillez entrer un tarif à la nuit.');
+            return;
+        }
+
+        const data = {
+            id: id,
+            tarif: tarif,
+        };
+
+        fetch('http://localhost/2A-ProjetAnnuel/PCS/API/biens', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('La demande a été acceptée avec succès.');
+                    window.location.href = 'demandeBailleurs.php';
+                } else {
+                    alert('Une erreur s\'est produite lors de l\'acceptation de la demande.');
+                }
+            })
+            .catch(error => {
+                console.error('Erreur lors de la demande d\'acceptation :', error);
+                alert('Erreur lors de la demande d\'acceptation.');
+            });
     }
 
     document.addEventListener('DOMContentLoaded', initMap);
