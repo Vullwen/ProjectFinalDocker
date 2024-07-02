@@ -15,9 +15,6 @@ try {
     }
 
     $token = $_SESSION['token'];
-    echo '<pre>';
-    print_r($_POST);
-    echo '</pre>';
 
     $getUserIDQuery = $databaseConnection->prepare("SELECT idutilisateur FROM utilisateur WHERE token = :token");
     $getUserIDQuery->bindParam(':token', $token);
@@ -27,6 +24,10 @@ try {
     $userId = $row['idutilisateur'];
 
     $targetDir = '/var/www/html/2A-ProjetAnnuel/PCS/Site/img/PhotosBienImmobilier/';
+
+    if (is_writable($targetDir) === false) {
+        die("Le dossier de destination des photos n'est pas accessible en écriture.");
+    }
 
     $photoPaths = [];
     if (isset($_FILES['propertyPhotos'])) {
