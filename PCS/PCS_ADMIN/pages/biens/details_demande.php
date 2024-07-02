@@ -112,7 +112,7 @@ $demande = $responseData['data'];
 
                     data.photos.forEach(photo => {
                         const imgElement = document.createElement('img');
-                        imgElement.src = 'http://51.75.69.184/' + photo.cheminPhoto;
+                        imgElement.src = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/Site/img/' + photo.cheminPhoto;
                         imgElement.alt = 'Photo de bien immobilier';
                         imgElement.classList.add('img-thumbnail', 'mr-2', 'mb-2');
 
