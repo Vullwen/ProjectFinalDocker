@@ -14,7 +14,10 @@ try {
         die("La connexion à la base de données a échoué.");
     }
 
-    $token = $_POST['token'];
+    $token = $_SESSION['token'];
+    echo '<pre>';
+    print_r($_POST);
+    echo '</pre>';
 
     $getUserIDQuery = $databaseConnection->prepare("SELECT idutilisateur FROM utilisateur WHERE token = :token");
     $getUserIDQuery->bindParam(':token', $token);
