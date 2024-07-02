@@ -191,7 +191,7 @@ include_once '../template/header.php';
         }
         return true;
     }
-    function validateForm() {
+    function validateForm(event) {
         event.preventDefault();
 
         var token = "<?php echo $_SESSION['token']; ?>";
@@ -321,7 +321,7 @@ include_once '../template/header.php';
         var xhr = new XMLHttpRequest();
         var url = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/demandebiens';
         xhr.open('POST', url, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Content-Type', 'multipart/form-data');
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 console.log(xhr.responseText);
@@ -338,7 +338,7 @@ include_once '../template/header.php';
                 }
             }
         };
-        xhr.send(JSON.stringify(formData));
+        xhr.send(formData);
     }
 
     function validateAddress(address, callback) {
