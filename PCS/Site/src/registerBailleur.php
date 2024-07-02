@@ -315,6 +315,7 @@ include_once '../template/header.php';
     }
 
     function sendFormDataToAPI(formData) {
+        console.log(formData);
 
         var xhr = new XMLHttpRequest();
         var url = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/routes/demandebiens';
