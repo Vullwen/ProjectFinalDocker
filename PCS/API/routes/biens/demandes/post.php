@@ -8,18 +8,17 @@ include __DIR__ . "/../../../libraries/response.php";
 include __DIR__ . "/../../../database/connectDB.php";
 
 try {
-    $body = getBody();
-
     $databaseConnection = connectDB();
 
     if (!$databaseConnection) {
         die("La connexion à la base de données a échoué.");
     }
 
-    $token = $body['token'];
+    $token = $_POST['token'];
 
     $getUserIDQuery = $databaseConnection->prepare("SELECT idutilisateur FROM utilisateur WHERE token = :token");
     $getUserIDQuery->bindParam(':token', $token);
+    $getUserIDQuery->execute();
     $row = $getUserIDQuery->fetch(PDO::FETCH_ASSOC);
 
     $userId = $row['idutilisateur'];
@@ -42,20 +41,20 @@ try {
     $postDemandeBienQuery = $databaseConnection->prepare("INSERT INTO demandebailleurs (type_conciergerie, autre_conciergerie, adresse, pays, type_bien, type_location, superficie, nombre_chambres, capacite, nom, description, email, telephone, heure_contact, date_demande, etat, utilisateur_id) VALUES (:type_conciergerie, :autre_conciergerie, :adresse, :pays, :type_bien, :type_location, :superficie, :nombre_chambres, :capacite, :nom, :description, :email, :telephone, :heure_contact, :date_demande, :etat, :utilisateur_id)");
 
     $success = $postDemandeBienQuery->execute([
-        "type_conciergerie" => $body['conciergerie'],
-        "autre_conciergerie" => $body['autreConciergerie'],
-        "adresse" => $body['adresse'],
-        "pays" => $body['pays'],
-        "type_bien" => $body['typeBien'],
-        "type_location" => $body['typeLocation'],
-        "superficie" => $body['superficie'],
-        "nombre_chambres" => $body['nombreChambres'],
-        "capacite" => $body['capacite'],
-        "description" => $body['description'],
-        "nom" => $body['nom'],
-        "email" => $body['email'],
-        "telephone" => $body['telephone'],
-        "heure_contact" => $body['contact'],
+        "type_conciergerie" => $_POST['conciergerie'],
+        "autre_conciergerie" => $_POST['autreConciergerie'],
+        "adresse" => $_POST['adresse'],
+        "pays" => $_POST['pays'],
+        "type_bien" => $_POST['typeBien'],
+        "type_location" => $_POST['typeLocation'],
+        "superficie" => $_POST['superficie'],
+        "nombre_chambres" => $_POST['nombreChambres'],
+        "capacite" => $_POST['capacite'],
+        "description" => $_POST['description'],
+        "nom" => $_POST['nom'],
+        "email" => $_POST['email'],
+        "telephone" => $_POST['telephone'],
+        "heure_contact" => $_POST['contact'],
         "date_demande" => date("Y-m-d"),
         "etat" => "En attente",
         "utilisateur_id" => $userId
@@ -73,12 +72,10 @@ try {
         }
     }
 
-
     $errorInfo = $postDemandeBienQuery->errorInfo();
     if ($errorInfo[0] !== '00000') {
         die("Erreur SQL : " . $errorInfo[2]);
     }
-
 
     if (!$success) {
         echo jsonResponse(500, ["PCS" => "PCError"], [
