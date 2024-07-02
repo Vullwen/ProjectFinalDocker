@@ -25,61 +25,73 @@ $demande = $responseData['data'];
 ?>
 
 <div class="container mt-5">
-    <h2>Demandes des bailleurs</h2>
-    <table class="table table-striped">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Numéro de demande</th>
-                <th scope="col">Type de conciergerie</th>
-                <th scope="col">Autre conciergerie</th>
-                <th scope="col">Adresse</th>
-                <th scope="col">Pays</th>
-                <th scope="col">Type de bien</th>
-                <th scope="col">Type de location</th>
-                <th scope="col">Superficie</th>
-                <th scope="col">Nombre de chambres</th>
-                <th scope="col">Capacité</th>
-                <th scope="col">Nom du propriétaire</th>
-                <th scope="col">Télephone</th>
-                <th scope="col">Email</th>
-                <th scope="col">Heure de contact</th>
-                <th scope="col">Etat</th>
-                <th scope="col">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row"><?php echo htmlspecialchars($demande['id']); ?></th>
-                <td><?php echo htmlspecialchars($demande['type_conciergerie']); ?></td>
-                <td><?php echo htmlspecialchars($demande['autre_conciergerie']); ?></td>
-                <td>
-                    <span class="address"
-                        onclick="showMap('<?php echo htmlspecialchars(addslashes($demande['adresse'] . ', ' . $demande['pays'])); ?>')">
-                        <?php echo htmlspecialchars($demande['adresse']); ?>
-                    </span>
-                </td>
-                <td><?php echo htmlspecialchars($demande['pays']); ?></td>
-                <td><?php echo htmlspecialchars($demande['type_bien']); ?></td>
-                <td><?php echo htmlspecialchars($demande['type_location']); ?></td>
-                <td><?php echo htmlspecialchars($demande['superficie']); ?></td>
-                <td><?php echo htmlspecialchars($demande['nombre_chambres']); ?></td>
-                <td><?php echo htmlspecialchars($demande['capacite']); ?></td>
-                <td><?php echo htmlspecialchars($demande['nom']); ?></td>
-                <td><?php echo htmlspecialchars($demande['telephone']); ?></td>
-                <td><?php echo htmlspecialchars($demande['email']); ?></td>
-                <td><?php echo htmlspecialchars($demande['heure_contact']); ?></td>
-                <td><?php echo htmlspecialchars($demande['etat']); ?></td>
-                <td>
+    <div class="card">
+        <div class="card-header">
+            <h2>Demande de bailleur - Numéro <?php echo htmlspecialchars($demande['id']); ?></h2>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Type de conciergerie :</h5>
+                    <p><?php echo htmlspecialchars($demande['type_conciergerie']); ?></p>
+                    <h5>Autre conciergerie :</h5>
+                    <p><?php echo htmlspecialchars($demande['autre_conciergerie']); ?></p>
+                    <h5>Adresse :</h5>
+                    <p>
+                        <span class="address"
+                            onclick="showMap('<?php echo htmlspecialchars(addslashes($demande['adresse'] . ', ' . $demande['pays'])); ?>')">
+                            <?php echo htmlspecialchars($demande['adresse']); ?>
+                        </span>
+                    </p>
+                    <h5>Pays :</h5>
+                    <p><?php echo htmlspecialchars($demande['pays']); ?></p>
+                    <h5>Type de bien :</h5>
+                    <p><?php echo htmlspecialchars($demande['type_bien']); ?></p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Type de location :</h5>
+                    <p><?php echo htmlspecialchars($demande['type_location']); ?></p>
+                    <h5>Superficie :</h5>
+                    <p><?php echo htmlspecialchars($demande['superficie']); ?></p>
+                    <h5>Nombre de chambres :</h5>
+                    <p><?php echo htmlspecialchars($demande['nombre_chambres']); ?></p>
+                    <h5>Capacité :</h5>
+                    <p><?php echo htmlspecialchars($demande['capacite']); ?></p>
+                    <h5>Nom du propriétaire :</h5>
+                    <p><?php echo htmlspecialchars($demande['nom']); ?></p>
+                    <h5>Téléphone :</h5>
+                    <p><?php echo htmlspecialchars($demande['telephone']); ?></p>
+                    <h5>Email :</h5>
+                    <p><?php echo htmlspecialchars($demande['email']); ?></p>
+                    <h5>Heure de contact :</h5>
+                    <p><?php echo htmlspecialchars($demande['heure_contact']); ?></p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h5>État :</h5>
+                    <p><?php echo htmlspecialchars($demande['etat']); ?></p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h5>Photos :</h5>
+                    <div id="photo-container"></div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <h5>Actions :</h5>
                     <a class='btn btn-info btn-sm ml-2'
                         href="accept_demande.php?id=<?php echo htmlspecialchars($demande['id']); ?>">Accepter la
                         demande</a>
                     <a class='btn btn-info btn-sm ml-2 btn-red'
                         href="refuse_demande.php?id=<?php echo htmlspecialchars($demande['id']); ?>">Refuser la
                         demande</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <button class="btn btn-primary" onclick="window.history.back()">Retour</button>
 <div class="overlay" id="map-overlay" onclick="hideMap()"></div>
@@ -89,6 +101,28 @@ $demande = $responseData['data'];
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const photosUrl = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/demandesBiens/photos?id=<?php echo $_GET['id']; ?>';
+
+        fetch(photosUrl)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.photos.length > 0) {
+                    const photoContainer = document.getElementById('photo-container');
+
+                    data.photos.forEach(photo => {
+                        const imgElement = document.createElement('img');
+                        imgElement.src = 'http://51.75.69.184/' + photo.cheminPhoto;
+                        imgElement.alt = 'Photo de bien immobilier';
+                        imgElement.classList.add('img-thumbnail', 'mr-2', 'mb-2');
+
+                        photoContainer.appendChild(imgElement);
+                    });
+                }
+            })
+            .catch(error => console.error('Erreur lors du chargement des photos :', error));
+    });
+
     function initMap() {
         window.map = new google.maps.Map(document.getElementById('map'), {
             zoom: 15,
