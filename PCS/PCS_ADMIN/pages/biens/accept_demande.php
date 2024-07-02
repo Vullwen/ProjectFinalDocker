@@ -55,7 +55,8 @@ echo "<script>
             nbchambres: <?php echo $demande['nombre_chambres']; ?>,
             capacite: <?php echo $demande['capacite']; ?>,
             description: "<?php echo $demande['description']; ?>",
-            type_conciergerie: "<?php echo $demande['type_conciergerie']; ?>"
+            type_conciergerie: "<?php echo $demande['type_conciergerie']; ?>",
+            idDemande: <?php echo $demande['id']; ?>
 
         }));
 

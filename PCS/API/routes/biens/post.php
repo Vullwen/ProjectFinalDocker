@@ -68,44 +68,28 @@ try {
         throw new Exception("Erreur lors de l'ajout du bien.");
     }
 
-    $uploadDirectory = "/../../Site/img/photosBI/";
+    $idBienImmobilier = $databaseConnection->lastInsertId();
 
+    $updateDemandeQuery = $databaseConnection->prepare("
+        UPDATE demandebailleurs 
+        SET etat = 'acceptee' 
+        WHERE id = :idDemande
+    ");
 
-    if (isset($body['files']) && !empty($body['files'])) {
-        $uploadedFiles = $_body['files'];
+    $updateDemandeQuery->execute([
+        "idDemande" => $body['idDemande']
+    ]);
 
-        foreach ($uploadedFiles['tmp_name'] as $key => $tmpName) {
-            $fileName = $uploadedFiles['name'][$key];
-            $filePath = $uploadDirectory . $fileName;
+    $updatePhotosQuery = $databaseConnection->prepare("
+    UPDATE photobienimmobilier 
+    SET IDbien = :idBienImmobilier 
+    WHERE IDdemande = idDemande
+");
 
-            if (!move_uploaded_file($tmpName, $filePath)) {
-                throw new Exception("Erreur lors de l'enregistrement du fichier $fileName.");
-            }
-        }
-    }
-
-
-
-    $idbien = $databaseConnection->lastInsertId();
-
-    if (isset($body['photos']) && !empty($body['photos'])) {
-        $postPhotosQuery = $databaseConnection->prepare("INSERT INTO photobienimmobilier (idbien, cheminPhoto) VALUES (:idbien, :cheminPhoto)");
-
-        foreach ($body['photos'] as $photo) {
-            $successphotos = $postPhotosQuery->execute([
-                "idbien" => $idbien,
-                "cheminPhoto" => $photo
-            ]);
-
-        }
-    }
-
-
-
-    if (!$success) {
-        throw new Exception("Erreur lors de l'ajout du bien.");
-    }
-
+    $updatePhotosQuery->execute([
+        "idBienImmobilier" => $idBienImmobilier,
+        "idDemande" => $body['idDemande']
+    ]);
 
 
     echo jsonResponse(200, ["PCS" => "PCSuccess"], [
