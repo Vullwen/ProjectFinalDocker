@@ -19,6 +19,12 @@ if (!$responseData || !$responseData['success']) {
 $demande = $responseData['data'];
 $demande['tarif'] = $_GET['tarif'];
 
+echo "<script>
+    window.onload = function() {
+        acceptDemande();
+    };
+</script>";
+
 ?>
 
 <script>
