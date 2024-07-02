@@ -55,7 +55,7 @@ try {
         "type_bien" => $body['type_bien'],
         "description" => $body['description'],
         "superficie" => $body['superficie'],
-        "NbChambres" => $body['nbChambres'],
+        "NbChambres" => $body['nbchambres'],
         "tarif" => $body['tarif'],
         "type_conciergerie" => $body['type_conciergerie'],
         "idutilisateur" => $body['idutilisateur'],
