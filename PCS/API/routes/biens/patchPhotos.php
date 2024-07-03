@@ -18,10 +18,10 @@ try {
                     unlink($filePath);
                 }
             }
-
+            $db = connectDB();
             $placeholders = rtrim(str_repeat('?,', count($photosToDelete)), ',');
             $sql = "DELETE FROM photobienimmobilier WHERE cheminPhoto IN ($placeholders)";
-            $stmt = $pdo->prepare($sql);
+            $stmt = $db->prepare($sql);
 
             if ($stmt->execute($photosToDelete)) {
                 echo json_encode(['success' => true, 'message' => 'Les photos ont été supprimées avec succès.']);
