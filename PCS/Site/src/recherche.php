@@ -44,14 +44,33 @@ include_once '../template/header.php';
     <div v-if="properties.length > 0">
         <h2>Résultats de la recherche :</h2>
         <div class="card" v-for="property in properties" :key="property.IDBien">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" v-for="(photo, index) in property.photos.slice(1)"
+                        :data-bs-target="'#carouselExampleIndicators'" :data-bs-slide-to="index + 1"
+                        :aria-label="'Slide ' + (index + 2)"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item" v-for="(photo, index) in property.photos"
+                        :class="{ active: index === 0 }">
+                        <img :src="photo" class="d-block w-100" alt="Photo du bien immobilier">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
 
             <div class="card-body">
-                <b-carousel v-if="property.photos && property.photos.length > 0" :interval="4000" img-width="600"
-                    img-height="400" background="#ababab" controls indicators>
-                    <b-carousel-slide v-for="(photo, index) in property.photos" :key="index">
-                        <img :src="photo" class="d-block w-100" alt="Photo du bien immobilier">
-                    </b-carousel-slide>
-                </b-carousel>
                 <h5 class="card-title">{{ property.Type }} - {{ property.Adresse }}</h5>
                 <p class="card-text">Description: {{ property.Description }}</p>
                 <p class="card-text">Superficie: {{ property.Superficie }} m²</p>
