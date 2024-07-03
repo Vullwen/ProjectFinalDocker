@@ -30,7 +30,7 @@ $data = json_decode(file_get_contents('php://input'), true);
 $photosToDelete = $data['photosToDelete'] ?? [];
 
 $uploadedFiles = $_FILES['photos'] ?? [];
-error_log(print_r($uploadedFiles, true));
+var_dump($uploadedFiles);
 $photoPaths = [];
 
 if (isset($uploadedFiles['tmp_name'])) {
