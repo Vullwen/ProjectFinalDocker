@@ -58,10 +58,7 @@ $photos = getPhotosBien($idBien);
         if (photosToDelete.length > 0) {
             formData.append('photosToDelete', JSON.stringify(photosToDelete));
         }
-        formData.entries().forEach(entry => {
-            console.log(entry);
-        });
-
+        console.log(JSON.stringify(formData));
 
         var xhr = new XMLHttpRequest();
         xhr.open('PATCH', 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, true);

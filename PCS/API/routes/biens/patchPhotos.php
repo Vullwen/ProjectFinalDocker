@@ -26,7 +26,6 @@ try {
 
         if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
             $error = json_last_error_msg();
-            // Log l'erreur pour le débogage
             error_log("Erreur JSON: $error");
         }
 
