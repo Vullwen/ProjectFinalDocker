@@ -24,7 +24,7 @@ try {
         $data = json_decode(file_get_contents("php://input"), true);
         error_log(print_r($data, true));
 
-        if (!empty($data['photosToDelete'])) {
+        if (!empty($data['photosToDelete[]'])) {
             $photosToDelete = $data['photosToDelete'];
             foreach ($photosToDelete as $photoPath) {
                 $filePath = $targetDir . $photoPath;
