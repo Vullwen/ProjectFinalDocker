@@ -168,14 +168,18 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/prestataires")) {
 
 if (isPath("/2A-ProjetAnnuel/PCS/API/demandesBiens/photos")) {
     if (isGetMethod()) {
-        require_once __DIR__ . "/routes/biens/getPhotos.php";
+        require_once __DIR__ . "/routes/biens/photos/getPhotos.php";
         die();
     }
 }
 
 if (isPath("/2A-ProjetAnnuel/PCS/API/biens/photos")) {
-    if (isPatchMethod()) {
-        require_once __DIR__ . "/routes/biens/patchPhotos.php";
+    if (isDeleteMethod()) {
+        require_once __DIR__ . "/routes/biens/photos/delete.php";
+        die();
+    }
+    if (isPostMethod()) {
+        require_once __DIR__ . "/routes/biens/photos/post.php";
         die();
     }
 }

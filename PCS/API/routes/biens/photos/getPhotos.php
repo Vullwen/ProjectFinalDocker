@@ -2,10 +2,10 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-include __DIR__ . "/../../libraries/parameters.php";
-include __DIR__ . "/../../libraries/body.php";
-include __DIR__ . "/../../libraries/response.php";
-include __DIR__ . "/../../database/connectDB.php";
+include __DIR__ . "../../../libraries/parameters.php";
+include __DIR__ . "../../../libraries/body.php";
+include __DIR__ . "../../../libraries/response.php";
+include __DIR__ . "../../../database/connectDB.php";
 
 try {
     $db = connectDB();

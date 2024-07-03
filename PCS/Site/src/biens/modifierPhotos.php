@@ -46,77 +46,69 @@ $photos = getPhotosBien($idBien);
 </div>
 
 <script>
-    document.getElementById('photos').addEventListener('change', function (event) {
-        var files = event.target.files;
-        var photoPreview = document.getElementById('photoPreview');
-        photoPreview.innerHTML = '';
+    document.addEventListener('DOMContentLoaded', function () {
+        var form = document.getElementById('photoForm');
 
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            var reader = new FileReader();
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
 
-            reader.onload = function (e) {
-                var img = document.createElement('img');
-                img.src = e.target.result;
-                img.style.maxWidth = '200px';
-                img.style.margin = '10px';
-                photoPreview.appendChild(img);
-            };
+            var formData = new FormData(form);
 
-            reader.readAsDataURL(file);
-        }
-    });
-    document.getElementById('photoForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        var formData = new FormData(this);
-
-
-        var photosToDelete = [];
-        var checkboxes = document.querySelectorAll('input[name="photosToDelete[]"]:checked');
-        checkboxes.forEach(function (checkbox) {
-            photosToDelete.push(checkbox.value);
-        });
-
-        var data = {
-            photosToDelete: photosToDelete,
-        };
-
-        var photos = document.getElementById('photos').files;
-        for (var i = 0; i < photos.length; i++) {
-            formData.append('photos[]', photos[i]);
-        }
-        for (var pair of formData.entries()) {
-            if (pair[0] === 'photos[]') {
-                console.log(pair[0] + ', ' + pair[1].name + ', ' + pair[1].size + ', ' + pair[1].type);
-            } else {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
-        }
-
-        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, {
-            method: 'PATCH',
-            body: JSON.stringify(data)
-        })
-            .then(function (response) {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Network response was not ok.');
-            })
-            .then(function (jsonResponse) {
-                if (jsonResponse.success) {
-                    alert('Modifications enregistrées avec succès.');
-                    window.location.reload();
-                } else {
-                    alert('Erreur lors de l\'enregistrement des modifications : ' + (jsonResponse.message || 'Erreur inconnue'));
-                }
-            })
-            .catch(function (error) {
-                console.error('Erreur lors de la requête fetch:', error);
-                alert('Une erreur s\'est produite lors de l\'enregistrement des modifications.');
+            var checkboxes = document.querySelectorAll('input[name="photosToDelete[]"]:checked');
+            var photosToDelete = [];
+            checkboxes.forEach(function (checkbox) {
+                photosToDelete.push(checkbox.value);
             });
+
+            var photosToAdd = document.getElementById('photos').files;
+            if (photosToAdd.length === 0 && photosToDelete.length === 0) {
+                alert('Aucune modification à enregistrer.');
+                return;
+            }
+
+            if (photosToDelete.length > 0) {
+                fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ photosToDelete: photosToDelete })
+                })
+                    .then(function (response) {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Erreur lors de la suppression des photos.');
+                    })
+                    .then(function (data) {
+                        console.log('Suppression des photos réussie :', data);
+                    })
+                    .catch(function (error) {
+                        console.error('Erreur lors de la requête de suppression :', error);
+                    });
+            }
+
+            if (photosToAdd.length > 0) {
+                fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos', {
+                    method: 'POST',
+                    body: formData
+                })
+                    .then(function (response) {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                        throw new Error('Erreur lors de l\'ajout des nouvelles photos.');
+                    })
+                    .then(function (data) {
+                        console.log('Ajout des nouvelles photos réussi :', data);
+                    })
+                    .catch(function (error) {
+                        console.error('Erreur lors de la requête d\'ajout :', error);
+                    });
+            }
+        });
     });
+
 
 </script>
 
