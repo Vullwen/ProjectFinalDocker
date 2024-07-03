@@ -72,11 +72,10 @@ try {
         if (!$stmt->execute($params)) {
             throw new PDOException("Erreur lors de la suppression des photos de la base de données.");
         }
-
-        echo json_encode(['success' => true, 'message' => 'Les photos ont été supprimées avec succès.']);
-    } else {
-        echo json_encode(['success' => false, 'message' => 'Aucune photo à supprimer spécifiée.']);
     }
+
+    echo json_encode(['success' => true, 'message' => 'Les modifications des photos ont été effectuées avec succès.']);
+
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['success' => false, 'message' => 'Erreur lors de la modification des photos.', 'error' => $e->getMessage()]);
