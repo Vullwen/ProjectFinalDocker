@@ -19,7 +19,7 @@ new Vue({
                     return acc;
                 }, {});
 
-            axios.get('http://51.75.69.184/2A-ProjetAnnuel/PCS_ADMIN/pages/biens/searchProperties.php', {
+            axios.get('http://51.75.69.184/2A-ProjetAnnuel/PCS/PCS_ADMIN/pages/biens/searchProperties.php', {
                 params: activeParams
             })
                 .then(response => {
