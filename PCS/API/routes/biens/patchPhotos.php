@@ -25,8 +25,7 @@ try {
     $photosToDelete = $_POST['photosToDelete'];
     var_dump($photosToDelete);
 
-    if (!empty($data)) {
-        $photosToDelete = $data['photosToDelete[]'];
+    if (!empty($photosToDelete)) {
         foreach ($photosToDelete as $photoPath) {
             $filePath = $targetDir . $photoPath;
             if (file_exists($filePath)) {
