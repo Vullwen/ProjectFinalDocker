@@ -23,11 +23,7 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
         $data = json_decode(file_get_contents('php://input'), true);
-
-        if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
-            $error = json_last_error_msg();
-            error_log("Erreur JSON: $error");
-        }
+        var_dump($_POST);
 
         if (!empty($data)) {
             $photosToDelete = $data['photosToDelete'];

@@ -47,18 +47,13 @@ $photos = getPhotosBien($idBien);
     document.getElementById('photoForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
-        var formData = new FormData;
+        var formData = new FormData(this);
 
 
-        var photosToDelete = [];
-        document.querySelectorAll('input[name="photosToDelete[]"]:checked').forEach(function (checkbox) {
-            photosToDelete.push(checkbox.value);
+        var photosToDelete = document.querySelectorAll('input[name="photosToDelete[]"]:checked');
+        photosToDelete.forEach(function (checkbox) {
+            formData.append('photosToDelete[]', checkbox.value);
         });
-
-        if (photosToDelete.length > 0) {
-            formData.append('photosToDelete', JSON.stringify(photosToDelete));
-        }
-        console.log(formData);
 
         var xhr = new XMLHttpRequest();
         xhr.open('PATCH', 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, true);
