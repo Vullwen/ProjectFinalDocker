@@ -21,8 +21,6 @@ try {
     $targetDir = "/var/www/html/2A-ProjetAnnuel/PCS/Site/";
 
     if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
-        $data = json_decode(file_get_contents("php://input"), true);
-        error_log(print_r($data['photosToDelete'], true));
 
         if (!empty($data['photosToDelete[]'])) {
             $photosToDelete = $data['photosToDelete'];
