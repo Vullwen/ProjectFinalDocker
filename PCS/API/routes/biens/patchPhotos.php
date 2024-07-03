@@ -22,7 +22,7 @@ try {
 
 
 
-    $photosToDelete = $_POST['photosToDelete[]'];
+    $photosToDelete = $_POST['photosToDelete'];
 
     error_log('Photos à supprimer:');
     error_log(print_r($photosToDelete, true));
