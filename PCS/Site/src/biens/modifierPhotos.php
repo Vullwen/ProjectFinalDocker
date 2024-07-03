@@ -70,7 +70,7 @@ $photos = getPhotosBien($idBien);
                 alert('Une erreur s\'est produite lors de l\'enregistrement des modifications.');
             }
         };
-        xhr.send(JSON.stringify(formData));
+        xhr.send(formData);
     });
 </script>
 

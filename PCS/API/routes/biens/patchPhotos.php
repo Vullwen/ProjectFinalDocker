@@ -21,7 +21,9 @@ try {
     $targetDir = "/var/www/html/2A-ProjetAnnuel/PCS/Site/";
 
 
-    $data = json_decode(file_get_contents('php://input'), true);
+
+    $photosToDelete = $_POST['photosToDelete'];
+    var_dump($photosToDelete);
 
     if (!empty($data)) {
         $photosToDelete = $data['photosToDelete[]'];
