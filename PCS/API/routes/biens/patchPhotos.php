@@ -19,10 +19,35 @@ try {
     }
 
     $targetDir = "/var/www/html/2A-ProjetAnnuel/PCS/Site/";
+    $fullTargetDir = '/var/www/html/2A-ProjetAnnuel/PCS/Site/img/PhotosBienImmobilier/';
 
 
     $data = json_decode(file_get_contents('php://input'), true);
     $photosToDelete = $data['photosToDelete'];
+
+    $uploadedFiles = $_FILES['photos'];
+
+    $photoPaths = [];
+    if (isset($uploadedFiles)) {
+        foreach ($uploadedFiles['tmp_name'] as $index => $tmpName) {
+            $originalName = basename($uploadedFiles['name'][$index]);
+            $uniqueName = uniqid() . '-' . $originalName;
+            $targetFilePath = $fullTargetDir . $uniqueName;
+
+            if (move_uploaded_file($tmpName, $targetFilePath)) {
+                $photoPaths[] = 'img/PhotosBienImmobilier/' . $uniqueName;
+            } else {
+                http_response_code(500);
+                echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'enregistrement des photos.']);
+                exit;
+            }
+        }
+        $queryPrepared = $db->prepare("INSERT INTO photobienimmobilier (cheminPhoto, IDbien) VALUES (?, ?)");
+        foreach ($photoPaths as $photoPath) {
+            $queryPrepared->execute([$photoPath, $idBien]);
+        }
+    }
+
 
 
     if (!empty($photosToDelete)) {

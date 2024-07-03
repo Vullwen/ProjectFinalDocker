@@ -59,6 +59,11 @@ $photos = getPhotosBien($idBien);
         var data = {
             photosToDelete: photosToDelete
         };
+
+        var photos = document.getElementById('photos').files;
+        for (var i = 0; i < photos.length; i++) {
+            formData.append('photos[]', photos[i]);
+        }
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, {
             method: 'PATCH',
             headers: {
@@ -73,7 +78,6 @@ $photos = getPhotosBien($idBien);
                 throw new Error('Network response was not ok.');
             })
             .then(function (jsonResponse) {
-                console.log(jsonResponse);
                 if (jsonResponse.success) {
                     alert('Modifications enregistrées avec succès.');
                     window.location.reload();
