@@ -21,33 +21,29 @@ try {
     $targetDir = "/var/www/html/2A-ProjetAnnuel/PCS/Site/";
 
 
-    if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
-        $data = json_decode(file_get_contents('php://input'), true);
+    $data = json_decode(file_get_contents('php://input'), true);
 
-        if (!empty($data)) {
-            $photosToDelete = $data['photosToDelete'];
-            foreach ($photosToDelete as $photoPath) {
-                $filePath = $targetDir . $photoPath;
-                if (file_exists($filePath)) {
-                    unlink($filePath);
-                }
+    if (!empty($data)) {
+        $photosToDelete = $data['photosToDelete'];
+        foreach ($photosToDelete as $photoPath) {
+            $filePath = $targetDir . $photoPath;
+            if (file_exists($filePath)) {
+                unlink($filePath);
             }
+        }
 
-            $placeholders = rtrim(str_repeat('?,', count($photosToDelete)), ',');
-            $sql = "DELETE FROM photobienimmobilier WHERE cheminPhoto IN ($placeholders) AND IDbien = ?";
-            $stmt = $db->prepare($sql);
-            $params = array_merge(array_values($photosToDelete), [$idBien]);
+        $placeholders = rtrim(str_repeat('?,', count($photosToDelete)), ',');
+        $sql = "DELETE FROM photobienimmobilier WHERE cheminPhoto IN ($placeholders) AND IDbien = ?";
+        $stmt = $db->prepare($sql);
+        $params = array_merge(array_values($photosToDelete), [$idBien]);
 
-            if ($stmt->execute($params)) {
-                echo json_encode(['success' => true, 'message' => 'Les photos ont été supprimées avec succès.']);
-            } else {
-                throw new PDOException("Erreur lors de la suppression des photos de la base de données.");
-            }
+        if ($stmt->execute($params)) {
+            echo json_encode(['success' => true, 'message' => 'Les photos ont été supprimées avec succès.']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Aucune photo à supprimer spécifiée.']);
+            throw new PDOException("Erreur lors de la suppression des photos de la base de données.");
         }
     } else {
-        echo json_encode(['success' => false, 'message' => 'Méthode HTTP non autorisée.']);
+        echo json_encode(['success' => false, 'message' => 'Aucune photo à supprimer spécifiée.']);
     }
 } catch (PDOException $e) {
     http_response_code(500);
