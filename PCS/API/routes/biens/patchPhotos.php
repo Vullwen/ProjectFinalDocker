@@ -24,7 +24,13 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
         $data = json_decode(file_get_contents('php://input'), true);
 
-        if (!empty($data['photosToDelete'])) {
+        if ($data === null && json_last_error() !== JSON_ERROR_NONE) {
+            $error = json_last_error_msg();
+            // Log l'erreur pour le débogage
+            error_log("Erreur JSON: $error");
+        }
+
+        if (!empty($data)) {
             $photosToDelete = $data['photosToDelete'];
             foreach ($photosToDelete as $photoPath) {
                 $filePath = $targetDir . $photoPath;
