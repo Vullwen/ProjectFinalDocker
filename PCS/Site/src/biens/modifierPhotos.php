@@ -2,6 +2,10 @@
 include_once "../../template/header.php";
 
 $idBien = $_GET['id'];
+if ($_SESSION['isBailleur'] == 0) {
+    header('Location: /2A-ProjetAnnuel/PCS/Site/');
+    exit();
+}
 
 function getPhotosBien($id)
 {
