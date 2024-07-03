@@ -24,7 +24,7 @@ try {
         $data = json_decode(file_get_contents("php://input"), true);
 
         if (!empty($data['photosToDelete'])) {
-            $photosToDelete = json_decode($data['photosToDelete'], true);
+            $photosToDelete = $data['photosToDelete'];
             foreach ($photosToDelete as $photoPath) {
                 $filePath = $targetDir . $photoPath;
                 if (file_exists($filePath)) {
