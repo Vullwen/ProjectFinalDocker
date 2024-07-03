@@ -4,14 +4,14 @@ include __DIR__ . "/../../database/connectDB.php";
 header("Content-Type: application/json; charset=UTF-8");
 
 try {
-
     $targetDir = "/var/www/html/2A-ProjetAnnuel/PCS/Site/";
 
     if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
         parse_str(file_get_contents("php://input"), $data);
+        var_dump($data);
 
-        if (!empty($data['photosToDelete[]'])) {
-            $photosToDelete = json_decode($data['photosToDelete[]'], true);
+        if (!empty($data['photosToDelete'])) {
+            $photosToDelete = $data['photosToDelete'];
             foreach ($photosToDelete as $photoPath) {
                 $filePath = $targetDir . $photoPath;
                 if (file_exists($filePath)) {
@@ -24,17 +24,15 @@ try {
             $stmt = $pdo->prepare($sql);
 
             if ($stmt->execute($photosToDelete)) {
-                foreach ($photosToDelete as $photoPath) {
-                    $filePath = "/var/www/html/2A-ProjetAnnuel/PCS/Site/" . $photoPath;
-                    if (file_exists($filePath)) {
-                        unlink($filePath);
-                    }
-                }
+                echo json_encode(['success' => true, 'message' => 'Les photos ont été supprimées avec succès.']);
             } else {
                 throw new PDOException("Erreur lors de la suppression des photos de la base de données.");
             }
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Aucune photo à supprimer spécifiée.']);
         }
-
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Méthode HTTP non autorisée.']);
     }
 } catch (PDOException $e) {
     http_response_code(500);
