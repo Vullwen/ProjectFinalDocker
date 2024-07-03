@@ -47,7 +47,7 @@ $photos = getPhotosBien($idBien);
 </div>
 
 <script>
-    document.getElementById('propertyPhotos').addEventListener('change', function (event) {
+    document.getElementById('photos').addEventListener('change', function (event) {
         var files = event.target.files;
         var photoPreview = document.getElementById('photoPreview');
         photoPreview.innerHTML = '';
