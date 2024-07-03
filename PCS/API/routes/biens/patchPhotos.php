@@ -30,7 +30,6 @@ $data = json_decode(file_get_contents('php://input'), true);
 $photosToDelete = $data['photosToDelete'] ?? [];
 
 $uploadedFiles = $_FILES['photos'] ?? [];
-var_dump($uploadedFiles);
 $photoPaths = [];
 
 if (isset($uploadedFiles['tmp_name'])) {
@@ -47,6 +46,11 @@ if (isset($uploadedFiles['tmp_name'])) {
             exit;
         }
     }
+} else {
+    http_response_code(400);
+    echo json_encode(['success' => false, 'message' => 'Aucune photo n\'a été envoyée.']);
+    exit;
+
 }
 
 try {
