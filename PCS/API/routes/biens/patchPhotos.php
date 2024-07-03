@@ -32,7 +32,7 @@ $photosToDelete = $data['photosToDelete'] ?? [];
 $uploadedFiles = $_FILES['photos'] ?? [];
 $photoPaths = [];
 
-if (isset($uploadedFiles['name'])) {
+if (isset($uploadedFiles['tmp_name'])) {
     foreach ($uploadedFiles['name'] as $index => $tmpName) {
         $originalName = basename($uploadedFiles['name'][$index]);
         $uniqueName = uniqid() . '-' . $originalName;

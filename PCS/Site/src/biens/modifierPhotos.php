@@ -78,16 +78,14 @@ $photos = getPhotosBien($idBien);
             photosToDelete.push(checkbox.value);
         });
 
+        var data = {
+            photosToDelete: photosToDelete,
+        };
+
         var photos = document.getElementById('photos').files;
         for (var i = 0; i < photos.length; i++) {
             formData.append('photos[]', photos[i]);
         }
-
-        var data = {
-            photosToDelete: photosToDelete,
-            photos: photos
-        };
-        console.log(data);
 
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, {
             method: 'PATCH',
