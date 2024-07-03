@@ -44,7 +44,7 @@ include_once '../template/header.php';
     <div v-if="properties.length > 0">
         <h2>Résultats de la recherche :</h2>
         <div class="card" v-for="property in properties" :key="property.IDBien">
-            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div :id="'carouselExampleIndicators' + property.IDBien" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
                         class="active" aria-current="true" aria-label="Slide 1"></button>
