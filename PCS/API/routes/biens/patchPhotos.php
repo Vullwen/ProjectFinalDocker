@@ -20,9 +20,11 @@ try {
 
     $targetDir = "/var/www/html/2A-ProjetAnnuel/PCS/Site/";
 
-    if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
 
-        if (!empty($data['photosToDelete[]'])) {
+    if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (!empty($data['photosToDelete'])) {
             $photosToDelete = $data['photosToDelete'];
             foreach ($photosToDelete as $photoPath) {
                 $filePath = $targetDir . $photoPath;

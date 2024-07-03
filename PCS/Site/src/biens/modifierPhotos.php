@@ -65,6 +65,7 @@ $photos = getPhotosBien($idBien);
 
         var xhr = new XMLHttpRequest();
         xhr.open('PATCH', 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.onload = function () {
             if (xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
