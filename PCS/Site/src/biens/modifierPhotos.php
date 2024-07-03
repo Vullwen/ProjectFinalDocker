@@ -86,6 +86,7 @@ $photos = getPhotosBien($idBien);
         for (var i = 0; i < photos.length; i++) {
             formData.append('photos[]', photos[i]);
         }
+        console.loh(formData);
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, {
             method: 'PATCH',
             headers: {
