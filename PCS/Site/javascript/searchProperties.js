@@ -19,11 +19,30 @@ new Vue({
                     return acc;
                 }, {});
 
-            axios.get('http://51.75.69.184/2A-ProjetAnnuel/PCS/PCS_ADMIN/pages/biens/searchProperties.php', {
+            axios.get('http://51.75.69.184/2A-ProjetAnnuel/PCS_ADMIN/pages/biens/searchProperties.php', {
                 params: activeParams
             })
                 .then(response => {
-                    this.properties = response.data;
+                    const baseUrl = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/Site/';
+
+                    this.properties = response.data.map(property => {
+                        axios.get('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/demandesBiens/photos', {
+                            params: { idBien: property.IDBien }
+                        })
+                            .then(photoResponse => {
+                                if (photoResponse.data.photos && photoResponse.data.photos.length > 0) {
+                                    property.photo = baseUrl + photoResponse.data.photos[0].cheminPhoto;
+                                } else {
+                                    property.photo = '../../PCS_ADMIN/img/home_icon.png';
+                                }
+                            })
+                            .catch(error => {
+                                console.error("Error fetching photo: ", error);
+                                property.photo = '../../PCS_ADMIN/img/home_icon.png';
+                            });
+
+                        return property;
+                    });
                 })
                 .catch(error => {
                     console.error("Error fetching properties: ", error);
