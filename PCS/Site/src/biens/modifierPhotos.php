@@ -59,6 +59,10 @@ $photos = getPhotosBien($idBien);
             formData.append('photosToDelete', JSON.stringify(photosToDelete));
         }
 
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ': ' + pair[1]);
+        }
+
         var xhr = new XMLHttpRequest();
         xhr.open('PATCH', 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos' + <?= json_encode($idBien) ?>, true);
         xhr.onload = function () {
