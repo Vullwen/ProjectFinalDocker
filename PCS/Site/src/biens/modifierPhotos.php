@@ -49,6 +49,7 @@ $photos = getPhotosBien($idBien);
 
         var form = document.getElementById('photoForm');
         var formData = new FormData(form);
+        console.log(formData);
 
         var photosToDelete = [];
         form.querySelectorAll('input[name="photosToDelete[]"]:checked').forEach(function (checkbox) {
