@@ -26,6 +26,7 @@ new Vue({
                     const baseUrl = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/Site/';
 
                     this.properties = response.data.map(property => {
+                        property.photos = [];
                         axios.get('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/demandesBiens/photos', {
                             params: { idBien: property.IDBien }
                         })
