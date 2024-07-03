@@ -46,25 +46,25 @@ include_once '../template/header.php';
         <div class="card" v-for="property in properties" :key="property.IDBien">
             <div :id="'carouselExampleIndicators' + property.IDBien" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                        class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" v-for="(photo, index) in property.photos.slice(1)"
-                        :data-bs-target="'#carouselExampleIndicators'" :data-bs-slide-to="index + 1"
+                    <button type="button" data-bs-target="'#carouselExampleIndicators' + property.IDBien"
+                        data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button v-for="(photo, index) in property.photos.slice(1)" :key="index"
+                        :data-bs-target="'#carouselExampleIndicators' + property.IDBien" :data-bs-slide-to="index + 1"
                         :aria-label="'Slide ' + (index + 2)"></button>
                 </div>
                 <div class="carousel-inner">
-                    <div class="carousel-item" v-for="(photo, index) in property.photos"
-                        :class="{ active: index === 0 }">
+                    <div class="carousel-item" v-for="(photo, index) in property.photos" :key="index"
+                        :class="{ 'active': index === 0 }">
                         <img :src="photo" class="d-block w-100" alt="Photo du bien immobilier">
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
+                <button class="carousel-control-prev" type="button"
+                    :data-bs-target="'#carouselExampleIndicators' + property.IDBien" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
+                <button class="carousel-control-next" type="button"
+                    :data-bs-target="'#carouselExampleIndicators' + property.IDBien" data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
                 </button>
