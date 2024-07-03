@@ -7,15 +7,6 @@ try {
     $db = connectDB();
 
     $idBien = $_GET['id'];
-    $stmt = $db->prepare("SELECT COUNT(*) AS count FROM photobienimmobilier WHERE IDbien = ?");
-    $stmt->execute([$idBien]);
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($row['count'] == 0) {
-        http_response_code(400);
-        echo json_encode(['success' => false, 'message' => 'ID du bien immobilier invalide.']);
-        exit;
-    }
 
 } catch (PDOException $e) {
     http_response_code(500);
