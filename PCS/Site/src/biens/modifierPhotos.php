@@ -48,7 +48,7 @@ $photos = getPhotosBien($idBien);
         e.preventDefault();
 
         var formData = new FormData(document.getElementById('photoForm'));
-        console.log(document.getElementById('photoToDelete[0]'));
+
 
         var photosToDelete = [];
         formData.querySelectorAll('input[name="photosToDelete[]"]:checked').forEach(function (checkbox) {
@@ -58,8 +58,7 @@ $photos = getPhotosBien($idBien);
         if (photosToDelete.length > 0) {
             formData.append('photosToDelete', JSON.stringify(photosToDelete));
         }
-
-        formData.append('photosToDelete', JSON.stringify(photosToDelete));
+        console.log(formData);
 
         var xhr = new XMLHttpRequest();
         xhr.open('PATCH', 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos' + <?= json_encode($idBien) ?>, true);
