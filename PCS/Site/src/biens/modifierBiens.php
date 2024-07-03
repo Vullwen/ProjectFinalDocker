@@ -11,7 +11,7 @@ function getBienDetails($id)
     return json_decode($response, true);
 }
 
-/*function getPhotosBien($id)
+function getPhotosBien($id)
 {
     $url = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/demandesBiens/photos";
     $params = ['idBien' => $id];
@@ -20,7 +20,7 @@ function getBienDetails($id)
 
     $response = file_get_contents($url);
     return json_decode($response, true);
-}*/
+}
 
 function updateBien($id, $data)
 {
@@ -88,9 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "</div>";
 } else {
     $bien = getBienDetails($idBien);
-    // $photos = getPhotosBien($idBien);
+    $photos = getPhotosBien($idBien);
 
-    if ($bien && $photos) {
+    if ($bien) {
         echo "<div class='container mt-5'>";
         echo "<h2>Modifier le Bien Immobilier</h2>";
         echo "<form action='modifierBiens.php' method='POST'>";
