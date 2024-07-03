@@ -49,7 +49,7 @@ $photos = getPhotosBien($idBien);
 
         var formData = new FormData(this);
 
-        console.log(formData.getAll('photosToDelete'));
+        console.log(formData.get('photosToDelete[]'));
 
 
 
