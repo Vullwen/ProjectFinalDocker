@@ -60,6 +60,8 @@ $photos = getPhotosBien($idBien);
                 photosToDelete.push(checkbox.value);
             });
 
+            var idBien = <?= json_encode($idBien) ?>;
+
             var photosToAdd = document.getElementById('photos').files;
             if (photosToAdd.length === 0 && photosToDelete.length === 0) {
                 alert('Aucune modification à enregistrer.');
@@ -67,7 +69,7 @@ $photos = getPhotosBien($idBien);
             }
 
             if (photosToDelete.length > 0) {
-                fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos', {
+                fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + idBien, {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json'
@@ -89,7 +91,7 @@ $photos = getPhotosBien($idBien);
             }
 
             if (photosToAdd.length > 0) {
-                fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos', {
+                fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + idBien, {
                     method: 'POST',
                     body: formData
                 })
