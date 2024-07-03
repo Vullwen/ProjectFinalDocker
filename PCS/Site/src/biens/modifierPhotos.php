@@ -96,9 +96,6 @@ $photos = getPhotosBien($idBien);
 
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(data)
         })
             .then(function (response) {

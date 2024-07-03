@@ -35,8 +35,8 @@ var_dump($_FILES);
 var_dump($uploadedFiles);
 $photoPaths = [];
 
-if (isset($uploadedFiles['tmp_name'])) {
-    foreach ($uploadedFiles['name'] as $index => $tmpName) {
+if (isset($uploadedFiles['tmp_name'][0])) {
+    foreach ($uploadedFiles['tmp_name'] as $index => $tmpName) {
         $originalName = basename($uploadedFiles['name'][$index]);
         $uniqueName = uniqid() . '-' . $originalName;
         $targetFilePath = $fullTargetDir . $uniqueName;
