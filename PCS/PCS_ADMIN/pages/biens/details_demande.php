@@ -110,7 +110,7 @@ $demande = $responseData['data'];
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const photosUrl = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/demandesBiens/photos?id=<?php echo $_GET['id']; ?>';
+        const photosUrl = 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/demandesBiens/photos?idDemande=<?php echo $_GET['id']; ?>';
 
         fetch(photosUrl)
             .then(response => response.json())

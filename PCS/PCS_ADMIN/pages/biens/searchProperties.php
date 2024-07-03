@@ -31,7 +31,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 function fetchPhoto($idBien)
 {
-    $photoUrl = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/demandesBiens/photos?id=" . $idBien;
+    $photoUrl = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/demandesBiens/photos?idBien=" . $idBien;
     $photoResponse = file_get_contents($photoUrl);
     $photoData = json_decode($photoResponse, true);
 
