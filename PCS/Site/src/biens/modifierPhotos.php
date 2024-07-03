@@ -49,29 +49,44 @@ $photos = getPhotosBien($idBien);
 
         var formData = new FormData(this);
 
-        console.log(formData.getAll('photosToDelete[]'));
 
+        var photosToDelete = [];
+        var checkboxes = document.querySelectorAll('input[name="photosToDelete[]"]:checked');
+        checkboxes.forEach(function (checkbox) {
+            photosToDelete.push(checkbox.value);
+        });
 
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('PATCH', 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onload = function () {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                console.log(xhr.responseText);
-                if (response.success) {
+        var data = {
+            photosToDelete: photosToDelete
+        };
+        fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Network response was not ok.');
+            })
+            .then(function (jsonResponse) {
+                console.log(jsonResponse);
+                if (jsonResponse.success) {
                     alert('Modifications enregistrées avec succès.');
                     window.location.reload();
                 } else {
-                    alert('Erreur lors de l\'enregistrement des modifications : ' + (response.message || 'Erreur inconnue'));
+                    alert('Erreur lors de l\'enregistrement des modifications : ' + (jsonResponse.message || 'Erreur inconnue'));
                 }
-            } else {
+            })
+            .catch(function (error) {
+                console.error('Erreur lors de la requête fetch:', error);
                 alert('Une erreur s\'est produite lors de l\'enregistrement des modifications.');
-            }
-        };
-        xhr.send(formData);
+            });
     });
+
 </script>
 
 <?php
