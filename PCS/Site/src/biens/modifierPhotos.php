@@ -106,6 +106,7 @@ $photos = getPhotosBien($idBien);
                     })
                     .then(function (data) {
                         console.log('Suppression des photos réussie :', data);
+                        window.location.reload();
                     })
                     .catch(function (error) {
                         console.error('Erreur lors de la requête de suppression :', error);
@@ -125,6 +126,7 @@ $photos = getPhotosBien($idBien);
                     })
                     .then(function (data) {
                         console.log('Ajout des nouvelles photos réussi :', data);
+                        window.location.reload();
                     })
                     .catch(function (error) {
                         console.error('Erreur lors de la requête d\'ajout :', error);
