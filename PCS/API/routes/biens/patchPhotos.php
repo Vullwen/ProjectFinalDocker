@@ -10,8 +10,8 @@ try {
     if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
         parse_str(file_get_contents("php://input"), $data);
 
-        if (!empty($data['photosToDelete'])) {
-            $photosToDelete = json_decode($data['photosToDelete'], true);
+        if (!empty($data['photosToDelete[]'])) {
+            $photosToDelete = json_decode($data['photosToDelete[]'], true);
             foreach ($photosToDelete as $photoPath) {
                 $filePath = $targetDir . $photoPath;
                 if (file_exists($filePath)) {
