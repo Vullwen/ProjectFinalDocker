@@ -8,7 +8,7 @@ try {
 
     if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
         parse_str(file_get_contents("php://input"), $data);
-        var_dump($data['photosToDelete']);
+        var_dump($data['photosToDelete[0]']);
 
         if (!empty($data['photosToDelete'])) {
             $photosToDelete = $data['photosToDelete'];
