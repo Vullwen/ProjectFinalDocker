@@ -44,7 +44,12 @@ include_once '../template/header.php';
     <div v-if="properties.length > 0">
         <h2>Résultats de la recherche :</h2>
         <div class="card" v-for="property in properties" :key="property.IDBien">
-            <img v-if="property.photo" :src="property.photo" class="card-img-top" alt="Photo du bien">
+            <b-carousel v-if="property.photos && property.photos.length > 0" :interval="4000" img-width="600"
+                img-height="400" background="#ababab" controls indicators>
+                <b-carousel-slide v-for="(photo, index) in property.photos" :key="index">
+                    <img :src="photo" class="d-block w-100" alt="Photo du bien immobilier">
+                </b-carousel-slide>
+            </b-carousel>
             <div class="card-body">
                 <h5 class="card-title">{{ property.Type }} - {{ property.Adresse }}</h5>
                 <p class="card-text">Description: {{ property.Description }}</p>

@@ -31,14 +31,14 @@ new Vue({
                         })
                             .then(photoResponse => {
                                 if (photoResponse.data.photos && photoResponse.data.photos.length > 0) {
-                                    property.photo = baseUrl + photoResponse.data.photos[0].cheminPhoto;
+                                    property.photos = photoResponse.data.photos.map(photo => baseUrl + photo.cheminPhoto);
                                 } else {
-                                    property.photo = '../../PCS_ADMIN/img/home_icon.png';
+                                    property.photos = '../../PCS_ADMIN/img/home_icon.png';
                                 }
                             })
                             .catch(error => {
                                 console.error("Error fetching photo: ", error);
-                                property.photo = '../../PCS_ADMIN/img/home_icon.png';
+                                property.photos = '../../PCS_ADMIN/img/home_icon.png';
                             });
 
                         return property;
