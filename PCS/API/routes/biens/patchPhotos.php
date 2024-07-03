@@ -26,6 +26,7 @@ try {
 
     error_log('Photos à supprimer:');
     error_log(print_r($photosToDelete, true));
+    var_dump($_POST);
 
     if (!empty($photosToDelete)) {
         foreach ($photosToDelete as $photoPath) {
