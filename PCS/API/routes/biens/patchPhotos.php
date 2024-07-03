@@ -44,7 +44,7 @@ try {
                 throw new PDOException("Erreur lors de la suppression des photos de la base de données.");
             }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Aucune photo à supprimer spécifiée.' . json_encode($data)]);
+            echo json_encode(['success' => false, 'message' => 'Aucune photo à supprimer spécifiée.']);
         }
     } else {
         echo json_encode(['success' => false, 'message' => 'Méthode HTTP non autorisée.']);
