@@ -55,6 +55,7 @@ $idBien = $_GET['id'];
         <p><strong>Nombre de Chambres:</strong> ${bien.NbChambres}</p>
         <p><strong>Tarif:</strong> ${bien.Tarif} € / nuit</p>
         <a href="modifierBiens.php?id=${bien.IDBien}" class="btn btn-primary">Modifier</a>
+        <a href="modifierPhotos.php?id=${bien.IDBien}" class="btn btn-primary">Modifier les photos</a>
         <button onclick="deleteBien(${bien.IDBien})" class="btn btn-danger">Supprimer</button>
         <a href="biensListe.php" class="btn btn-secondary">Retour à la liste</a>
         <a href="details_reservation.php?id=${bien.IDBien}" class="btn btn-primary">Voir les réservations</a>

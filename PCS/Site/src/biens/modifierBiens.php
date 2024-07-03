@@ -66,8 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             $updateResponse = updateBien($idBien, $dataDiff);
 
-            var_dump($updateResponse);
-
             if (isset($updateResponse['success']) && $updateResponse['success']) {
                 header("Location: biensListe.php");
                 exit;
@@ -93,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($bien) {
         echo "<div class='container mt-5'>";
         echo "<h2>Modifier le Bien Immobilier</h2>";
-        echo "<form action='modifierBiens.php' method='POST'>";
+        echo "<form action='modifierBiens.php' method='POST' enctype='multipart/form-data'>";
         echo "<input type='hidden' name='id' value='{$bien['properties']['IDBien']}'>";
         echo "<div class='form-group'>";
         echo "<label for='type'>Type</label>";
@@ -125,11 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         } else {
             echo "<p>Aucune photo disponible pour ce bien immobilier.</p>";
         }
-        echo "</div>";
-
-        echo "<div class='form-group'>";
-        echo "<label for='photos'>Ajouter de Nouvelles Photos</label>";
-        echo "<input type='file' class='form-control-file' id='photos' name='photos[]' accept='image/*' multiple>";
         echo "</div>";
         echo "<button type='submit' class='btn btn-primary'>Enregistrer les modifications</button>";
         echo "</form>";

@@ -226,14 +226,6 @@ include_once '../template/header.php';
                 for (var i = 0; i < photoFiles.length; i++) {
                     formData.append('propertyPhotos[]', photoFiles[i]);
                 }
-                console.log(formData.get('conciergerie'));
-                console.log(formData.get('autreConciergerie'));
-                console.log(formData.get('adresse'));
-                console.log(formData.get('pays'));
-                console.log(formData.get('typeBien'));
-                console.log(formData.get('typeLocation'));
-                console.log(formData.get('superficie'));
-                console.log(validateFormData(formData));
 
                 if (validateFormData(formData)) {
                     sendFormDataToAPI(formData);
@@ -331,7 +323,6 @@ include_once '../template/header.php';
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 console.log(xhr.responseText);
                 if (xhr.status === 200) {
-                    console.log(formData);
 
                     alert('Votre demande a été soumise avec succès !');
 
