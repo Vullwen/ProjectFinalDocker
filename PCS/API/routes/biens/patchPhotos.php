@@ -6,8 +6,9 @@ header("Content-Type: application/json; charset=UTF-8");
 try {
 
     $idBien = $_GET['id'];
+    $db = connectDB();
 
-    $stmt = $pdo->prepare("SELECT COUNT(*) AS count FROM photobienimmobilier WHERE IDbien = ?");
+    $stmt = $db->prepare("SELECT COUNT(*) AS count FROM photobienimmobilier WHERE IDbien = ?");
     $stmt->execute([$idBien]);
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -31,7 +32,7 @@ try {
                     unlink($filePath);
                 }
             }
-            $db = connectDB();
+
             $placeholders = rtrim(str_repeat('?,', count($photosToDelete)), ',');
             $sql = "DELETE FROM photobienimmobilier WHERE cheminPhoto IN ($placeholders) AND IDbien = ?";
             $stmt = $db->prepare($sql);
