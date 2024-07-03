@@ -11,7 +11,7 @@ function getBienDetails($id)
     return json_decode($response, true);
 }
 
-function getPhotosBien($id)
+/*function getPhotosBien($id)
 {
     $url = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/demandesBiens/photos";
     $params = ['idBien' => $id];
@@ -20,7 +20,7 @@ function getPhotosBien($id)
 
     $response = file_get_contents($url);
     return json_decode($response, true);
-}
+}*/
 
 function updateBien($id, $data)
 {
@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "</div>";
 } else {
     $bien = getBienDetails($idBien);
-    $photos = getPhotosBien($idBien);
+    // $photos = getPhotosBien($idBien);
 
     if ($bien && $photos) {
         echo "<div class='container mt-5'>";
@@ -115,22 +115,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<label for='nbChambres'>Nombre de Chambres</label>";
         echo "<input type='number' class='form-control' id='nbChambres' name='nbChambres' value='{$bien['properties'][0]['NbChambres']}' required>";
         echo "</div>";
-        echo "<div class='form-group'>";
-        echo "<label>Photos Actuelles</label>";
-        if (!empty($photos['photos'])) {
-            foreach ($photos['photos'] as $photo) {
-                $photoUrl = "/2A-ProjetAnnuel/PCS/Site/" . $photo['cheminPhoto'];
-                echo "<img src='{$photoUrl}' class='img-thumbnail' width='150'>";
-            }
-        } else {
-            echo "<p>Aucune photo disponible pour ce bien immobilier.</p>";
-        }
-        echo "</div>";
+        /* echo "<div class='form-group'>";
+         echo "<label>Photos Actuelles</label>";
+         if (!empty($photos['photos'])) {
+             foreach ($photos['photos'] as $photo) {
+                 $photoUrl = "/2A-ProjetAnnuel/PCS/Site/" . $photo['cheminPhoto'];
+                 echo "<img src='{$photoUrl}' class='img-thumbnail' width='150'>";
+             }
+         } else {
+             echo "<p>Aucune photo disponible pour ce bien immobilier.</p>";
+         }
+         echo "</div>";
 
-        echo "<div class='form-group'>";
-        echo "<label for='photos'>Ajouter de Nouvelles Photos</label>";
-        echo "<input type='file' class='form-control-file' id='photos' name='photos[]' accept='image/*' multiple>";
-        echo "</div>";
+         echo "<div class='form-group'>";
+         echo "<label for='photos'>Ajouter de Nouvelles Photos</label>";
+         echo "<input type='file' class='form-control-file' id='photos' name='photos[]' accept='image/*' multiple>";
+         echo "</div>";*/
         echo "<button type='submit' class='btn btn-primary'>Enregistrer les modifications</button>";
         echo "</form>";
         echo "</div>";

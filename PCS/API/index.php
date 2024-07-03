@@ -168,7 +168,7 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/prestataires")) {
 
 if (isPath("/2A-ProjetAnnuel/PCS/API/demandesBiens/photos")) {
     if (isGetMethod()) {
-        require_once __DIR__ . "/routes/biens/getPhotosDemandes.php";
+        require_once __DIR__ . "/routes/biens/getPhotos.php";
         die();
     }
 }
