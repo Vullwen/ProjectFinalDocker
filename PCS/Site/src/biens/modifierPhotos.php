@@ -87,6 +87,7 @@ $photos = getPhotosBien($idBien);
             photosToDelete: photosToDelete,
             photos: photos
         };
+        console.log(data);
 
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, {
             method: 'PATCH',
