@@ -47,7 +47,7 @@ $photos = getPhotosBien($idBien);
     document.getElementById('photoForm').addEventListener('submit', function (e) {
         e.preventDefault();
 
-        var formData = new FormData(document.getElementById('photoForm'));
+        var formData = new FormData;
 
 
         var photosToDelete = [];
