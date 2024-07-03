@@ -1,8 +1,5 @@
 <?php
 include_once "../../template/header.php";
-include_once "../../../API/database/connectDB.php";
-
-$db = connectDB();
 
 $idBien = $_GET['id'];
 
@@ -10,6 +7,17 @@ $idBien = $_GET['id'];
 function getBienDetails($id)
 {
     $url = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens?id={$id}";
+    $response = file_get_contents($url);
+    return json_decode($response, true);
+}
+
+function getPhotosBien($id)
+{
+    $url = "http://51.75.69.184/2A-ProjetAnnuel/PCS/API/demandesBiens/photos";
+    $params = ['idBien' => $id];
+    $queryString = http_build_query($params);
+    $url .= '?' . $queryString;
+
     $response = file_get_contents($url);
     return json_decode($response, true);
 }
@@ -80,8 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo "</div>";
 } else {
     $bien = getBienDetails($idBien);
+    $photos = getPhotosBien($idBien);
 
-    if ($bien) {
+    if ($bien && $photos) {
         echo "<div class='container mt-5'>";
         echo "<h2>Modifier le Bien Immobilier</h2>";
         echo "<form action='modifierBiens.php' method='POST'>";
@@ -105,6 +114,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<div class='form-group'>";
         echo "<label for='nbChambres'>Nombre de Chambres</label>";
         echo "<input type='number' class='form-control' id='nbChambres' name='nbChambres' value='{$bien['properties'][0]['NbChambres']}' required>";
+        echo "</div>";
+        echo "<div class='form-group'>";
+        echo "<label>Photos Actuelles</label>";
+        if (!empty($photos['photos'])) {
+            foreach ($photos['photos'] as $photo) {
+                $photoUrl = "/2A-ProjetAnnuel/PCS/Site/" . $photo['cheminPhoto'];
+                echo "<img src='{$photoUrl}' class='img-thumbnail' width='150'>";
+            }
+        } else {
+            echo "<p>Aucune photo disponible pour ce bien immobilier.</p>";
+        }
+        echo "</div>";
+
+        echo "<div class='form-group'>";
+        echo "<label for='photos'>Ajouter de Nouvelles Photos</label>";
+        echo "<input type='file' class='form-control-file' id='photos' name='photos[]' accept='image/*' multiple>";
         echo "</div>";
         echo "<button type='submit' class='btn btn-primary'>Enregistrer les modifications</button>";
         echo "</form>";
