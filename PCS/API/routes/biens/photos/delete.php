@@ -1,6 +1,6 @@
 <?php
 
-include __DIR__ . "../../../database/connectDB.php";
+include __DIR__ . "/../../../database/connectDB.php";
 header("Content-Type: application/json; charset=UTF-8");
 
 try {
