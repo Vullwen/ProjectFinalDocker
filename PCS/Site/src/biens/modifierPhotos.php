@@ -58,7 +58,9 @@ $photos = getPhotosBien($idBien);
         if (photosToDelete.length > 0) {
             formData.append('photosToDelete', JSON.stringify(photosToDelete));
         }
-        console.log(formData.entries());
+        formData.entries().forEach(entry => {
+            console.log(entry);
+        });
 
 
         var xhr = new XMLHttpRequest();
