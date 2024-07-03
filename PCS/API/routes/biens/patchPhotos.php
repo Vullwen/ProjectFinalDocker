@@ -4,6 +4,19 @@ include __DIR__ . "/../../database/connectDB.php";
 header("Content-Type: application/json; charset=UTF-8");
 
 try {
+
+    $idBien = $_GET['id'];
+
+    $stmt = $pdo->prepare("SELECT COUNT(*) AS count FROM photobienimmobilier WHERE IDbien = ?");
+    $stmt->execute([$idBien]);
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row['count'] == 0) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'message' => 'ID du bien immobilier invalide.']);
+        exit;
+    }
+
     $targetDir = "/var/www/html/2A-ProjetAnnuel/PCS/Site/";
 
     if ($_SERVER['REQUEST_METHOD'] === 'PATCH') {
@@ -20,8 +33,9 @@ try {
             }
             $db = connectDB();
             $placeholders = rtrim(str_repeat('?,', count($photosToDelete)), ',');
-            $sql = "DELETE FROM photobienimmobilier WHERE cheminPhoto IN ($placeholders)";
+            $sql = "DELETE FROM photobienimmobilier WHERE cheminPhoto IN ($placeholders) AND IDbien = ?";
             $stmt = $db->prepare($sql);
+            $params = array_merge(array_values($photosToDelete), [$idBien]);
 
             if ($stmt->execute($photosToDelete)) {
                 echo json_encode(['success' => true, 'message' => 'Les photos ont été supprimées avec succès.']);
