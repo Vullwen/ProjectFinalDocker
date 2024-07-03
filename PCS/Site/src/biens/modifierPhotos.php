@@ -40,12 +40,34 @@ $photos = getPhotosBien($idBien);
             <input type='file' class='form-control-file' id='photos' name='photos[]' accept='image/*' multiple>
             <div id="photoPreview"></div>
 
+
         </div>
         <button type='submit' class='btn btn-primary'>Enregistrer les modifications</button>
     </form>
 </div>
 
 <script>
+    document.getElementById('propertyPhotos').addEventListener('change', function (event) {
+        var files = event.target.files;
+        var photoPreview = document.getElementById('photoPreview');
+        photoPreview.innerHTML = '';
+
+        for (var i = 0; i < files.length; i++) {
+            var file = files[i];
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                var img = document.createElement('img');
+                img.src = e.target.result;
+                img.style.maxWidth = '200px';
+                img.style.margin = '10px';
+                photoPreview.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', function () {
         var form = document.getElementById('photoForm');
 
