@@ -29,7 +29,7 @@ $fullTargetDir = '/var/www/html/2A-ProjetAnnuel/PCS/Site/img/PhotosBienImmobilie
 $data = json_decode(file_get_contents('php://input'), true);
 $photosToDelete = $data['photosToDelete'] ?? [];
 
-$uploadedFiles = $_FILES['photos'] ?? [];
+$uploadedFiles = isset($_FILES['photos']) ? $_FILES['photos'] : [];
 $photoPaths = [];
 
 if (isset($uploadedFiles['tmp_name'])) {
