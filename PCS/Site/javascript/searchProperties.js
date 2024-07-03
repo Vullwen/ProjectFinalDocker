@@ -44,6 +44,9 @@ new Vue({
 
                         return property;
                     });
+                    setTimeout(() => {
+                        $('.carousel').carousel();
+                    }, 1000);
                 })
                 .catch(error => {
                     console.error("Error fetching properties: ", error);
