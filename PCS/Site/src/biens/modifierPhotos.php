@@ -64,6 +64,7 @@ $photos = getPhotosBien($idBien);
         xhr.onload = function () {
             if (xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
+                console.log(xhr.responseText);
                 if (response.success) {
                     alert('Modifications enregistrées avec succès.');
                     window.location.reload();
