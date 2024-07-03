@@ -24,9 +24,6 @@ try {
     $data = json_decode(file_get_contents('php://input'), true);
     $photosToDelete = $data['photosToDelete'];
 
-    error_log('Photos à supprimer:');
-    error_log(print_r($photosToDelete, true));
-    error_log(print_r($_POST, true));
 
     if (!empty($photosToDelete)) {
         foreach ($photosToDelete as $photoPath) {
