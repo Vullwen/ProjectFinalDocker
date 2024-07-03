@@ -38,7 +38,7 @@ try {
             $stmt = $db->prepare($sql);
             $params = array_merge(array_values($photosToDelete), [$idBien]);
 
-            if ($stmt->execute($$params)) {
+            if ($stmt->execute($params)) {
                 echo json_encode(['success' => true, 'message' => 'Les photos ont été supprimées avec succès.']);
             } else {
                 throw new PDOException("Erreur lors de la suppression des photos de la base de données.");
