@@ -44,6 +44,7 @@ include_once '../template/header.php';
     <div v-if="properties.length > 0">
         <h2>Résultats de la recherche :</h2>
         <div class="card" v-for="property in properties" :key="property.IDBien">
+            <img v-if="property.photo" :src="property.photo" class="card-img-top" alt="Photo du bien">
             <div class="card-body">
                 <h5 class="card-title">{{ property.Type }} - {{ property.Adresse }}</h5>
                 <p class="card-text">Description: {{ property.Description }}</p>
