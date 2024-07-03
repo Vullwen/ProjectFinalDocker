@@ -54,12 +54,12 @@ $photos = getPhotosBien($idBien);
         photosToDelete.forEach(function (checkbox) {
             formData.append('photosToDelete[]', checkbox.value);
         });
-        console.log(photosToDelete);
+        console.log(formData['photosToDelete[]']);
 
         var xhr = new XMLHttpRequest();
         xhr.open('PATCH', 'http://51.75.69.184/2A-ProjetAnnuel/PCS/API/biens/photos?id=' + <?= json_encode($idBien) ?>, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onreadystatechange = function () {
+        xhr.onload = function () {
             if (xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
                 console.log(xhr.responseText);
