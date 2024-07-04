@@ -14,7 +14,7 @@ try {
 
         $db = connectDB();
 
-        $stmt = $db->prepare("SELECT password FROM users WHERE id = :id");
+        $stmt = $db->prepare("SELECT password FROM utilisateur WHERE id = :id");
         $stmt->bindParam(':id', $userId);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
