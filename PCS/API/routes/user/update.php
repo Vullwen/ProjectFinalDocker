@@ -31,15 +31,15 @@ try {
         }
         $query .= " WHERE IDUtilisateur = :id";
 
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':telephone', $telephone);
+        $stmt2 = $db->prepare($query);
+        $stmt2->bindParam(':email', $email);
+        $stmt2->bindParam(':telephone', $telephone);
         if ($newPassword) {
-            $stmt->bindParam(':newPassword', $hashedPassword);
+            $stmt2->bindParam(':newPassword', $hashedPassword);
         }
-        $stmt->bindParam(':id', $userId);
+        $stmt2->bindParam(':id', $userId);
 
-        if ($stmt->execute()) {
+        if ($stmt2->execute()) {
             echo json_encode(['success' => true, 'message' => 'Informations mises à jour avec succès']);
         } else {
             echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour des informations']);
