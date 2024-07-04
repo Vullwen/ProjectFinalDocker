@@ -103,7 +103,7 @@ try {
     $updateEstBailleurQuery = $databaseConnection->prepare("
     UPDATE utilisateur
     SET EstBailleur = 1
-    WHERE id = :idutilisateur AND EstBailleur = 0 OR EstBailleur IS NULL
+    WHERE id = :idutilisateur
 ");
 
     $updateEstBailleurQuery->execute([
