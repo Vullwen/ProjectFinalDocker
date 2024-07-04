@@ -83,7 +83,6 @@ if (!isset($_SESSION['token'])) {
 
     function updateUserInfos() {
         const token = <?php echo json_encode($_SESSION['token']); ?>;
-        const userId = <?php echo json_encode($_SESSION['user_id']); ?>;
         const email = document.getElementById('email').value;
         const telephone = document.getElementById('telephone').value;
         const password = document.getElementById('password').value;
