@@ -32,11 +32,6 @@ include_once "../../template/header.php";
             <input type='number' class='form-control' id='nbChambres' name='nbChambres' required>
         </div>
         <div class='form-group'>
-            <label for='tarif'>Tarif (€ / nuit)<span class='obligatoire'>
-                    (obligatoire)</span></label>
-            <input type='number' class='form-control' id='tarif' name='tarif' required>
-        </div>
-        <div class='form-group'>
             <label for='conciergerie'>Quel type de conciergerie souhaitez-vous ?<span class='obligatoire'>
                     (obligatoire)</span></label><br>
             <input type='radio' id='aaz' name='conciergerie' value='De A à Z'>

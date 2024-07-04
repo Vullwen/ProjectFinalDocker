@@ -53,10 +53,8 @@ form.addEventListener('submit', async (e) => {
                 adresse: adresse,
                 description: description,
                 superficie: superficie,
-                nbchambres: nbChambres,
-                tarif: tarif
+                nbchambres: nbChambres
             };
-            console.log(data);
 
             const response = await fetch(apiUrl, {
                 method: 'POST',
