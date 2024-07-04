@@ -58,14 +58,20 @@ if (!isset($_SESSION['token'])) {
             });
     });
 
+    function formatDate(dateString) {
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        return new Date(dateString).toLocaleDateString('fr-FR', options);
+    }
+
     function displayUserInfos(user) {
         const profileInfoDiv = document.getElementById('profile-info');
+        const formattedDate = formatDate(user.DateInscription);
         profileInfoDiv.innerHTML = `
             <p><strong>Nom :</strong> ${user.nom}</p>
             <p><strong>Prénom :</strong> ${user.prenom}</p>
             <p><strong>Email :</strong> ${user.email}</p>
             <p><strong>Téléphone :</strong> ${user.telephone}</p>
-            <p><strong>Date d'inscription :</strong> ${user.DateInscription}</p>
+            <p><strong>Date d'inscription :</strong> ${formattedDate}</p>
         `;
     }
 </script>
