@@ -20,13 +20,13 @@ try {
     }
 
     $query->execute();
-    $bailleurs = $query->fetchAll(PDO::FETCH_ASSOC);
+    $user = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    if ($idUtilisateur && empty($bailleurs)) {
+    if ($idUtilisateur && empty($user)) {
         echo jsonResponse(404, ["error" => "Utilisateur non trouvé"], []);
     } else {
 
-        echo jsonResponse(200, ["success" => true], $bailleurs);
+        echo jsonResponse(200, ["success" => true], $user);
     }
 } catch (Exception $exception) {
     echo jsonResponse(500, ["error" => $exception->getMessage()], []);
