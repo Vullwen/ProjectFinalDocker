@@ -62,7 +62,7 @@ include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
                 </li>';
 
                     echo '<li class="nav-item">
-                    <a class="nav-link" href="/2A-ProjetAnnuel/PCS/Site/src/modifProfil.php">Mon Profil</a>
+                    <a class="nav-link" href="/2A-ProjetAnnuel/PCS/Site/src/profil.php">Mon Profil</a>
                     </li>';
 
                     echo '<li class="nav-item">

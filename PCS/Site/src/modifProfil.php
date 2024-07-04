@@ -113,6 +113,7 @@ if (!isset($_SESSION['token'])) {
                     return;
                 }
                 alert('Informations mises à jour avec succès');
+                window.location.href = 'profil.php';
             })
             .catch(error => {
                 console.error('Erreur:', error);

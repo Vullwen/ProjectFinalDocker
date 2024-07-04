@@ -12,7 +12,7 @@ try {
 
     if ($idUtilisateur) {
 
-        $query = $databaseConnection->prepare("SELECT idutilisateur, nom, prenom, email, telephone FROM utilisateur WHERE idutilisateur = :id");
+        $query = $databaseConnection->prepare("SELECT idutilisateur, nom, prenom, email, telephone, DateInscription FROM utilisateur WHERE idutilisateur = :id");
         $query->bindParam(':id', $idUtilisateur, PDO::PARAM_INT);
     } else {
 
