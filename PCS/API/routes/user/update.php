@@ -38,6 +38,11 @@ try {
             $stmt2->bindParam(':newPassword', $hashedPassword);
         }
         $stmt2->bindParam(':id', $userId);
+        error_log("Query: " . $query);
+        error_log("Email: " . $email);
+        error_log("Telephone: " . $telephone);
+        error_log("NewPassword: " . $newPassword ? $hashedPassword : "N/A");
+        error_log("UserID: " . $userId);
 
         if ($stmt2->execute()) {
             echo json_encode(['success' => true, 'message' => 'Informations mises à jour avec succès']);
