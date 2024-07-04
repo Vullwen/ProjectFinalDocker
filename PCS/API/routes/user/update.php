@@ -14,7 +14,7 @@ try {
 
         $db = connectDB();
 
-        $stmt = $db->prepare("SELECT Mdp FROM utilisateur WHERE id = :id");
+        $stmt = $db->prepare("SELECT Mdp FROM utilisateur WHERE IDUtilisateur = :id");
         $stmt->bindParam(':id', $userId);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
