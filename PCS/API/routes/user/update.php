@@ -14,7 +14,7 @@ try {
 
         $db = connectDB();
 
-        $stmt = $db->prepare("SELECT password FROM utilisateur WHERE id = :id");
+        $stmt = $db->prepare("SELECT Mdp FROM utilisateur WHERE id = :id");
         $stmt->bindParam(':id', $userId);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -27,7 +27,7 @@ try {
         $query = "UPDATE utilisateur SET email = :email, telephone = :telephone";
         if ($newPassword) {
             $hashedPassword = password_hash($newPassword, PASSWORD_BCRYPT);
-            $query .= ", password = :newPassword";
+            $query .= ", Mdp = :newPassword";
         }
         $query .= " WHERE IDUtilisateur = :id";
 
