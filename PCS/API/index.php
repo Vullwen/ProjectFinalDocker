@@ -185,7 +185,7 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/biens/photos")) {
 }
 
 if (isPath("/2A-ProjetAnnuel/PCS/API/user/update")) {
-    if (isPatchMethod()) {
+    if (isPostMethod()) {
         require_once __DIR__ . "/routes/user/update.php";
         die();
     }
