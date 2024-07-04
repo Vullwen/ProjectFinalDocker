@@ -49,7 +49,7 @@ if (!isset($_SESSION['token'])) {
                     alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
                     return;
                 }
-                const userId = data.user_id;
+                userId = data.user_id;
 
 
                 return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user?id=' + userId, {
@@ -83,6 +83,7 @@ if (!isset($_SESSION['token'])) {
 
     function updateUserInfos() {
         const token = <?php echo json_encode($_SESSION['token']); ?>;
+        const userId = <?php echo json_encode($_SESSION['user_id']); ?>;
         const email = document.getElementById('email').value;
         const telephone = document.getElementById('telephone').value;
         const password = document.getElementById('password').value;
