@@ -11,6 +11,11 @@ if (!isset($_SESSION['token'])) {
     <h2>Votre Profil</h2>
     <div id="profile-info">
     </div>
+    <div class="mt-4">
+        <a href="/2A-ProjetAnnuel/PCS/Site/src/mesReservation.php" class="btn btn-primary mr-3">Mes Réservations</a>
+        <a href="/2A-ProjetAnnuel/PCS/Site/src/biens/biensListe.php" class="btn btn-primary mr-3">Mes Biens</a>
+        <a href="modifProfil.php" class="btn btn-primary">Modifier mon Profil</a>
+    </div>
 </div>
 
 <script>

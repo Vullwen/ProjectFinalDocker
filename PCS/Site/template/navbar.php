@@ -44,22 +44,17 @@ include (dirname(__DIR__) . "../../API/entities/isAuthenticated.php");
                 }
 
                 if (isset($_SESSION['token'])) {
-                    if (estBailleur()) {
+                    if (!estBailleur()) {
                         echo '<li class="nav-item">
-                    <a class="nav-link" href="/2A-ProjetAnnuel/PCS/Site/src/biens/biensListe.php">Mes Biens</a>
-                </li>';
-                        echo '<li class="nav-item">
-                <a class="nav-link" href="/2A-ProjetAnnuel/PCS/Site/src/remplirTicket.php">Assistance</a>
-            </li>';
+                        <a class="nav-link" href="/2A-ProjetAnnuel/PCS/Site/src/registerBailleur.php">Devenir Bailleur</a>
+                    </li>';
+
                     } else {
                         echo '<li class="nav-item">
-                    <a class="nav-link" href="/2A-ProjetAnnuel/PCS/Site/src/registerBailleur.php">Devenir Bailleur</a>
+                    <a class="nav-link" href="/2A-ProjetAnnuel/PCS/Site/src/remplirTicket.php">Assistance</a>
                 </li>';
 
                     }
-                    echo '<li class="nav-item">
-                    <a class="nav-link" href="/2A-ProjetAnnuel/PCS/Site/src/mesReservation.php">Mes Réservations</a>
-                </li>';
 
                     echo '<li class="nav-item">
                     <a class="nav-link" href="/2A-ProjetAnnuel/PCS/Site/src/profil.php">Mon Profil</a>
