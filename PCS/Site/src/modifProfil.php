@@ -7,31 +7,45 @@ if (!isset($_SESSION['token'])) {
 }
 ?>
 
+<div class="container mt-5">
+    <h2>Modifier vos informations</h2>
+    <form onsubmit="event.preventDefault(); updateUserInfos();">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="text" id="telephone" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Nouveau mot de passe</label>
+            <input type="password" id="password" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+    </form>
+</div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const token = <?php echo json_encode($_SESSION['token']); ?>;
-
-        console.log('Token:', token);
 
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + token }
         })
             .then(response => {
-                console.log('First fetch response:', response);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                console.log(response.json());
                 return response.json();
             })
             .then(data => {
-                console.log('First fetch data:', data);
                 if (!data.success) {
                     alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
                     return;
                 }
-                const userId = data.[0].idutilisateur;
+                const userId = data[0].idutilisateur;
                 console.log('ID utilisateur:', userId);
 
                 return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user?id=' + userId, {
@@ -40,7 +54,6 @@ if (!isset($_SESSION['token'])) {
                 });
             })
             .then(response => {
-                console.log('Second fetch response:', response);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -48,9 +61,10 @@ if (!isset($_SESSION['token'])) {
             })
             .then(data => {
                 if (!data.success) {
-                    alert('Erreur lors de la récupération des informations de l\'utilisateur COUCOU C MOI');
+                    alert('Erreur lors de la récupération des informations de l\'utilisateur');
                     return;
                 }
+                console.log(data[0]); // Pour vérifier les données reçues
                 displayUserInfos(data[0]);
             })
             .catch(error => {
@@ -60,7 +74,6 @@ if (!isset($_SESSION['token'])) {
     });
 
     function displayUserInfos(user) {
-        console.log('Affichage des informations de l\'utilisateur :', user);
         document.getElementById('email').value = user.email;
         document.getElementById('telephone').value = user.telephone;
     }
@@ -104,25 +117,6 @@ if (!isset($_SESSION['token'])) {
             });
     }
 </script>
-
-<div class="container mt-5">
-    <h2>Modifier vos informations</h2>
-    <form onsubmit="event.preventDefault(); updateUserInfos();">
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="telephone">Téléphone</label>
-            <input type="text" id="telephone" class="form-control" required>
-        </div>
-        <div class="form-group">
-            <label for="password">Nouveau mot de passe</label>
-            <input type="password" id="password" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
-    </form>
-</div>
 
 <?php
 require_once '../template/footer.php';
