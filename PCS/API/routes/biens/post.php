@@ -100,6 +100,16 @@ try {
         "idBienImmobilier" => $idBienImmobilier
     ]);
 
+    $updateEstBailleurQuery = $databaseConnection->prepare("
+    UPDATE utilisateur
+    SET EstBailleur = 1
+    WHERE id = :idutilisateur AND EstBailleur = 0
+");
+
+    $updateEstBailleurQuery->execute([
+        "idutilisateur" => $body['idutilisateur']
+    ]);
+
 
     echo jsonResponse(200, ["PCS" => "PCSuccess"], [
         "success" => true,
