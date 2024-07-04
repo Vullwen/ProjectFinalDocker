@@ -41,7 +41,7 @@ if (!isset($_SESSION['token'])) {
             })
             .then(data => {
                 if (!data.success) {
-                    alert('Erreur lors de la récupération des informations de l\'utilisateur');
+                    alert('Erreur lors de la récupération des informations de l\'utilisateur COUCOU C MOI');
                     return;
                 }
                 displayUserInfos(data[0]);
