@@ -25,7 +25,8 @@ try {
     if ($idUtilisateur && empty($bailleurs)) {
         echo jsonResponse(404, ["error" => "Utilisateur non trouvé"], []);
     } else {
-        echo jsonResponse(200, [], $bailleurs);
+
+        echo jsonResponse(200, ["success" => true], $bailleurs);
     }
 } catch (Exception $exception) {
     echo jsonResponse(500, ["error" => $exception->getMessage()], []);
