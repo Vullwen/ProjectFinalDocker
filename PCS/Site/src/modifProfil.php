@@ -85,9 +85,10 @@ if (!isset($_SESSION['token'])) {
         const token = <?php echo json_encode($_SESSION['token']); ?>;
         const email = document.getElementById('email').value;
         const telephone = document.getElementById('telephone').value;
+        const currentPassword = document.getElementById('currentPassword').value;
         const password = document.getElementById('password').value;
 
-        const data = { email, telephone };
+        const data = { email, telephone, currentPassword };
         if (password) {
             data.password = password;
         }
