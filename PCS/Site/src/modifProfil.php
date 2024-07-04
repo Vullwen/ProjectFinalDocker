@@ -44,7 +44,7 @@ if (!isset($_SESSION['token'])) {
                     alert('Erreur lors de la récupération des informations de l\'utilisateur');
                     return;
                 }
-                displayUserInfos(data.data);
+                displayUserInfos(data[0]);
             })
             .catch(error => {
                 console.error('Erreur:', error);
@@ -53,8 +53,8 @@ if (!isset($_SESSION['token'])) {
     });
 
     function displayUserInfos(user) {
-        document.getElementById('email').value = utilisateur.email;
-        document.getElementById('telephone').value = utilisateur.telephone;
+        document.getElementById('email').value = user.email;
+        document.getElementById('telephone').value = user.telephone;
     }
 
     function updateUserInfos() {
