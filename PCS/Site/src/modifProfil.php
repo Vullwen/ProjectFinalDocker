@@ -23,7 +23,7 @@ if (!isset($_SESSION['token'])) {
             <input type="password" id="currentPassword" class="form-control" required>
         </div>
         <div class="form-group">
-            <label for="password">Nouveau mot de passe</label>
+            <label for="newPassword">Nouveau mot de passe</label>
             <input type="password" id="newPassword" class="form-control">
         </div>
         <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
@@ -90,7 +90,7 @@ if (!isset($_SESSION['token'])) {
 
         const data = { email, telephone, currentPassword };
         if (newPassword) {
-            data.password = newPassword;
+            data.newPassword = newPassword;
         }
 
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/update?id=' + userId, {
