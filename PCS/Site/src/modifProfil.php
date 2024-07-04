@@ -26,7 +26,7 @@ if (!isset($_SESSION['token'])) {
                     alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
                     return;
                 }
-                const userId = data.idutilisateur;
+                const userId = data.[0].idutilisateur;
 
                 return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user?id=' + userId, {
                     method: 'GET',
