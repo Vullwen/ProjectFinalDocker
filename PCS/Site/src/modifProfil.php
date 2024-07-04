@@ -60,7 +60,7 @@ if (!isset($_SESSION['token'])) {
                 return response.json();
             })
             .then(data => {
-                if (!data.success) {
+                if (!data) {
                     alert('Erreur lors de la récupération des informations de l\'utilisateur');
                     return;
                 }
