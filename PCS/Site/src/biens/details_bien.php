@@ -54,11 +54,7 @@ $idBien = $_GET['id'];
         <p><strong>Superficie:</strong> ${bien.Superficie}</p>
         <p><strong>Nombre de Chambres:</strong> ${bien.NbChambres}</p>
         <p><strong>Tarif:</strong> ${bien.Tarif} € / nuit</p>
-        <a href="modifierBiens.php?id=${bien.IDBien}" class="btn btn-primary">Modifier</a>
-        <a href="modifierPhotos.php?id=${bien.IDBien}" class="btn btn-primary">Modifier les photos</a>
-        <button onclick="deleteBien(${bien.IDBien})" class="btn btn-danger">Supprimer</button>
-        <a href="biensListe.php" class="btn btn-secondary">Retour à la liste</a>
-        <a href="details_reservation.php?id=${bien.IDBien}" class="btn btn-primary">Voir les réservations</a>
+
             <h2>Calendrier des disponibilités</h2>
     <div class="calendar-container">
     <table class="calendar">
@@ -84,6 +80,11 @@ $idBien = $_GET['id'];
                 <p><span class="legend unavailable"></span> Réservé</p>
                 <p><span class="legend pending"></span> En attente</p>
             </div>
+                    <a href="modifierBiens.php?id=${bien.IDBien}" class="btn btn-primary">Modifier</a>
+        <a href="modifierPhotos.php?id=${bien.IDBien}" class="btn btn-primary">Modifier les photos</a>
+        <button onclick="deleteBien(${bien.IDBien})" class="btn btn-danger">Supprimer</button>
+        <a href="biensListe.php" class="btn btn-secondary">Retour à la liste</a>
+        <a href="details_reservation.php?id=${bien.IDBien}" class="btn btn-primary">Voir les réservations</a>
         </div>
     `;
             initMap(bien.Adresse);
