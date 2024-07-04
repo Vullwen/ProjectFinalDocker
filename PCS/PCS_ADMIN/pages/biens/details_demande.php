@@ -94,17 +94,19 @@ if ($demande['etat'] === 'acceptee') {
             <div id="image-overlay" onclick="hideImage()">
                 <img id="overlay-img" src="" alt="Agrandissement de l'image">
             </div>
-            <div class="row mt-3">
-                <div class="col-md-12">
-                    <h5>Actions :</h5>
-                    <button class='btn btn-info btn-sm ml-2'
-                        onclick="acceptDemande(<?php echo htmlspecialchars($demande['id']); ?>)">Accepter la
-                        demande</button>
-                    <a class='btn btn-info btn-sm ml-2 btn-red'
-                        href="refuse_demande.php?id=<?php echo htmlspecialchars($demande['id']); ?>">Refuser la
-                        demande</a>
+            <?php if (!$buttonsHidden): ?>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <h5>Actions :</h5>
+                        <button class='btn btn-info btn-sm ml-2'
+                            onclick="acceptDemande(<?php echo htmlspecialchars($demande['id']); ?>)">Accepter la
+                            demande</button>
+                        <a class='btn btn-info btn-sm ml-2 btn-red'
+                            href="refuse_demande.php?id=<?php echo htmlspecialchars($demande['id']); ?>">Refuser la
+                            demande</a>
+                    </div>
                 </div>
-            </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>
