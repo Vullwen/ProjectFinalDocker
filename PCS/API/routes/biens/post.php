@@ -91,6 +91,15 @@ try {
         "idDemande" => $body['idDemande']
     ]);
 
+    $insertDisponibiliteQuery = $databaseConnection->prepare("
+        INSERT INTO disponibilite (IDBien, DateDebut, DateFin)
+        VALUES (:idBienImmobilier, NOW(), DATE_ADD(NOW(), INTERVAL 1 YEAR))
+    ");
+
+    $insertDisponibiliteQuery->execute([
+        "idBienImmobilier" => $idBienImmobilier
+    ]);
+
 
     echo jsonResponse(200, ["PCS" => "PCSuccess"], [
         "success" => true,
