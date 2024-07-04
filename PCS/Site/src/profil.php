@@ -65,7 +65,7 @@ if (!isset($_SESSION['token'])) {
             <p><strong>Prénom :</strong> ${user.prenom}</p>
             <p><strong>Email :</strong> ${user.email}</p>
             <p><strong>Téléphone :</strong> ${user.telephone}</p>
-            <p><strong>Date d'inscription :</strong> ${user.date_inscription}</p>
+            <p><strong>Date d'inscription :</strong> ${user.DateInscription}</p>
         `;
     }
 </script>
