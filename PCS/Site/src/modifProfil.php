@@ -8,50 +8,50 @@ if (!isset($_SESSION['token'])) {
 ?>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded' {
         const token = <?php echo json_encode($_SESSION['token']); ?>;
 
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + token }
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                console.log(response.json());
-                return response.json();
-            })
-            .then(data => {
-                if (!data.success) {
-                    alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
-                    return;
-                }
-                const userId = data.[0].idutilisateur;
-                console.log('ID utilisateur:', userId);
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            console.log(response.json());
+            return response.json();
+        })
+        .then(data => {
+            if (!data.success) {
+                alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
+                return;
+            }
+            const userId = data.[0].idutilisateur;
+            console.log('ID utilisateur:', userId);
 
-                return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user?id=' + userId, {
-                    method: 'GET',
-                    headers: { 'Authorization': 'Bearer ' + token }
-                });
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (!data.success) {
-                    alert('Erreur lors de la récupération des informations de l\'utilisateur COUCOU C MOI');
-                    return;
-                }
-                displayUserInfos(data[0]);
-            })
-            .catch(error => {
-                console.error('Erreur:', error);
-                alert('Erreur lors de la récupération des informations de l\'utilisateur');
+            return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user?id=' + userId, {
+                method: 'GET',
+                headers: { 'Authorization': 'Bearer ' + token }
             });
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data.success) {
+                alert('Erreur lors de la récupération des informations de l\'utilisateur COUCOU C MOI');
+                return;
+            }
+            displayUserInfos(data[0]);
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            alert('Erreur lors de la récupération des informations de l\'utilisateur');
+        });
     });
 
     function displayUserInfos(user) {
