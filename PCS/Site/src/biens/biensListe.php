@@ -37,7 +37,6 @@ if (!isset($_SESSION['estBailleur']) || $_SESSION['estBailleur'] != 1) {
         const headers = new Headers({
             'Authorization': 'Bearer ' + token
         });
-        console.log(token);
 
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', { headers: headers })
             .then(response => response.json())
