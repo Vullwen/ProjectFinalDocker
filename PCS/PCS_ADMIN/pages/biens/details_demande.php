@@ -23,6 +23,13 @@ if (!$responseData || !$responseData['success']) {
 }
 
 $demande = $responseData['data'];
+
+if ($demande['etat'] === 'acceptee') {
+    echo "<div class='alert alert-success'>La demande a déjà été acceptée.</div>";
+    $buttonsHidden = true;
+} else {
+    $buttonsHidden = false;
+}
 ?>
 
 <div class="container mt-5">
