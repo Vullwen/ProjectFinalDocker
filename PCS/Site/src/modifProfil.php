@@ -53,8 +53,8 @@ if (!isset($_SESSION['token'])) {
     });
 
     function displayUserInfos(user) {
-        document.getElementById('email').value = user.email;
-        document.getElementById('telephone').value = user.telephone;
+        document.getElementById('email').value = utilisateur.email;
+        document.getElementById('telephone').value = utilisateur.telephone;
     }
 
     function updateUserInfos() {
