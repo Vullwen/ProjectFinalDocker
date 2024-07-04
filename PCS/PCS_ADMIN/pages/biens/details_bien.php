@@ -36,7 +36,7 @@ if (isset($_GET['id'])) {
             echo "<div class='row'>";
             foreach ($photos as $photo) {
                 echo "<div class='col-md-4 mb-4'>";
-                echo "<img src='https://localhost/2A-ProjetAnnuel/PCS/Site/{$photo['cheminPhoto']}' class='img-fluid' alt='Photo'>";
+                echo "<img src='http://51.75.69.184/2A-ProjetAnnuel/PCS/Site/{$photo['cheminPhoto']}' class='img-fluid' alt='Photo'>";
                 echo "</div>";
             }
             echo "</div>";
