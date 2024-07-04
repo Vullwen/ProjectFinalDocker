@@ -45,7 +45,7 @@ if (!isset($_SESSION['token'])) {
                     alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
                     return;
                 }
-                const userId = data[0].idutilisateur;
+                const userId = data[0].user_id;
                 console.log('ID utilisateur:', userId);
 
                 return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user?id=' + userId, {
@@ -64,7 +64,7 @@ if (!isset($_SESSION['token'])) {
                     alert('Erreur lors de la récupération des informations de l\'utilisateur');
                     return;
                 }
-                console.log(data[0]); // Pour vérifier les données reçues
+                console.log(data[0]);
                 displayUserInfos(data[0]);
             })
             .catch(error => {
