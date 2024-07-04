@@ -184,5 +184,13 @@ if (isPath("/2A-ProjetAnnuel/PCS/API/biens/photos")) {
     }
 }
 
+if (isPath("/2A-ProjetAnnuel/PCS/API/user/update")) {
+    if (isPatchMethod()) {
+        require_once __DIR__ . "/routes/user/update.php";
+        die();
+    }
+
+}
+
 
 // PowerPoint soutenance PA : Présentation personnes, présentation du projet, présentation des technologies utilisées. 5 min

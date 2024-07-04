@@ -19,6 +19,10 @@ if (!isset($_SESSION['token'])) {
             <input type="text" id="telephone" class="form-control" required>
         </div>
         <div class="form-group">
+            <label for="currentPassword">Mot de passe actuel</label>
+            <input type="password" id="currentPassword" class="form-control" required>
+        </div>
+        <div class="form-group">
             <label for="password">Nouveau mot de passe</label>
             <input type="password" id="password" class="form-control">
         </div>
@@ -46,7 +50,7 @@ if (!isset($_SESSION['token'])) {
                     return;
                 }
                 const userId = data.user_id;
-                console.log('ID utilisateur:', userId);
+
 
                 return fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user?id=' + userId, {
                     method: 'GET',
@@ -64,7 +68,6 @@ if (!isset($_SESSION['token'])) {
                     alert('Erreur lors de la récupération des informations de l\'utilisateur');
                     return;
                 }
-                console.log(data[0]);
                 displayUserInfos(data[0]);
             })
             .catch(error => {
