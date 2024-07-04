@@ -11,11 +11,14 @@ if (!isset($_SESSION['token'])) {
     document.addEventListener('DOMContentLoaded' {
         const token = <?php echo json_encode($_SESSION['token']); ?>;
 
+        console.log('Token:', token);
+
         fetch('http://51.75.69.184/2A-ProjetAnnuel/PCS/API/user/id', {
             method: 'GET',
             headers: { 'Authorization': 'Bearer ' + token }
         })
         .then(response => {
+            console.log('First fetch response:', response);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -23,6 +26,7 @@ if (!isset($_SESSION['token'])) {
             return response.json();
         })
         .then(data => {
+            console.log('First fetch data:', data);
             if (!data.success) {
                 alert('Erreur lors de la récupération de l\'ID de l\'utilisateur');
                 return;
@@ -36,6 +40,7 @@ if (!isset($_SESSION['token'])) {
             });
         })
         .then(response => {
+            console.log('Second fetch response:', response);
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -55,6 +60,7 @@ if (!isset($_SESSION['token'])) {
     });
 
     function displayUserInfos(user) {
+        console.log('Affichage des informations de l\'utilisateur :', user);
         document.getElementById('email').value = user.email;
         document.getElementById('telephone').value = user.telephone;
     }
