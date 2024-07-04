@@ -19,7 +19,7 @@ try {
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if (!$user || !password_verify($currentPassword, $user['password'])) {
+        if (!$user || !password_verify($currentPassword, $user['Mdp'])) {
             echo json_encode(['success' => false, 'message' => 'Mot de passe actuel incorrect']);
             exit();
         }
