@@ -35,6 +35,10 @@ L'application est divisée en trois services principaux dans Docker :
 - **Réseaux** :
     - `app-network` : Réseau bridge personnalisé permettant aux conteneurs de communiquer entre eux.
 
+- **Images Docker** :
+    - `https://hub.docker.com/repository/docker/vullwen/frontend/general` : Image Docker pour le frontend.
+    - `https://hub.docker.com/repository/docker/vullwen/backend/general` : Image Docker pour le backend.
+
 ### Commandes supplémentaires utiles
 
 - **Démarrer les conteneurs en arrière-plan** :
