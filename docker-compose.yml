@@ -1,0 +1,41 @@
+version: '3.8'
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Backend/Dockerfile
+    volumes:
+      - ./Backend:/var/www/html/backend
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Frontend/Dockerfile
+    volumes:
+      - ./Frontend:/var/www/html/frontend
+    ports:
+      - "8081:80"
+    networks:
+      - app-network
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: mdp  
+      MYSQL_DATABASE: BDDPCS
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./Database:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  db-data:
